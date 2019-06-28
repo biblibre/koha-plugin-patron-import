@@ -36,33 +36,9 @@ sub new {
 
 sub configure {
     my ( $self, $args ) = @_;
-    my $cgi = $self->{'cgi'};
 
-    my $template = $self->get_template({ file => 'templates/index/index.tt' });
-
-    my $imports = GetFromTable($self->{import_table});
-    foreach my $i (@$imports) {
-        my $dbh = C4::Context->dbh;
-
-        my $query = "SELECT id, start, end FROM $self->{runs_table}
-            WHERE import_id = ?
-            AND end = (SELECT MAX(end) FROM $self->{runs_table} WHERE import_id = ?)";
-        my $sth = $dbh->prepare($query);
-        $sth->execute($i->{id}, $i->{id}) or die $sth->errstr;
-
-        my $run = $sth->fetchrow_hashref;
-
-        $i->{last_run} = 'No run yet';
-        if ( $run->{end} ) {
-            $i->{last_run} = $run->{start};
-            $i->{last_run_id} = $run->{id};
-        }
-    }
-    $template->param(imports => $imports);
-
-    print $cgi->header();
-    print $template->output();
-
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Index;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Index::index($self, $args);
 }
 
 sub editimport {
