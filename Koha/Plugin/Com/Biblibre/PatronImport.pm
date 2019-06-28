@@ -2,10 +2,7 @@ package Koha::Plugin::Com::Biblibre::PatronImport;
 
 use Modern::Perl;
 
-use JSON qw( to_json from_json );
-
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
-use Koha::Plugin::Com::Biblibre::PatronImport::Helper::CSVConfig qw( :DEFAULT );
 
 use base qw(Koha::Plugins::Base);
 
@@ -23,8 +20,6 @@ our $metadata = {
     version => $VERSION,
 };
 
-our $tables;
-
 sub new {
     my ($class, $args) = @_;
 
@@ -33,10 +28,8 @@ sub new {
 
     my $self = $class->SUPER::new($args);
 
-    $tables = {
-        import      => $self->get_qualified_table_name('import'),
-        runs        => $self->get_qualified_table_name('runs'),
-    };
+    $self->{import_table}  = $self->get_qualified_table_name('import');
+    $self->{runs_table}  = $self->get_qualified_table_name('runs');
 
     return $self;
 }
@@ -47,13 +40,13 @@ sub configure {
 
     my $template = $self->get_template({ file => 'templates/index/index.tt' });
 
-    my $imports = GetFromTable($tables->{import});
+    my $imports = GetFromTable($self->{import_table});
     foreach my $i (@$imports) {
         my $dbh = C4::Context->dbh;
 
-        my $query = "SELECT id, start, end FROM $tables->{runs}
+        my $query = "SELECT id, start, end FROM $self->{runs_table}
             WHERE import_id = ?
-            AND end = (SELECT MAX(end) FROM $tables->{runs} WHERE import_id = ?)";
+            AND end = (SELECT MAX(end) FROM $self->{runs_table} WHERE import_id = ?)";
         my $sth = $dbh->prepare($query);
         $sth->execute($i->{id}, $i->{id}) or die $sth->errstr;
 
@@ -74,116 +67,16 @@ sub configure {
 
 sub editimport {
     my ( $self, $args ) = @_;
-    my $cgi = $self->{'cgi'};
 
-    my $template = $self->get_template({ file => 'templates/import/edit.tt' });
-
-    my $op = $cgi->param('op') || '';
-
-    my  $flow_types = [
-        { code => 'file-csv', name => 'CSV file'},
-        { code => 'ldap', name => 'LDAP connection'},
-    ];
-
-    $template->param(
-        import_types => $flow_types,
-        supported_eol => SupportedEOL(),
-        supported_quote_char => SupportedQuoteChar(),
-        supported_sep_char => SupportedSepChar(),
-    );
-
-    if ( $op eq 'save' ) {
-        my $id = $cgi->param('id');
-        my $name = $cgi->param('name');
-        my $type = $cgi->param('type');
-        my $createonly = $cgi->param('createonly') ? 1 : 0;
-        my $flow_settings = $self->_handle_flow_settings($cgi);
-        my $values = {
-            name => $name,
-            type => $type,
-            createonly =>$createonly,
-            flow_settings => $flow_settings
-        };
-
-        if (my $existing = GetFirstFromTable( $tables->{import}, { id => $id } )) {
-            UpdateInTable($tables->{import}, $values, { id => $existing->{id} });
-            print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
-            return;
-        }
-
-        my $now = DateTime->now();
-        $values->{created_on} = $now->ymd() . ' ' . $now->hms;
-        InsertInTable($tables->{import}, $values);
-
-        print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
-    }
-
-    my $id = $cgi->param('id');
-    if ( $id ) {
-        my $import = GetFirstFromTable($tables->{import}, { id => $id });
-
-        my $flow_settings = from_json($import->{flow_settings}) if $import->{flow_settings};
-        $template->param(
-            id => $import->{id},
-            name => $import->{name},
-            type => $import->{type},
-            createonly => $import->{createonly},
-            %{ $flow_settings }
-        );
-    }
-
-    print $cgi->header();
-    print $template->output();
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import::edit($self, $args);
 }
 
 sub deleteimport {
-    my ($self, $params) = @_;
-    my $cgi = $self->{'cgi'};
+    my ($self, $args) = @_;
 
-    my $id = $cgi->param('id');
-    my $op = $cgi->param('op') || '';
-
-    if ( $op eq 'confirm' ) {
-        if (my $existing = GetFirstFromTable( $tables->{import}, { id => $id } )) {
-            Delete( $tables->{import}, { id => $existing->{id} });
-        }
-        print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
-    }
-
-    my $template = $self->get_template({ file => 'templates/import/delete.tt' });
-
-    my $existing = GetFirstFromTable( $tables->{import}, { id => $id } );
-
-    $template->param(
-        todelete => $existing,
-        id => $id
-    );
-
-    print $cgi->header();
-    print $template->output();
-}
-
-sub _handle_flow_settings {
-    my ($self, $cgi) = @_;
-
-    if ( $cgi->param('type') eq 'file-csv' ) {
-        return $self->_handle_csv($cgi);
-    }
-}
-
-sub _handle_csv {
-    my ($self, $cgi) = @_;
-
-    my $settings = {
-        binary              => $cgi->param('binary') ? 1 : 0,
-        eol                 => $cgi->param('eol') || "",
-        sep_char            => $cgi->param('sep_char') || "",
-        quote_char          => $cgi->param('quote_char') || "",
-        empty_is_undef      => $cgi->param('empty_is_undef') ? 1 : 0,
-        allow_loose_quotes  => $cgi->param('allow_loose_quotes') ? 1 : 0,
-    };
-
-    return to_json($settings);
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import::delete($self, $args);
 }
 
 sub install {
