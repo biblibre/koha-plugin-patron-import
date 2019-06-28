@@ -48,7 +48,7 @@
                             </li>
                             <li>
                                 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editimport&id=[% i.id %]">Edit</a> - 
-                                <a href="[% BASE_URL %]&controller=import&action=delete_form&id=[% i.id %]">Delete</a>
+                                <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=deleteimport&id=[% i.id %]">Delete</a> - 
                             </li>
                         </ol>
                     </fieldset>

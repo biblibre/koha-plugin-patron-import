@@ -132,6 +132,32 @@ sub editimport {
         );
     }
 
+    print $cgi->header();
+    print $template->output();
+}
+
+sub deleteimport {
+    my ($self, $params) = @_;
+    my $cgi = $self->{'cgi'};
+
+    my $id = $cgi->param('id');
+    my $op = $cgi->param('op') || '';
+
+    if ( $op eq 'confirm' ) {
+        if (my $existing = GetFirstFromTable( $tables->{import}, { id => $id } )) {
+            Delete( $tables->{import}, { id => $existing->{id} });
+        }
+        print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
+    }
+
+    my $template = $self->get_template({ file => 'templates/import/delete.tt' });
+
+    my $existing = GetFirstFromTable( $tables->{import}, { id => $id } );
+
+    $template->param(
+        todelete => $existing,
+        id => $id
+    );
 
     print $cgi->header();
     print $template->output();

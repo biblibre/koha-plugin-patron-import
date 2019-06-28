@@ -1,0 +1,55 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#ldap').hide();
+        [% IF type == 'ldap' %]
+            $('#ldap').show();
+            $('#csv-file').hide();
+        [% END %]
+
+        $('#type').change(function() {
+            if ($(this).val() == 'file-csv') {
+                $('#csv-file').show();
+                $('#ldap').hide();
+            }
+            else {
+                $('#ldap').show();
+                $('#csv-file').hide();
+            }
+        });
+    });
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo; <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2>Delete import #[% todelete.id %] [% todelete.name %]</h2>
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="id" value="[% id %]"/>
+                    <input type="hidden" name="op" value="confirm"/>
+
+                    <p>Do you want to delete this import ?</p>
+
+                    <div>
+                        <input type="submit" value="Yes, delete"/>
+                        <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">No, cancel</a>
+                    </div>
+                </form>
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
