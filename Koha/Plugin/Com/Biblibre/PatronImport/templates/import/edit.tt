@@ -1,0 +1,166 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#ldap').hide();
+        [% IF type == 'ldap' %]
+            $('#ldap').show();
+            $('#csv-file').hide();
+        [% END %]
+
+        $('#type').change(function() {
+            if ($(this).val() == 'file-csv') {
+                $('#csv-file').show();
+                $('#ldap').hide();
+            }
+            else {
+                $('#ldap').show();
+                $('#csv-file').hide();
+            }
+        });
+    });
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo; <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> New import</h2>
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="op" value="save"/>
+
+                    <input type="hidden" name="id" value="[% id %]"/>
+
+                    <fieldset class="rows">
+                        <ol>
+                            <li>
+                                <label for="name">Import name :</label>
+                                <input type="text" value="[% name %]" id="name" name="name"/>
+                            </li>
+
+                            <li>
+                                <label for="type">Flow type :</label>
+                                <select id="type" name="type">
+                                    [% FOREACH t IN import_types %]
+                                        [% IF t.code == type %]
+                                            <option value="[% t.code %]" selected="selected">[% t.name %]</option>
+                                        [% ELSE %]
+                                            <option value="[% t.code %]">[% t.name %]</option>
+                                        [% END %]
+                                    [% END %]
+                                </select>
+                            </li>
+
+                            <li>
+                                <label for="createonly">Create only :</label>
+                                [% IF createonly %]
+                                    <input name="createonly" type="checkbox" checked="checked"/>
+                                [% ELSE %]
+                                    <input name="createonly" type="checkbox"/>
+                                [% END %]
+                            </li>
+
+                        </ol>
+                    </fieldset>
+
+                    <fieldset class="rows" id="csv-file">
+                        <legend>CSV file settings</legend>
+
+                        <ol>
+                            <li>
+                                <label for="binary">Binary :</label>
+                                [% IF binary %]
+                                    <input name="binary" type="checkbox" checked="checked"/>
+                                [% ELSE %]
+                                    <input name="binary" type="checkbox"/>
+                                [% END %]
+                                <div class="hint">
+                                    if this is set to 1, you may use binary characters in quoted fiels.
+                                </div>
+                            </li>
+                            <li>
+                                <label for="eol">End of line :</label>
+                                <select name="eol">
+                                    [% FOREACH s IN supported_eol %]
+                                        [% IF eol == s.code %]
+                                            <option value="[% s.code %]" selected="selected">[% s.name %]</option>
+                                        [% ELSE %]
+                                            <option value="[% s.code %]">[% s.name %]</option>
+                                        [% END %]
+                                    [% END %]
+                                </select>
+                                <div class="hint">CSV's end of lines<div>
+                            </li>
+                            <li>
+                                <label for="sep_char">Char separator :</label>
+                                <select name="sep_char">
+                                    [% FOREACH s IN supported_sep_char %]
+                                        [% IF sep_char == s.code %]
+                                            <option value="[% s.code %]" selected="selected">[% s.name %]</option>
+                                        [% ELSE %]
+                                            <option value="[% s.code %]">[% s.name %]</option>
+                                        [% END %]
+                                    [% END %]
+                                </select>
+                                <div class="hint">char used to separate fields<div>
+                            </li>
+                            <li>
+                                <label for="quote_char">Quote char :</label>
+                                <select name="quote_char">
+                                    [% FOREACH s IN supported_quote_char %]
+                                        [% IF quote_char == s.code %]
+                                            <option value="[% s.code %]" selected="selected">[% s.name %]</option>
+                                        [% ELSE %]
+                                            <option value="[% s.code %]">[% s.name %]</option>
+                                        [% END %]
+                                    [% END %]
+                                </select>
+                                <div class="hint">chararacter to quote fields<div>
+                            </li>
+                            <li>
+                                <label for="empty_is_undef">Empty is undef :</label>
+                                [% IF empty_is_undef %]
+                                    <input type="checkbox"name="empty_is_undef" checked="checked"/>
+                                [% ELSE %]
+                                    <input type="checkbox" name="empty_is_undef"/>
+                                [% END %]
+                                <div class="hint">
+                                    this attribute converts all blank fields to undef
+                                </div>
+                            </li>
+                            <li>
+                                <label for="allow_loose_quotes">Allow loose quotes :</label>
+                                    [% IF allow_loose_quotes %]
+                                        <input type="checkbox" name="allow_loose_quotes" checked="checked"/>
+                                    [% ELSE %]
+                                        <input type="checkbox" name="allow_loose_quotes"/>
+                                    [% END %]
+                                <div class="hint">
+                                    Parse unquoted fields containing quote_char like 1,foo "bar" baz, 42
+                                </div>
+                            </li>
+                        </ol>
+                    </fieldset>
+
+                    <fieldset class="rows" id="ldap">
+                        <legend>LDAP settings</legend>
+                    </fieldset>
+
+                    <input type="submit" value="Save"/>
+                </form>
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
