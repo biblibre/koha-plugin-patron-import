@@ -42,7 +42,7 @@
                                 </span>
                             </li>
                             <li>
-                                <a href="[% BASE_URL %]&controller=fieldMappings&action=add_form&import_id=[% i.id %]">Mappings</a> - 
+                                <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editfieldmappings&import_id=[% i.id %]">Mappings</a> - 
                                 <a href="[% BASE_URL %]&controller=fields&action=add_form&import_id=[% i.id %]">Fields</a> - 
                                 <a href="[% BASE_URL %]&controller=defaultValues&action=add_form&import_id=[% i.id %]">Default values</a>
                             </li>

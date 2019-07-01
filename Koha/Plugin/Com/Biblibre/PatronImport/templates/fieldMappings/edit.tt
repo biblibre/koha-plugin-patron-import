@@ -1,0 +1,178 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+    function clean_line( line ) {
+        $(line).find('input[type="text"]').val("");
+        $(line).find('select').find('option:first').attr("selected", "selected");
+    }
+
+    function clone_line( line ) {
+        var new_line = $(line).clone();
+        $(new_line).find('td:last-child>a').removeClass("add").addClass("delete").html(_("Delete"));
+        $(new_line).find('[data-id]').each( function() {
+            $(this).attr({ name: $(this).attr('data-id') }).removeAttr('data-id');
+        } );
+        $(new_line).find("select").each( function() {
+            var attr = $(this).attr('name');
+            var val = $(line).find('[data-id="' + attr + '"]').val();
+            $(this).find('option[value="' + val + '"]').attr("selected", "selected");
+        } );
+        return new_line;
+    }
+
+    $(document).ready(function() {
+        $('.add').click(function() {
+            var line = $(this).closest("tr");
+            var source_field = $(line).find('input[data-id="source_field"]').val();
+            if ( source_field.length > 0 ) {
+                var new_line = clone_line( line );
+                new_line.appendTo($('table#field_mappings>tbody'));
+                clean_line(line);
+
+                $('.delete').click(function() {
+                    $(this).parents('tr').remove();
+                });
+            }
+        });
+
+        $('.delete').click(function() {
+            $(this).parents('tr').remove();
+        });
+
+        $('.add_match').click(function() {
+
+            var line = $(this).closest("li");
+            val = line.find('select').val();
+
+            exists = false;
+            $('input[name="matching_points"]').each(function() {
+                if ($(this).val() == val) {
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                li = $('<li>').addClass('list-group-item').html(val + ' ');
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'matching_points',
+                    value: val
+                }).appendTo(li);
+
+                a = $('<a>').addClass('btn btn-default btn-xs delete_match');
+                i = $('<i>').addClass('fa fa-trash');
+                i.appendTo(a);
+                a.find('i').after(' Delete');
+                a.appendTo(li);
+
+                li.appendTo('#matching_points');
+            }
+        });
+
+        $(document).on('click', '.delete_match', function() {
+            var line = $(this).closest("li");
+            line.remove();
+        });
+    });
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+Mappings</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> Field mappings</h2>
+                [% IF error %]
+                    <div class="alert alert-danger" role="alert">
+                        Oops. An error occurs while saving your mappings.
+                    </div>
+                [% END %]
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="op" value="save"/>
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+
+                    <div>
+                        <table id="field_mappings">
+                            <thead>
+                                <tr>
+                                    <td>Source field</td>
+                                    <td>Koha field</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" data-id="source_field"/></td>
+                                    <td>
+                                        <select data-id="koha_field">
+                                            [% FOREACH column IN columns %]
+                                                <option value="[% column.code %]">[% column.description %]</option>
+                                            [% END %]
+                                        </select>
+                                    </td>
+                                    <td><a class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
+                                </tr>
+
+                                [% FOREACH mapping IN mappings %]
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="source_field" value="[% mapping.source %]"/>
+                                            [% mapping.source %]
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="koha_field" value="[% mapping.destination %]"/>
+                                            [% mapping.destination %]
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-default btn-xs" href="[% BASE_URL %]&controller=fieldMappings&action=add_values_form&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.count %])</a>
+                                            <a class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                [% END %]
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <h2>Matching points</h2>
+                        <ul class="list-group" id="matching_points">
+                            <li class="list-group-item">
+                                <select data-id="koha_field">
+                                    [% FOREACH column IN columns %]
+                                        <option value="[% column.code %]">[% column.description %]</option>
+                                    [% END %]
+                                </select>
+                                <a class="btn btn-default btn-xs add_match"><i class="fa fa-plus"></i> Add</a>
+                            </li>
+                            [% FOREACH mp IN matching_points %]
+                                <li class="list-group-item">
+                                    [% mp.field %]
+                                    <input type="hidden" name="matching_points" value="[% mp.field %]"/>
+                                    <a class="btn btn-default btn-xs delete_match"><i class="fa fa-trash"></i> Delete</a>
+                                </li>
+                            [% END %]
+                        </ul>
+                    </div>
+                    <button class="btn btn-default" type="submit" name="op" value="edit"><i class="fa fa-hdd-o" aria-hidden="true"></i> Save</button>
+                </form>
+
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]

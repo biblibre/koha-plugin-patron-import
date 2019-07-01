@@ -30,6 +30,9 @@ sub new {
 
     $self->{import_table}  = $self->get_qualified_table_name('import');
     $self->{runs_table}  = $self->get_qualified_table_name('runs');
+    $self->{field_mappings_table}  = $self->get_qualified_table_name('field_mappings');
+    $self->{value_mappings_table}  = $self->get_qualified_table_name('value_mappings');
+    $self->{matching_points_table}  = $self->get_qualified_table_name('matching_points');
 
     return $self;
 }
@@ -53,6 +56,13 @@ sub deleteimport {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import::delete($self, $args);
+}
+
+sub editfieldmappings {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::edit($self, $args);
 }
 
 sub install {
