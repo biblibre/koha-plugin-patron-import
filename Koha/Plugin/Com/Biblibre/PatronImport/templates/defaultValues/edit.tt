@@ -1,0 +1,91 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<style>
+#add-form {
+  margin-bottom: 15px;
+}
+
+#del-form {
+  margin-bottom: 5px;
+}
+</style>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+Default values</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> Default values</h2>
+                [% IF error %]
+                    <div class="alert alert-danger" role="alert">
+                        [% error %]
+                    </div>
+                [% END %]
+
+                <div id="add-form">
+                    <form class="form-inline" method="POST">
+                        <input type="hidden" name="class" value="[% CLASS %]"/>
+                        <input type="hidden" name="method" value="[% METHOD %]"/>
+                        <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
+                        <input type="hidden" name="action" value="add_form"/>
+                        <input type="hidden" name="op" value="save"/>
+                        <input type="hidden" name="import_id" value="[% import_id %]"/>
+
+                        <div class="form-group">
+                            <label for="koha_field">Koha field</label>
+                            <select name="koha_field">
+                                [% FOREACH column IN columns %]
+                                    <option value="[% column.code %]">[% column.description %]</option>
+                                [% END %]
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="value">Default value</label>
+                            <input type="text" id="value" name="value">
+                        </div>
+                        <button type="submit" class="btn btn-xs">add</button>
+                    </form>
+                </div>
+
+                    [% FOREACH d IN defaults %]
+                        <div id="del-form">
+                            <form class="form-inline" method="POST">
+                                <input type="hidden" name="class" value="[% CLASS %]"/>
+                                <input type="hidden" name="method" value="[% METHOD %]"/>
+                                <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
+                                <input type="hidden" name="action" value="add_form"/>
+                                <input type="hidden" name="op" value="delete"/>
+                                <input type="hidden" name="import_id" value="[% import_id %]"/>
+                                <input type="hidden" name="koha_field" value="[% d.koha_field %]"/>
+
+                                <div class="form-group">
+                                    <label for="koha_field">Koha field</label>
+                                    <input type="text" name="koha_field" value="[% d.koha_field %]" disabled/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="value">Default value</label>
+                                    <input type="text" name="value" value="[% d.value %]" disabled/>
+                                </div>
+                                <button type="submit" class="btn btn-xs">delete</button>
+                            </form>
+                        </div>
+                    [% END %]
+
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
