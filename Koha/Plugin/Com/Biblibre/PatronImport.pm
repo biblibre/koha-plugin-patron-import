@@ -33,6 +33,8 @@ sub new {
     $self->{field_mappings_table}  = $self->get_qualified_table_name('field_mappings');
     $self->{value_mappings_table}  = $self->get_qualified_table_name('value_mappings');
     $self->{matching_points_table}  = $self->get_qualified_table_name('matching_points');
+    $self->{protected_table}  = $self->get_qualified_table_name('protected');
+    $self->{erasables_table}  = $self->get_qualified_table_name('erasables');
 
     return $self;
 }
@@ -70,6 +72,13 @@ sub editvaluemappings {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::editvalues($self, $args);
+}
+
+sub editprotected {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::editprotected($self, $args);
 }
 
 sub install {

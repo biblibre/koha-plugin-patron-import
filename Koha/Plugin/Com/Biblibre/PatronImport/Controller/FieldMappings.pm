@@ -99,11 +99,12 @@ sub editvalues {
 
     my $import_id = $cgi->param('import_id');
     my $destination = $cgi->param('destination');
-    my $op = $cgi->param('op');
+    my $op = $cgi->param('op') || '';
 
     if ( $op eq 'save' ) {
         my @input_values = $cgi->param('input');
         my @output_values = $cgi->param('output');
+        my $is_error = 0;
         eval {
             Delete($plugin->{value_mappings_table},
                 { import_id => $import_id, destination => $destination });
@@ -124,12 +125,13 @@ sub editvalues {
         };
         if ( $@ ) {
             $template->param( error => $@ );
-            print $cgi->header();
-            print $template->output();
+            $is_error = 1;
+        }
+
+        unless ( $is_error ) {
+            print $cgi->redirect("/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editfieldmappings&import_id=$import_id");
             return;
         }
-        my $url = "/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editfieldmappings&import_id=$import_id";
-        print $cgi->redirect($url);
     }
 
     my $mappings = GetFromTable($plugin->{value_mappings_table},
@@ -139,6 +141,83 @@ sub editvalues {
         import_id => $import_id,
         mappings => $mappings,
         destination => $destination
+    );
+
+    print $cgi->header();
+    print $template->output();
+}
+
+sub editprotected {
+    my ($plugin, $params) = @_;
+    my $cgi = $plugin->{cgi};
+
+    my $template = $plugin->get_template({ file => 'templates/fieldMappings/editprotected.tt' });
+
+    my $import_id = $cgi->param('import_id');
+    my $op = $cgi->param('op') || '';
+
+    if ( $op eq 'save' ) {
+        # Save protected fields.
+        my @protected = $cgi->multi_param('protected');
+        my $is_error = 0;
+        eval {
+            Delete($plugin->{protected_table}, { import_id => $import_id });
+
+            foreach my $p ( @protected ) {
+                InsertInTable(
+                    $plugin->{protected_table},
+                    {
+                        import_id => $import_id,
+                        field => $p
+                    }
+                );
+            }
+        };
+        if ( $@ ) {
+            $template->param( error => $@ );
+            $is_error = 1;
+        }
+
+        # Save erasable fields.
+        my @erasables = $cgi->multi_param('erasable');
+        eval {
+            Delete($plugin->{erasables_table},
+                { import_id => $import_id });
+
+            foreach my $e ( @erasables ) {
+                InsertInTable(
+                    $plugin->{erasables_table},
+                    {
+                        import_id => $import_id,
+                        field => $e
+                    }
+                );
+            }
+        };
+        if ( $@ ) {
+            $template->param( error => $@ );
+            $is_error = 1;
+        }
+
+        unless ( $is_error ) {
+            print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
+            return;
+        }
+    }
+
+    my $protectables = PatronFields(1);
+    my $erasables = PatronFields(0);
+    my $protected = GetFromTable($plugin->{protected_table},
+        { import_id => $import_id});
+    my $erased = GetFromTable($plugin->{erasables_table},
+        { import_id => $import_id});
+
+    $template->param(
+        import_id => $import_id,
+        protectables => $protectables,
+        erasables => $erasables,
+        protected => $protected,
+        erased => $erased
     );
 
     print $cgi->header();

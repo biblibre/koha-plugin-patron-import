@@ -1,0 +1,151 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.add_protected').click(function() {
+
+            var line = $(this).closest("li");
+            val = line.find('select').val();
+
+            exists = false;
+            $('input[name="protected"]').each(function() {
+                if ($(this).val() == val) {
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                li = $('<li>').addClass('list-group-item').html(val + ' ');
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'protected',
+                    value: val
+                }).appendTo(li);
+
+                a = $('<a>').addClass('btn btn-default btn-xs delete');
+                i = $('<i>').addClass('fa fa-trash');
+                i.appendTo(a);
+                a.find('i').after(' Delete');
+                a.appendTo(li);
+
+                li.appendTo('#protected');
+            }
+        });
+
+        $('.add_erasable').click(function() {
+
+            var line = $(this).closest("li");
+            val = line.find('select').val();
+
+            exists = false;
+            $('input[name="erasable"]').each(function() {
+                if ($(this).val() == val) {
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                li = $('<li>').addClass('list-group-item').html(val + ' ');
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'erasable',
+                    value: val
+                }).appendTo(li);
+
+                a = $('<a>').addClass('btn btn-default btn-xs delete');
+                i = $('<i>').addClass('fa fa-trash');
+                i.appendTo(a);
+                a.find('i').after(' Delete');
+                a.appendTo(li);
+
+                li.appendTo('#erasables');
+            }
+        });
+
+        $(document).on('click', '.delete', function() {
+            var line = $(this).closest("li");
+            line.remove();
+        });
+    });
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+Protected/erasables</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                [% IF error %]
+                    <div class="alert alert-danger" role="alert">
+                        Oops. An error occurs while saving your mappings.
+                    </div>
+                [% END %]
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
+                    <input type="hidden" name="action" value="add_form"/>
+                    <input type="hidden" name="op" value="save"/>
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+
+                    <div>
+                        <h2>Protected</h2>
+                        <ul class="list-group" id="protected">
+                            <li class="list-group-item">
+                                <select data-id="koha_field">
+                                    [% FOREACH p IN protectables %]
+                                        <option value="[% p.code %]">[% p.description %]</option>
+                                    [% END %]
+                                </select>
+                                <a class="btn btn-default btn-xs add_protected"><i class="fa fa-plus"></i> Add</a>
+                            </li>
+                            [% FOREACH p IN protected %]
+                                <li class="list-group-item">
+                                    [% p.field %]
+                                    <input type="hidden" name="protected" value="[% p.field %]"/>
+                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                </li>
+                            [% END %]
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2>Erasable</h2>
+                        <ul class="list-group" id="erasables">
+                            <li class="list-group-item">
+                                <select data-id="koha_field">
+                                    [% FOREACH e IN erasables %]
+                                        <option value="[% e.code %]">[% e.description %]</option>
+                                    [% END %]
+                                </select>
+                                <a class="btn btn-default btn-xs add_erasable"><i class="fa fa-plus"></i> Add</a>
+                            </li>
+                            [% FOREACH e IN erased %]
+                                <li class="list-group-item">
+                                    [% e.field %]
+                                    <input type="hidden" name="erasable" value="[% e.field %]"/>
+                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                </li>
+                            [% END %]
+                        </ul>
+                    </div>
+                    <button class="btn btn-default" type="submit" name="op" value="edit"><i class="fa fa-hdd-o" aria-hidden="true"></i> Save</button>
+                </form>
+
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
