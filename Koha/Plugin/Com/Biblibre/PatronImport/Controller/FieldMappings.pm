@@ -91,4 +91,58 @@ sub edit {
     print $template->output();
 }
 
+sub editvalues {
+    my ($plugin, $params) = @_;
+    my $cgi = $plugin->{cgi};
+
+    my $template = $plugin->get_template({ file => 'templates/fieldMappings/editvalues.tt' });
+
+    my $import_id = $cgi->param('import_id');
+    my $destination = $cgi->param('destination');
+    my $op = $cgi->param('op');
+
+    if ( $op eq 'save' ) {
+        my @input_values = $cgi->param('input');
+        my @output_values = $cgi->param('output');
+        eval {
+            Delete($plugin->{value_mappings_table},
+                { import_id => $import_id, destination => $destination });
+            for my $i ( 0 .. scalar(@input_values) - 1 ) {
+                my $input_value = $input_values[$i];
+                my $output_value = $output_values[$i];
+
+                InsertInTable(
+                    $plugin->{value_mappings_table},
+                    {
+                        import_id => $import_id,
+                        destination => $destination,
+                        input => $input_value,
+                        output => $output_value
+                    }
+                );
+            }
+        };
+        if ( $@ ) {
+            $template->param( error => $@ );
+            print $cgi->header();
+            print $template->output();
+            return;
+        }
+        my $url = "/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editfieldmappings&import_id=$import_id";
+        print $cgi->redirect($url);
+    }
+
+    my $mappings = GetFromTable($plugin->{value_mappings_table},
+        { import_id => $import_id, destination => $destination });
+
+    $template->param(
+        import_id => $import_id,
+        mappings => $mappings,
+        destination => $destination
+    );
+
+    print $cgi->header();
+    print $template->output();
+}
+
 1;

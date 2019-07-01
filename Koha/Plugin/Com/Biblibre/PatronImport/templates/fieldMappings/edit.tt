@@ -84,7 +84,7 @@
 <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
 <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
-Mappings</div>
+Field mappings</div>
 
 <div id="doc3" class="yui-t1">
     <div id="bd">
@@ -136,7 +136,7 @@ Mappings</div>
                                             [% mapping.destination %]
                                         </td>
                                         <td>
-                                            <a class="btn btn-default btn-xs" href="[% BASE_URL %]&controller=fieldMappings&action=add_values_form&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.count %])</a>
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editvaluemappings&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.count %])</a>
                                             <a class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
                                     </tr>

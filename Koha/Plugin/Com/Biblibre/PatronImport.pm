@@ -65,6 +65,13 @@ sub editfieldmappings {
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::edit($self, $args);
 }
 
+sub editvaluemappings {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::editvalues($self, $args);
+}
+
 sub install {
     my ( $self, $args ) = @_;
 
