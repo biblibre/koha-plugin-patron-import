@@ -6,10 +6,10 @@ use C4::Context;
 use C4::Members;
 use Koha::Patron;
 use Koha::Patrons;
+use Koha::Patron::Attribute::Types;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( :DEFAULT );
-use Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::ExtendedAttributes;
 
 sub new {
     my $class = shift;
@@ -96,6 +96,32 @@ sub addXattributes {
         }
     }
 }
+
+sub is_xattr {
+    my $xattr = shift;
+
+    my $attribute_type = Koha::Patron::Attribute::Types->find($xattr);
+
+    if ( $attribute_type ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+sub xattr_to_protect {
+    my ( $borrowernumber, $attr_code ) = @_;
+
+    my $dbh = C4::Context->dbh;
+    my $query = "SELECT attribute FROM borrower_attributes WHERE borrowernumber=? AND code=?";
+    my $sth = $dbh->prepare($query);
+    $sth->execute($borrowernumber, $attr_code);
+    my $result = $sth->fetchrow_array;
+
+    return 1 if is_set($result);
+    return 0;
+}
+
 
 sub Xattributes {
     my ($this, $attributes) = @_;

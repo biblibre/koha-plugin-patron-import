@@ -43,6 +43,8 @@ sub _load_db_conf {
     $conf->{matchingpoint} = _load_matching_points($import_id);
     $conf->{default} = _load_default($import_id);
     $conf->{setup} = _load_setup($import_id);
+    $conf->{protected} = _load_protected($import_id);
+    $conf->{erasable} = _load_erasables($import_id);
 
     return $conf;
 }
@@ -132,6 +134,36 @@ sub _load_setup {
     $setup->{'flow-type'} = $values->{type};
 
     return $setup;
+}
+
+sub  _load_protected {
+    my $import_id = shift;
+    my $table = $tables->{protected_table};
+
+    my $dbh = C4::Context->dbh;
+    my $sth = $dbh->prepare("SELECT field FROM $table WHERE import_id = ?");
+    $sth->execute($import_id);
+    my $protected = [];
+    while (my ($field) = $sth->fetchrow_array()) {
+        push @$protected, $field;
+    }
+
+    return $protected;
+}
+
+sub  _load_erasables {
+    my $import_id = shift;
+    my $table = $tables->{erasables_table};
+
+    my $dbh = C4::Context->dbh;
+    my $sth = $dbh->prepare("SELECT field FROM $table WHERE import_id = ?");
+    $sth->execute($import_id);
+    my $protected = [];
+    while (my ($field) = $sth->fetchrow_array()) {
+        push @$protected, $field;
+    }
+
+    return $protected;
 }
 
 sub _get_table_values {
