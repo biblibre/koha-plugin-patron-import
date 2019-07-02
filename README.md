@@ -1,13 +1,13 @@
 # Koha's patron import plugin
 
-This plugin is intened to create and configure regular patron imports
+This plugin is intended to create and configure regular patron imports
 
 # Cronjob
 
-Le cronjob doit être lancé quotidiennement, de préférence la nuit
-pour ne pas gêner l'utilisation normale de Koha.
+Cronjob should be executed daily, preferably at night to prevent 
+interfere with Koha's normal use.
 
-Exemple:
+Example:
 
 ```
 PERL5LIB=/path/to/koha
