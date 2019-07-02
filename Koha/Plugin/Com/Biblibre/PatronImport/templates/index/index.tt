@@ -38,7 +38,7 @@
                                     [% i.last_run %]
                                     [% IF i.last_run_id %]
                                         ( run #[% i.last_run_id %])
-                                        <a href="[% BASE_URL %]&controller=runs&import_id=[% i.id %]">Show all runs</a>
+                                        <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=[% i.id %]">Show all runs</a>
                                     [% END %]
                                 </span>
                             </li>

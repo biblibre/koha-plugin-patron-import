@@ -111,6 +111,34 @@ sub editdefault {
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::DefaultValues::edit($self, $args);
 }
 
+sub showruns {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::index($self, $args);
+}
+
+sub rundetails {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::details($self, $args);
+}
+
+sub runlogs {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::logs($self, $args);
+}
+
+sub rundelete {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::delete($self, $args);
+}
+
 sub install {
     my ( $self, $args ) = @_;
 

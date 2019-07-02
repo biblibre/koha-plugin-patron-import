@@ -1,0 +1,74 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<style>
+#table {
+max-width: 45%;
+}
+</style>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs">
+<a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+View runs</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> Runs for import #[% import_id %]</h2>
+
+                <div id="table">
+                    <table id="runs" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th colspan="2">Dates</th>
+                                <th colspan="5">Borrowers processed</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>#id</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>New</th>
+                                <th>Updated</th>
+                                <th>Skipped</th>
+                                <th>Error</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            [% FOREACH run IN runs %]
+                                <tr>
+                                    <td>#[% run.id %]</td>
+                                    <td>[% run.start %]</td>
+                                    <td>[% run.end %]</td>
+                                    <td>[% run.new %]</td>
+                                    <td>[% run.updated %]</td>
+                                    <td>[% run.skipped %]</td>
+                                    <td>[% run.error %]</td>
+                                    <td><strong>[% run.total %]</strong></td>
+                                    <td>
+                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundetails&id=[% run.id %]">Details</a> 
+                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=runlogs&id=[% run.id %]">Logs</a> 
+                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundelete&id=[% run.id %]">Delete</a> 
+                                    </td>
+                                </tr>
+                            [% END %]
+                        </tbody>
+                    </table>
+                </div> <!-- table -->
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
