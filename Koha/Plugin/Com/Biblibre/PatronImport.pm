@@ -2,6 +2,7 @@ package Koha::Plugin::Com::Biblibre::PatronImport;
 
 use Modern::Perl;
 
+use C4::Context;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 use base qw(Koha::Plugins::Base);
@@ -30,12 +31,33 @@ sub new {
 
     $self->{import_table}  = $self->get_qualified_table_name('import');
     $self->{runs_table}  = $self->get_qualified_table_name('runs');
+    $self->{run_stats_table}  = $self->get_qualified_table_name('run_stats');
+    $self->{run_logs_table}  = $self->get_qualified_table_name('run_logs');
     $self->{field_mappings_table}  = $self->get_qualified_table_name('field_mappings');
     $self->{value_mappings_table}  = $self->get_qualified_table_name('value_mappings');
     $self->{matching_points_table}  = $self->get_qualified_table_name('matching_points');
     $self->{protected_table}  = $self->get_qualified_table_name('protected');
     $self->{erasables_table}  = $self->get_qualified_table_name('erasables');
     $self->{default_values_table}  = $self->get_qualified_table_name('default_values');
+
+    # Used by PatronImport/cron/run-import.pl
+    if ( $args->{import_id} ) {
+        use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config;
+        use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger;
+        use Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File::CSV;
+
+        my $import_id = $args->{import_id};
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config::load_conf($import_id);
+        my $config = get_conf();
+
+        my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger->new($import_id);
+
+        $self->{id} = $import_id;
+        $self->{from} = $args->{from};
+        $self->{'dry-run'} = $args->{dry_run};
+        $self->{config} = $config;
+        $self->{logger} = $logger;
+    }
 
     return $self;
 }
@@ -215,6 +237,55 @@ sub install {
             CONSTRAINT import_default_values_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
+}
+
+sub run_import {
+    my ( $self ) = @_;
+
+    $self->{logger}->InitRun();
+
+    $self->_disable_borrowers_logs;
+
+    my $borrowers = $self->_load_borrowers;
+    while ( my $borrower = $borrowers->next ) {
+        $borrower->to_koha($self);
+
+        $self->{logger}->Extractstats( $borrower );
+    }
+
+    $self->_enable_borrowers_logs;
+
+    $self->{logger}->Stop;
+}
+
+sub _disable_borrowers_logs {
+    my ( $self ) = @_;
+
+    $self->{BorrowersLog} = C4::Context->preference('BorrowersLog');
+
+    C4::Context->set_preference( 'BorrowersLog', 0 );
+}
+
+sub _enable_borrowers_logs {
+    my ( $self ) = @_;
+
+    C4::Context->set_preference( 'BorrowersLog', $self->{BorrowersLog} );
+}
+
+sub _load_borrowers {
+    my ( $self ) = @_;
+
+    my $source = $self->{config}{setup}{'flow-type'};
+
+    if ( $source eq 'file-csv' ) {
+        return Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File::CSV->in($self);
+    }
+
+    if ( $source eq 'ldap' ) {
+        return KohaPatron::Ldap->in($self);
+    }
+
+    die "Unknown source type \"$source\"";
 }
 
 1;
