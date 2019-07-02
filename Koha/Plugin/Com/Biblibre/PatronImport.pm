@@ -44,7 +44,7 @@ sub new {
     if ( $args->{import_id} ) {
         use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config;
         use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger;
-        use Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File::CSV;
+        use Koha::Plugin::Com::Biblibre::PatronImport::Source;
 
         my $import_id = $args->{import_id};
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config::load_conf($import_id);
@@ -274,8 +274,8 @@ sub run_import {
 
     $self->_disable_borrowers_logs;
 
-    my $borrowers = $self->_load_borrowers;
-    while ( my $borrower = $borrowers->next ) {
+    my $source = Koha::Plugin::Com::Biblibre::PatronImport::Source->new( $self );
+    while ( my $borrower = $source->next ) {
         $borrower->to_koha($self);
 
         $self->{logger}->Extractstats( $borrower );
@@ -298,22 +298,6 @@ sub _enable_borrowers_logs {
     my ( $self ) = @_;
 
     C4::Context->set_preference( 'BorrowersLog', $self->{BorrowersLog} );
-}
-
-sub _load_borrowers {
-    my ( $self ) = @_;
-
-    my $source = $self->{config}{setup}{'flow-type'};
-
-    if ( $source eq 'file-csv' ) {
-        return Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File::CSV->in($self);
-    }
-
-    if ( $source eq 'ldap' ) {
-        return KohaPatron::Ldap->in($self);
-    }
-
-    die "Unknown source type \"$source\"";
 }
 
 1;

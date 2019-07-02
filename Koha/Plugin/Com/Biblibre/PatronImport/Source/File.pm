@@ -1,4 +1,4 @@
-package Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File;
+package Koha::Plugin::Com::Biblibre::PatronImport::Source::File;
 
 use Modern::Perl;
 use Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron;

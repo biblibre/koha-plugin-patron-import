@@ -1,7 +1,6 @@
-package KohaPatron::Ldap;
+package Koha::Plugin::Com::Biblibre::PatronImport::Source::Ldap;
 
 use Modern::Perl;
-use KohaPatron;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Mapping;
@@ -77,8 +76,8 @@ sub unbless_entry {
     my $data;
     my @attributes = $entry->attributes();
     foreach my $attribute (@attributes) {
-	my $value = $entry->get_value($attribute);
-	$data->{$attribute} = $value || '';
+        my $value = $entry->get_value($attribute);
+        $data->{$attribute} = $value || '';
     }
 
     return $data;

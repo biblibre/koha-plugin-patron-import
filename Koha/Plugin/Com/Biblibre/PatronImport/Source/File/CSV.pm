@@ -1,9 +1,9 @@
-package Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File::CSV;
+package Koha::Plugin::Com::Biblibre::PatronImport::Source::File::CSV;
 
 use Modern::Perl;
-use Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File;
+use Koha::Plugin::Com::Biblibre::PatronImport::Source::File;
 use Text::CSV;
-use vars qw( @ISA ); @ISA = qw( Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron::File );
+use vars qw( @ISA ); @ISA = qw( Koha::Plugin::Com::Biblibre::PatronImport::Source::File );
 
 sub _next {
     my $self = shift;

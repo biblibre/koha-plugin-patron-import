@@ -1,8 +1,8 @@
-package KohaPatron::File::XML;
+package Koha::Plugin::Com::Biblibre::PatronImport::Source::File::XML;
 
-use KohaPatron::File;
+use Koha::Plugin::Com::Biblibre::PatronImport::Source::File;
 use XML::Simple;
-use vars qw( @ISA ); @ISA = qw( KohaPatron::File );
+use vars qw( @ISA ); @ISA = qw( Koha::Plugin::Com::Biblibre::PatronImport::Source::File );
 
 sub _next {
     my $this = shift;
