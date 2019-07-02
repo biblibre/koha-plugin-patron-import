@@ -35,8 +35,6 @@ Run logs</div>
                     <form class="form-inline" method="POST">
                         <input type="hidden" name="class" value="[% CLASS %]"/>
                         <input type="hidden" name="method" value="[% METHOD %]"/>
-                        <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
-                        <input type="hidden" name="action" value="logs"/>
                         <input type="hidden" name="op" value="filter"/>
                         <input type="hidden" name="id" value="[% id %]"/>
                         <div class="checkbox">

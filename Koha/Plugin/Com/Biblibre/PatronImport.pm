@@ -139,6 +139,13 @@ sub rundelete {
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::delete($self, $args);
 }
 
+sub rundeletebatch {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::batchdelete($self, $args);
+}
+
 sub install {
     my ( $self, $args ) = @_;
 

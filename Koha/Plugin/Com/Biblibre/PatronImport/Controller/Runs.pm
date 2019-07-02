@@ -160,4 +160,17 @@ sub delete {
     print $template->output();
 }
 
+sub batchdelete {
+    my ( $plugin, $params ) = @_;
+    my $cgi = $plugin->{'cgi'};
+
+    my $import_id = $cgi->param('import_id');
+    my @ids = $cgi->multi_param('delete');
+    foreach my $id ( @ids ) {
+        Delete( $plugin->{runs_table}, { id => $id } );
+    }
+
+    print $cgi->redirect("/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=$import_id");
+}
+
 1;

@@ -1,10 +1,25 @@
 [% INCLUDE 'doc-head-open.inc' %]
 <title>Configure Koha patron imports</title>
 [% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#selectall").on("click",function() {
+            $(".delete").prop("checked", true);
+            return false;
+        });
+        $("#selectnone").on("click",function() {
+            $(".delete").prop("checked", false);
+            return false;
+        });
+    });
+</script>
 <style>
-#table {
-max-width: 45%;
-}
+    #table {
+        max-width: 55%;
+    }
+    #toolbar {
+        margin-bottom: 25px;
+    }
 </style>
 </head>
 <body>
@@ -22,47 +37,58 @@ View runs</div>
             <div class="yui-b">
                 <h2> Runs for import #[% import_id %]</h2>
 
-                <div id="table">
-                    <table id="runs" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th colspan="2">Dates</th>
-                                <th colspan="5">Borrowers processed</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th>#id</th>
-                                <th>Start</th>
-                                <th>End</th>
-                                <th>New</th>
-                                <th>Updated</th>
-                                <th>Skipped</th>
-                                <th>Error</th>
-                                <th>Total</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            [% FOREACH run IN runs %]
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="rundeletebatch"/>
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+                    <div id="toolbar" class="btn-toolbar">
+                        <input class="btn btn-default" type="submit" value="Delete selected">
+                    </div>
+
+                    <div id="table">
+                        <table id="runs" class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>#[% run.id %]</td>
-                                    <td>[% run.start %]</td>
-                                    <td>[% run.end %]</td>
-                                    <td>[% run.new %]</td>
-                                    <td>[% run.updated %]</td>
-                                    <td>[% run.skipped %]</td>
-                                    <td>[% run.error %]</td>
-                                    <td><strong>[% run.total %]</strong></td>
-                                    <td>
-                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundetails&id=[% run.id %]">Details</a> 
-                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=runlogs&id=[% run.id %]">Logs</a> 
-                                        <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundelete&id=[% run.id %]">Delete</a> 
-                                    </td>
+                                    <th></th>
+                                    <th colspan="2">Dates</th>
+                                    <th colspan="5">Borrowers processed</th>
+                                    <th colspan="2">Actions</th>
                                 </tr>
-                            [% END %]
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <th>#id</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>New</th>
+                                    <th>Updated</th>
+                                    <th>Skipped</th>
+                                    <th>Error</th>
+                                    <th>Total</th>
+                                    <th>Show</th>
+                                    <th><a href="#" id="selectall">Select all</a> | <a href="#" id="selectnone">none</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                [% FOREACH run IN runs %]
+                                    <tr>
+                                        <td>#[% run.id %]</td>
+                                        <td>[% run.start %]</td>
+                                        <td>[% run.end %]</td>
+                                        <td>[% run.new %]</td>
+                                        <td>[% run.updated %]</td>
+                                        <td>[% run.skipped %]</td>
+                                        <td>[% run.error %]</td>
+                                        <td><strong>[% run.total %]</strong></td>
+                                        <td>
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundetails&id=[% run.id %]">Details</a> 
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=runlogs&id=[% run.id %]">Logs</a> 
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundelete&id=[% run.id %]">Delete</a> 
+                                        </td>
+                                        <td><input type="checkbox" name="delete" value="[% run.id %]" class="delete"></td>
+                                    </tr>
+                                [% END %]
+                            </tbody>
+                        </table>
+                    </form>
                 </div> <!-- table -->
             </div> <!-- yui-b -->
         </div> <!-- yui-main -->
