@@ -158,6 +158,7 @@ sub install {
             name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             type varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             createonly tinyint COLLATE utf8_unicode_ci NULL,
+            autocardnumber varchar(20) COLLATE utf8_unicode_ci NULL,
             flow_settings text COLLATE utf8_unicode_ci NULL,
             created_on datetime NOT NULL,
             last_run datetime NOT NULL,

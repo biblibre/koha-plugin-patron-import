@@ -32,11 +32,13 @@ sub edit {
         my $name = $cgi->param('name');
         my $type = $cgi->param('type');
         my $createonly = $cgi->param('createonly') ? 1 : 0;
+        my $autocardnumber = $cgi->param('autocardnumber');
         my $flow_settings = _handle_flow_settings($cgi);
         my $values = {
             name => $name,
             type => $type,
-            createonly =>$createonly,
+            createonly => $createonly,
+            autocardnumber => $autocardnumber,
             flow_settings => $flow_settings
         };
 
@@ -63,6 +65,7 @@ sub edit {
             name => $import->{name},
             type => $import->{type},
             createonly => $import->{createonly},
+            autocardnumber => $import->{autocardnumber},
             %{ $flow_settings }
         );
     }

@@ -68,6 +68,32 @@
                                 [% END %]
                             </li>
 
+                            <li>
+                                <label for="autocardnumber">Auto Cardnumber:</label>
+                                    <select id="autocardnumber" name="autocardnumber">
+                                        [% IF autocardnumber == 'no' %]
+                                            <option value="no" selected="selected">Don't generate</option>
+                                        [% ELSE %]
+                                            <option value="no">Don't generate</option>
+                                        [% END %]
+
+                                        [% IF autocardnumber == 'gen' %]
+                                            <option value="gen" selected="selected">Generate</option>
+                                        [% ELSE %]
+                                            <option value="gen">Generate</option>
+                                        [% END %]
+
+                                        [% IF autocardnumber == 'gen_if_empty' %]
+                                            <option value="gen_if_empty" selected="selected">Generate if empty</option>
+                                        [% ELSE %]
+                                            <option value="gen_if_empty">Generate if empty</option>
+                                        [% END %]
+                                    </select>
+                                <div class="hint">
+                                    Automatically generate a cardnumber (for new patrons only).
+                                </div>
+                            </li>
+
                         </ol>
                     </fieldset>
 

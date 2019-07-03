@@ -141,10 +141,6 @@ sub to_koha {
 
     my $conf = $this->{import}{config};
 
-    # Generate a cardnumber.
-    if ( $conf->{setup}->{autocardnumber} && !$this->{cardnumber} ) {
-        $this->genCardnumber();
-    }
     my %patron = $this->_unbless;
 
     # Make a hash with patron informations. ( Use matchingpoint values ).
@@ -287,6 +283,18 @@ sub to_koha {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_updated', $borrowernumber);
     } else {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_create', [\%patron, $extended_attributes]);
+
+        # Generate a cardnumber.
+        if ( ( $conf->{autocardnumber} eq 'gen_if_empty' && !$this->{cardnumber}) || $conf->{autocardnumber} eq 'gen' ) {
+            $patron{cardnumber} = $this->genCardnumber();
+            $import->{logger}->Add(
+                'info',
+                "Generated a new cardnumber",
+                '',
+                \%patron
+            );
+        }
+
         eval { $borrowernumber = Koha::Patron->new(\%patron)->store->borrowernumber; };
         if ( $@ ) {
             $import->{logger}->Add(
@@ -359,7 +367,7 @@ sub genCardnumber {
     );
     $sth->execute;
     my ($result) = $sth->fetchrow;
-    $this->{cardnumber} = $result + 1;
+    return $result + 1;
 }
 
 sub _clean_xattr {
