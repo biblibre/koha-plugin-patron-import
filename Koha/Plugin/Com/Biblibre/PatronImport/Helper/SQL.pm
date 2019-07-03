@@ -76,7 +76,7 @@ sub Count {
     my $dbh = C4::Context->dbh;
 
     my $query = "SELECT * FROM $table" . _buildQuery($params);
-    $query .= $additional;
+    $query .= $additional || '';
     my $sth = $dbh->prepare($query);
     $sth->execute(_buildParams($params)) or die $sth->errstr;
 
