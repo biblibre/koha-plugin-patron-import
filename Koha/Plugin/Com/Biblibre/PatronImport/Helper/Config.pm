@@ -38,11 +38,14 @@ sub _load_db_conf {
     $tables->{default_values_table} = $plugin->{default_values_table};
 
     my $conf;
+    my ( $setup, $import_settings) = _load_setup($import_id);
+    $conf->{setup} = $setup;
+    $conf->{createonly} = $import_settings->{createonly} || 0;
+
     $conf->{map} = _load_field_mappings($import_id);
     $conf->{valuesmapping} = _load_value_mappings($import_id);
     $conf->{matchingpoint} = _load_matching_points($import_id);
     $conf->{default} = _load_default($import_id);
-    $conf->{setup} = _load_setup($import_id);
     $conf->{protected} = _load_protected($import_id);
     $conf->{erasable} = _load_erasables($import_id);
 
@@ -133,7 +136,7 @@ sub _load_setup {
     $setup->{ $values->{type} } = $settings;
     $setup->{'flow-type'} = $values->{type};
 
-    return $setup;
+    return ($setup, $values);
 }
 
 sub  _load_protected {

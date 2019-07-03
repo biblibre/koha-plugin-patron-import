@@ -217,7 +217,7 @@ sub to_koha {
        return;
     }
 
-    if ($borrowernumber && $conf->{setup}->{createonly}) {
+    if ($borrowernumber && $conf->{createonly}) {
         return 0;
     }
     my $exists = 0;
