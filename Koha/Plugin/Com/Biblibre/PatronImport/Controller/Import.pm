@@ -70,7 +70,7 @@ sub edit {
         );
     }
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -97,7 +97,7 @@ sub delete {
         id => $id
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 

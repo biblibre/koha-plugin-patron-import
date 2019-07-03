@@ -87,7 +87,7 @@ sub edit {
         columns => $columns
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -143,7 +143,7 @@ sub editvalues {
         destination => $destination
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -220,7 +220,7 @@ sub editprotected {
         erased => $erased
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 

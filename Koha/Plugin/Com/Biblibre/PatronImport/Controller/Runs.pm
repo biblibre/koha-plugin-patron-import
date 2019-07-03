@@ -27,7 +27,7 @@ sub index {
         runs => $runs
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -68,7 +68,7 @@ sub details {
         import_id => $runs->[0]->{import_id}
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -129,7 +129,7 @@ sub logs {
         success_checked => $success_checked
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
@@ -156,7 +156,7 @@ sub delete {
         import_id => $runs->[0]->{import_id}
     );
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 

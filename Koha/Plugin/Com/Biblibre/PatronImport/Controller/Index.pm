@@ -30,7 +30,7 @@ sub index {
     }
     $template->param(imports => $imports);
 
-    print $cgi->header();
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
 }
 
