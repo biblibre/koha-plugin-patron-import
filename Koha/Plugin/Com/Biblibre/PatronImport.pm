@@ -275,6 +275,42 @@ sub install {
     ");
 }
 
+sub uninstall {
+    my ( $self, $args ) = @_;
+
+    my $dbh = C4::Context->dbh;
+
+    my $import_table = $self->get_qualified_table_name('import');
+    C4::Context->dbh->do("DROP TABLE $import_table");
+
+    my $runs_table = $self->get_qualified_table_name('runs');
+    C4::Context->dbh->do("DROP TABLE $runs_table");
+
+    my $run_stats_table = $self->get_qualified_table_name('run_stats');
+    C4::Context->dbh->do("DROP TABLE $run_stats_table");
+
+    my $run_logs_table = $self->get_qualified_table_name('run_logs');
+    C4::Context->dbh->do("DROP TABLE $run_logs_table");
+
+    my $field_mappings_table = $self->get_qualified_table_name('field_mappings');
+    C4::Context->dbh->do("DROP TABLE $field_mappings_table");
+
+    my $matching_points_table = $self->get_qualified_table_name('matching_points');
+    C4::Context->dbh->do("DROP TABLE $matching_points_table");
+
+    my $value_mappings_table = $self->get_qualified_table_name('value_mappings');
+    C4::Context->dbh->do("DROP TABLE $value_mappings_table");
+
+    my $protected_table = $self->get_qualified_table_name('protected');
+    C4::Context->dbh->do("DROP TABLE $protected_table");
+
+    my $erasables_table = $self->get_qualified_table_name('erasables');
+    C4::Context->dbh->do("DROP TABLE $erasables_table");
+
+    my $default_values_table = $self->get_qualified_table_name('default_values');
+    C4::Context->dbh->do("DROP TABLE $default_values_table");
+}
+
 sub run_import {
     my ( $self ) = @_;
 
