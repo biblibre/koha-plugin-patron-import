@@ -27,7 +27,7 @@ sub process_mapping {
         = @{$conf}{qw(map valuesmapping)};
 
     # Calling preprocess hook.
-    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('preprocess', [$data, $borrower]);
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_mapping_preprocess', [$data, $borrower]);
 
     # Build reverse mapping : keys are fields in target ($borrower),
     # values are fields in source ($data)
@@ -57,7 +57,7 @@ sub process_mapping {
     }
 
     # Calling postprocess hook.
-    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('postprocess', $borrower);
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_mapping_postprocess', $borrower);
 
     # Map borrower with patron object.
     map_patron_object($patron, $borrower);

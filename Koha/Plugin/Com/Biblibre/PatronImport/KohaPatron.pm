@@ -152,7 +152,8 @@ sub to_koha {
 
     # In addition to 'matchingpoint', a plugin can override patron_info or add
     # values (From extended attributes in exemple).
-    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_info', [\%patron, $patron_info]);
+
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_info', [\%patron, $patron_info]);
 
     # Finally, make a string for logging.
     my $patron_info_str = join(", ", map { "$_: $patron_info->{$_}" } keys %$patron_info);
@@ -258,7 +259,7 @@ sub to_koha {
             }
         }
 
-        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_update', [\%patron, $extended_attributes]);
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_update', [\%patron, $extended_attributes]);
         my $stored_patron = Koha::Patrons->find( $borrowernumber );
         eval { my $success = $stored_patron->set(\%patron)->store; };
         if ( $@ ) {
@@ -280,9 +281,9 @@ sub to_koha {
         );
 
         $this->{'status'} = 'updated';
-        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_updated', $borrowernumber);
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_updated', $borrowernumber);
     } else {
-        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_create', [\%patron, $extended_attributes]);
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_create', [\%patron, $extended_attributes]);
 
         # Generate a cardnumber.
         if ( ( $conf->{autocardnumber} eq 'gen_if_empty' && !$this->{cardnumber}) || $conf->{autocardnumber} eq 'gen' ) {
@@ -315,7 +316,7 @@ sub to_koha {
         );
 
         $this->{'status'} = 'new';
-        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_created', $borrowernumber);
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_created', $borrowernumber);
     }
 
     unless ($borrowernumber) {
@@ -506,7 +507,7 @@ sub _check_branchcode {
 sub to_skip {
     my ($this, $patron) = @_;
 
-    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('to_skip', [$this]);
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_to_skip', [$this]);
 
     if ( defined($this->{skip}) && $this->{skip} ) {
         return 1;
