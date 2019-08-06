@@ -39,6 +39,7 @@ sub new {
     $self->{protected_table}  = $self->get_qualified_table_name('protected');
     $self->{erasables_table}  = $self->get_qualified_table_name('erasables');
     $self->{default_values_table}  = $self->get_qualified_table_name('default_values');
+    $self->{debarments_table} = $self->get_qualified_table_name('debarments');
 
     # Used by PatronImport/cron/run-import.pl
     if ( $args->{import_id} ) {
@@ -144,6 +145,13 @@ sub rundeletebatch {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs::batchdelete($self, $args);
+}
+
+sub editdebarments {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Debarments;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Debarments::edit($self, $args);
 }
 
 sub install {
@@ -271,6 +279,19 @@ sub install {
             value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (import_id, koha_field),
             CONSTRAINT import_default_values_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
+    my $debarments_table = $self->get_qualified_table_name('debarments');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $debarments_table (
+            import_id int(11) NOT NULL,
+            suspend tinyint COLLATE utf8_unicode_ci NOT NULL,
+            comment varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            days int(5) COLLATE utf8_unicode_ci NULL,
+            unlimited tinyint COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (import_id),
+            CONSTRAINT import_debarments_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
 }

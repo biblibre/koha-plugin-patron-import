@@ -7,6 +7,7 @@ use C4::Members;
 use Koha::Patron;
 use Koha::Patrons;
 use Koha::Patron::Attribute::Types;
+use Koha::Patron::Debarments;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( :DEFAULT );
@@ -319,6 +320,25 @@ sub to_koha {
             \%patron
         );
 
+        my $result = $this->add_debarment($borrowernumber);
+        if ( $result eq 'error' ) {
+            $import->{logger}->Add(
+                'error',
+                "Unable to add debarment for this patron",
+                $borrowernumber,
+                \%patron
+            );
+        }
+
+        if ( $result eq 'ok' ) {
+            $import->{logger}->Add(
+                'info',
+                "Debarment added",
+                $borrowernumber,
+                \%patron
+            );
+        }
+
         $this->{'status'} = 'new';
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_created', $borrowernumber);
     }
@@ -337,6 +357,29 @@ sub to_koha {
     }
 
     $borrowernumber;
+}
+
+sub add_debarment {
+    my ($self, $borrowernumber) = @_;
+
+    my $debarment_conf = $self->{import}{config}{debarments};
+
+    if ( $debarment_conf->{suspend} ) {
+        eval { AddDebarment(
+                {   borrowernumber => $borrowernumber,
+                    type           => 'MANUAL',
+                    comment        => $debarment_conf->{'comment'},
+                    expiration     => $debarment_conf->{expiration},
+                }
+            );
+        };
+
+        if ( $@ ) {
+            return 'error';
+        }
+
+        return 'ok';
+    }
 }
 
 sub is_protected {

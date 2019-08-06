@@ -5,6 +5,7 @@ use Exporter;
 use YAML;
 use JSON;
 use C4::Context;
+use DateTime;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::CSVConfig;
 
@@ -36,6 +37,7 @@ sub _load_db_conf {
     $tables->{protected_table} = $plugin->{protected_table};
     $tables->{erasables_table} = $plugin->{erasables_table};
     $tables->{default_values_table} = $plugin->{default_values_table};
+    $tables->{debarments_table} = $plugin->{debarments_table};
 
     my $conf;
     my ( $setup, $import_settings) = _load_setup($import_id);
@@ -49,6 +51,7 @@ sub _load_db_conf {
     $conf->{default} = _load_default($import_id);
     $conf->{protected} = _load_protected($import_id);
     $conf->{erasable} = _load_erasables($import_id);
+    $conf->{debarments} = _load_debarments($import_id);
 
     return $conf;
 }
@@ -168,6 +171,30 @@ sub  _load_erasables {
     }
 
     return $protected;
+}
+
+sub _load_debarments {
+    my $import_id = shift;
+    my $table = $tables->{debarments_table};
+
+    my $dbh = C4::Context->dbh;
+    my $sth = $dbh->prepare("SELECT * FROM $table WHERE import_id = ?");
+    $sth->execute($import_id);
+
+    my $values = $sth->fetchrow_hashref;
+
+    if ( $values->{unlimited} ) {
+        $values->{expiration} = '9999-12-01';
+        return $values;
+    }
+
+    if ( $values->{days} ) {
+        my $today = DateTime->now(time_zone=>'local');
+        $today->add( days => $values->{days} );
+        $values->{expiration} = $today->ymd;
+    }
+
+    return $values;
 }
 
 sub _get_table_values {

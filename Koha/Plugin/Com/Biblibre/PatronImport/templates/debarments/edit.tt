@@ -1,0 +1,112 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript">
+
+    function disable_all() {
+        $('#comment').prop('disabled', true);
+        $('#duration').prop('disabled', true);
+        $('#unlimited').prop('disabled', true);
+    }
+
+    function enable_all() {
+        $('#comment').prop('disabled', false);
+        $('#duration').prop('disabled', false);
+        $('#unlimited').prop('disabled', false);
+    }
+
+    $(document).ready(function() {
+        disable_all();
+        if ( $('#suspend').is(':checked') ) {
+            enable_all();
+        }
+
+        if ( $('#unlimited').is(':checked') ) {
+            $('#duration').prop('disabled', true);
+        }
+
+        $('#suspend').change(function() {
+            if ( $(this).is(':checked') ) {
+                enable_all();
+            }
+            else {
+                disable_all();
+            }
+        });
+
+        $('#unlimited').change(function() {
+            if ( $(this).is(':checked') ) {
+                $('#duration').prop('disabled', true);
+            }
+            else {
+                $('#duration').prop('disabled', false);
+            }
+        });
+    });
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> Configure debarments</h2>
+
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="op" value="save"/>
+
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+
+                    <fieldset>
+                        <label for="suspend">Suspend new patron</label>
+                        [% IF suspend %]
+                            <input id="suspend" name="suspend" type="checkbox" checked="checked"/>
+                        [% ELSE %]
+                            <input id="suspend" name="suspend" type="checkbox"/>
+                        [% END %]
+                        <div class="hint">
+                            If checked, all new (and only new) patron will be debarred with settings below.
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="rows">
+                        <legend>Suspend settings</legend>
+
+                        <ol>
+                            <li>
+                                <label for="comment">Comment :</label>
+                                <input type="text" size="70" value="[% comment %]" id="comment" name="comment"/>
+                            </li>
+
+                            <li>
+                                <label for="duration">Duration (days) :</label>
+                                <input type="text" size="7" value="[% days %]" id="duration" name="duration"/>
+
+                                [% IF unlimited %]
+                                    <input id="unlimited" name="unlimited" type="checkbox" checked="checked"/> no limit
+                                [% ELSE %]
+                                    <input id="unlimited" name="unlimited" type="checkbox"/> no limit
+                                [% END %]
+                            </li>
+                        </ol>
+                    </fieldset>
+
+                    <input type="submit" value="Save"/>
+                </form>
+
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]
