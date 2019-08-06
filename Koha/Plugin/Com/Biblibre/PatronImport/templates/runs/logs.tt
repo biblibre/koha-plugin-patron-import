@@ -103,7 +103,7 @@ Run logs</div>
                                 <td>[% log.message %]</td>
                                 <td>
                                     [% IF log.borrowernumber %]
-                                        <a href="cgi-bin/koha/members/moremember.pl?borrowernumber=[% log.borrowernumber %]">[% log.borrowernumber %]</a>
+                                        <a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=[% log.borrowernumber %]">[% log.borrowernumber %]</a>
                                     [% END %]
                                 </td>
                                 <td>
