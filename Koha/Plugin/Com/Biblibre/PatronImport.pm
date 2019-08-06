@@ -330,6 +330,9 @@ sub uninstall {
 
     my $default_values_table = $self->get_qualified_table_name('default_values');
     C4::Context->dbh->do("DROP TABLE $default_values_table");
+
+    my $debarments_table = $self->get_qualified_table_name('debarments');
+    C4::Context->dbh->do("DROP TABLE $debarments_table");
 }
 
 sub run_import {
