@@ -67,7 +67,7 @@ sub Stop {
     );
 
     my $field_stats = $self->{stats}{fields};
-    foreach my $field ( qw/ branchocodes categorycodes / ) {
+    foreach my $field ( qw/ branchcodes categorycodes / ) {
         foreach my $value ( keys %{ $field_stats->{ $field } } ) {
             InsertInTable(
                 $self->{plugin}{run_stats_table},
@@ -90,7 +90,7 @@ sub Extractstats {
     # The rest of statistics is only for non-skipped patrons.
     return if $borrower->{status} eq 'skipped';
 
-    $self->{stats}{fields}{branchocodes}{ $borrower->{branchcode} || '_UNDEF_' }++;
+    $self->{stats}{fields}{branchcodes}{ $borrower->{branchcode} || '_UNDEF_' }++;
     $self->{stats}{fields}{categorycodes}{ $borrower->{categorycode} || '_UNDEF_' }++;
 
     return $self;
