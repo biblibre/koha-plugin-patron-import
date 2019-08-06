@@ -221,6 +221,10 @@ sub to_koha {
     if ( $borrowernumber ) {
         $exists = 1;
 
+        # Here we keep original patron because some fields
+        # we need in logger could be deleted if protected.
+        my %kept_patron = %patron;
+
         # If patron exists some fields should not be replaced.
         foreach ( @{ $conf->{protected} } ) {
             if ( is_xattr($_) ) {
@@ -268,7 +272,7 @@ sub to_koha {
                 'error',
                 "Fail to update patron: $@",
                 $borrowernumber,
-                \%patron
+                \%kept_patron
             );
             return;
         }
@@ -277,7 +281,7 @@ sub to_koha {
             'success',
             "Patron successfully updated",
             $borrowernumber,
-            \%patron
+            \%kept_patron
         );
 
         $this->{'status'} = 'updated';
