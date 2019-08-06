@@ -30,7 +30,7 @@ sub new {
 sub InitRun {
     my ( $self ) = @_;
 
-    my $now = DateTime->now;
+    my $now = DateTime->now( time_zone => 'local' );
     my $run_id = InsertInTable(
         $self->{plugin}{runs_table},
         {
@@ -51,7 +51,7 @@ sub InitRun {
 sub Stop {
     my ( $self ) = @_;
 
-    my $now = DateTime->now;
+    my $now = DateTime->now( time_zone => 'local' );
     UpdateInTable(
         $self->{plugin}{runs_table},
         {
