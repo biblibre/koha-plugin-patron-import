@@ -25,7 +25,8 @@
         $('.add').click(function() {
             var line = $(this).closest("tr");
             var source_field = $(line).find('input[data-id="source_field"]').val();
-            if ( source_field.length > 0 ) {
+            var koha_field = $(line).find('select[data-id="koha_field"]').val();
+            if ( source_field.length > 0 && koha_field) {
                 var new_line = clone_line( line );
                 new_line.appendTo($('table#field_mappings>tbody'));
                 clean_line(line);
@@ -44,6 +45,10 @@
 
             var line = $(this).closest("li");
             val = line.find('select').val();
+
+            if (!val) {
+                return;
+            }
 
             exists = false;
             $('input[name="matching_points"]').each(function() {
@@ -117,6 +122,7 @@ Field mappings</div>
                                     <td><input type="text" data-id="source_field"/></td>
                                     <td>
                                         <select data-id="koha_field">
+                                            <option value="" selected="selected" disabled="disabled">Select a Koha field</option>
                                             [% FOREACH column IN columns %]
                                                 <option value="[% column.code %]">[% column.description %]</option>
                                             [% END %]
@@ -150,6 +156,7 @@ Field mappings</div>
                         <ul class="list-group" id="matching_points">
                             <li class="list-group-item">
                                 <select data-id="koha_field">
+                                    <option value="" selected="selected" disabled="disabled">Select a matching point</option>
                                     [% FOREACH column IN columns %]
                                         <option value="[% column.code %]">[% column.description %]</option>
                                     [% END %]
