@@ -10,6 +10,7 @@ use Koha::Patron::Attribute::Types;
 use Koha::Patron::Debarments;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( :DEFAULT );
 
 sub new {
@@ -349,6 +350,8 @@ sub to_koha {
     }
 
     $this->{'borrowernumber'} = $borrowernumber;
+
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
 
     if ( $extended_attributes ) {
         foreach my $attribute ( @$extended_attributes ) {
