@@ -423,7 +423,15 @@ sub _clean_xattr {
     my $new_xattr;
 
     foreach my $attr ( @$xattr ) {
-        push @{ $new_xattr }, $attr if is_xattr($attr->{code});
+        if (is_empty($attr->{attribute})) {
+            next;
+        }
+
+        unless (is_xattr($attr->{code})) {
+            next;
+        }
+
+        push @{ $new_xattr }, $attr;
     }
     return $new_xattr;
 }
