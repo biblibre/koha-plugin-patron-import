@@ -11,6 +11,7 @@ sub _next {
     return if eof($fh);
 
     my $config = $self->{import}{config};
+    delete $config->{setup}{'file-csv'}{file_path};
 
     my $csv = Text::CSV->new($config->{setup}->{'file-csv'}) or die "Cannot use CSV: ".Text::CSV->error_diag ();
     unless ( $self->{header} ) {

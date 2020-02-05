@@ -385,6 +385,10 @@ sub run_import {
     $self->_disable_borrowers_logs;
 
     my $source = Koha::Plugin::Com::Biblibre::PatronImport::Source->new( $self );
+    if (my $error = $source->{in}{unable_to_run}) {
+        $self->{logger}->Add('error', "Unable to run this import: $error");
+    }
+
     while ( my $borrower = $source->next ) {
         $borrower->to_koha($self);
 

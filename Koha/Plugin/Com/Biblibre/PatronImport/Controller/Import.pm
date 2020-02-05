@@ -113,6 +113,7 @@ sub _handle_csv {
     my ( $cgi ) = @_;
 
     my $settings = {
+        file_path           => $cgi->param('file_path') || '',
         binary              => $cgi->param('binary') ? 1 : 0,
         eol                 => $cgi->param('eol') || "",
         sep_char            => $cgi->param('sep_char') || "",

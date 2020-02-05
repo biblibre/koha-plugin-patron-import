@@ -102,6 +102,19 @@
 
                         <ol>
                             <li>
+                                <label for="file_path">CSV path (optional) :</label>
+                                [% IF file_path %]
+                                    <input name="file_path" type="text" value="[% file_path %]" size="70"/>
+                                [% ELSE %]
+                                    <input name="file_path" type="text" size="70"/>
+                                [% END %]
+                                <div class="hint">
+                                    Enter here the absolute CSV file path. This will be used <strong>only if it is not passed to the launcher</strong>.<br />
+                                    Possible wildcards are &#60;year&#62;, &#60;month&#62; and &#60;day&#62; which correspond respectively<br />
+                                    to the current year, month and day. Exemple: /home/user/my-app-exports/borrowers_&#60;year&#62;-&#60;month&#62;-&#60;day&#62;.csv
+                                </div>
+                            </li>
+                            <li>
                                 <label for="binary">Binary :</label>
                                 [% IF binary %]
                                     <input name="binary" type="checkbox" checked="checked"/>

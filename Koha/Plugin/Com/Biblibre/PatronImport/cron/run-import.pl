@@ -6,6 +6,7 @@ use Getopt::Long;
 use C4::Context;
 use Koha::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 my ( $from, $import_id, $dry_run );
 GetOptions (
@@ -14,11 +15,27 @@ GetOptions (
     'dry-run' => \$dry_run,
 );
 
-my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new({
-    enable_plugins  => 1,
-    import_id       => $import_id,
-    from            => $from,
-    dry_run         => $dry_run
-});
+if (!$import_id && $from) {
+    print "You can't specify a source (--from|s) without import id (--import-id|i).\n";
+    exit;
+}
 
-$plugin->run_import();
+my $imports_params;
+if ($import_id) {
+    $imports_params->{id} = $import_id;
+}
+
+my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new();
+
+my $imports = GetFromTable($plugin->{import_table}, $imports_params);
+
+foreach my $import ( @$imports ) {
+    $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new({
+        enable_plugins  => 1,
+        import_id       => $import->{id},
+        from            => $from,
+        dry_run         => $dry_run
+    });
+
+    $plugin->run_import();
+}
