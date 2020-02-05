@@ -33,6 +33,7 @@ sub _load_db_conf {
     $tables->{import_table} = $plugin->{import_table};
     $tables->{field_mappings_table} = $plugin->{field_mappings_table};
     $tables->{value_mappings_table} = $plugin->{value_mappings_table};
+    $tables->{transformation_plugins_table} = $plugin->{transformation_plugins_table};
     $tables->{matching_points_table} = $plugin->{matching_points_table};
     $tables->{protected_table} = $plugin->{protected_table};
     $tables->{erasables_table} = $plugin->{erasables_table};
@@ -47,6 +48,7 @@ sub _load_db_conf {
 
     $conf->{map} = _load_field_mappings($import_id);
     $conf->{valuesmapping} = _load_value_mappings($import_id);
+    $conf->{transformationplugins} = _load_transformation_plugins($import_id);
     $conf->{matchingpoint} = _load_matching_points($import_id);
     $conf->{default} = _load_default($import_id);
     $conf->{protected} = _load_protected($import_id);
@@ -98,6 +100,20 @@ sub _load_value_mappings {
     }
 
     return $mappings;
+}
+
+sub _load_transformation_plugins {
+    my $import_id = shift;
+
+    my $values = _get_table_values($tables->{transformation_plugins_table}, $import_id);
+    my $tr_plugins;
+    foreach my $p ( @$values ) {
+        my $dest = $p->{destination};
+        my $name = $p->{transformation_plugin};
+        push @{ $tr_plugins->{$dest} }, $name;
+    }
+
+    return $tr_plugins;
 }
 
 sub _load_matching_points {

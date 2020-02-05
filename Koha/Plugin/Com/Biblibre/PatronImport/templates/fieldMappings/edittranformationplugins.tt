@@ -1,0 +1,55 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=configure">Koha Patron Import</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=editfieldmappings&import_id=[% import_id %]">Field mappings</a> &rsaquo;
+Mappings</div>
+
+<div id="doc3" class="yui-t1">
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <h2> Check transformation plugins for [% destination %]</h2>
+                [% IF error %]
+                    <div class="alert alert-danger" role="alert">
+                        Oops. An error occurs while saving your mappings.
+                    </div>
+                [% END %]
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="op" value="save"/>
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+                    <input type="hidden" name="destination" value="[% destination %]"/>
+
+                    <ul class="list-group">
+                        [% FOREACH plugin IN tr_plugins %]
+                            <li class="list-group-item">
+                                [% IF plugin.checked == 1 %]
+                                    <input type="checkbox" name="[% plugin.code %]" checked="checked"/>
+                                [% ELSE %]
+                                    <input type="checkbox" name="[% plugin.code %]" />
+                                [% END %]
+                                <label for="[% plugin.code %]"><strong>[% plugin.name %]</strong> <cite>[% plugin.description %]</cite></label>
+                            </li>
+                        [% END %]
+                    </ul>
+
+
+                    <button class="btn btn-default" type="submit" name="op" value="edit"><i class="fa fa-hdd-o" aria-hidden="true"></i> Save</button>
+                </form>
+
+            </div> <!-- yui-b -->
+        </div> <!-- yui-main -->
+        <div class="yui-b noprint">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div> <!-- yui-b -->
+    </div> <!-- bd -->
+</div> <!-- doc3 -->
+[% INCLUDE 'intranet-bottom.inc' %]

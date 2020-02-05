@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.0';
+our $VERSION = '1.1';
 
 our $metadata = {
     name => 'Patron import',
@@ -35,6 +35,7 @@ sub new {
     $self->{run_logs_table}  = $self->get_qualified_table_name('run_logs');
     $self->{field_mappings_table}  = $self->get_qualified_table_name('field_mappings');
     $self->{value_mappings_table}  = $self->get_qualified_table_name('value_mappings');
+    $self->{transformation_plugins_table}  = $self->get_qualified_table_name('transformation_plugins');
     $self->{matching_points_table}  = $self->get_qualified_table_name('matching_points');
     $self->{protected_table}  = $self->get_qualified_table_name('protected');
     $self->{erasables_table}  = $self->get_qualified_table_name('erasables');
@@ -96,6 +97,13 @@ sub editvaluemappings {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::editvalues($self, $args);
+}
+
+sub edittransformationplugins {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::FieldMappings::edittransformationplugins($self, $args);
 }
 
 sub editprotected {
@@ -251,6 +259,17 @@ sub install {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
 
+    my $transformation_plugins_table = $self->get_qualified_table_name('transformation_plugins');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $transformation_plugins_table (
+            import_id int(11) NOT NULL,
+            destination varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            transformation_plugin varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (import_id, destination, transformation_plugin),
+            CONSTRAINT transformation_plugins_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
     my $protected_table = $self->get_qualified_table_name('protected');
     $dbh->do("
         CREATE TABLE IF NOT EXISTS $protected_table (
@@ -296,6 +315,26 @@ sub install {
     ");
 }
 
+sub upgrade {
+    my ( $self, $args ) = @_;
+
+    my $dbh = C4::Context->dbh;
+    my $import_table = $self->get_qualified_table_name('import');
+    my $transformation_plugins_table = $self->get_qualified_table_name('transformation_plugins');
+
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $transformation_plugins_table (
+            import_id int(11) NOT NULL,
+            destination varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            transformation_plugin varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (import_id, destination, transformation_plugin),
+            CONSTRAINT transformation_plugins_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
+    return 1;
+}
+
 sub uninstall {
     my ( $self, $args ) = @_;
 
@@ -321,6 +360,9 @@ sub uninstall {
 
     my $value_mappings_table = $self->get_qualified_table_name('value_mappings');
     C4::Context->dbh->do("DROP TABLE $value_mappings_table");
+
+    my $transformation_plugins_table = $self->get_qualified_table_name('transformation_plugins');
+    C4::Context->dbh->do("DROP TABLE $transformation_plugins_table");
 
     my $protected_table = $self->get_qualified_table_name('protected');
     C4::Context->dbh->do("DROP TABLE $protected_table");

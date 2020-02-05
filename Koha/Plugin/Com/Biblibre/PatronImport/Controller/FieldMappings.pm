@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( PatronFields );
+use Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins;
 
 sub edit {
     my ($plugin, $params) = @_;
@@ -71,7 +72,9 @@ sub edit {
     my $mappings = GetFromTable($plugin->{field_mappings_table}, { import_id => $import_id});
 
     foreach my $m ( @$mappings ) {
-        $m->{count} = Count($plugin->{value_mappings_table},
+        $m->{value_count} = Count($plugin->{value_mappings_table},
+            { import_id => $import_id, destination => $m->{destination} });
+        $m->{plugin_count} = Count($plugin->{transformation_plugins_table},
             { import_id => $import_id, destination => $m->{destination} });
     }
 
@@ -140,6 +143,62 @@ sub editvalues {
     $template->param(
         import_id => $import_id,
         mappings => $mappings,
+        destination => $destination
+    );
+
+    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
+    print $template->output();
+}
+
+sub edittransformationplugins {
+    my ($plugin, $params) = @_;
+    my $cgi = $plugin->{cgi};
+
+    my $template = $plugin->get_template({ file => 'templates/fieldMappings/edittranformationplugins.tt' });
+
+    my $import_id = $cgi->param('import_id');
+    my $destination = $cgi->param('destination');
+    my $op = $cgi->param('op') || '';
+    my $tr_plugins = Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::all;
+
+    if ( $op eq 'save' ) {
+        Delete($plugin->{transformation_plugins_table},
+            { import_id => $import_id, destination => $destination });
+
+        foreach my $tr_plugin (@$tr_plugins) {
+            my $code = $tr_plugin->{code};
+            my $checked = $cgi->param($code);
+
+            if ($checked && $checked eq 'on') {
+                InsertInTable(
+                    $plugin->{transformation_plugins_table},
+                    {
+                        import_id => $import_id,
+                        destination => $destination,
+                        transformation_plugin => $code,
+                    }
+                );
+            }
+        }
+        print $cgi->redirect("/cgi-bin/koha/plugins/run.pl?class=Koha::Plugin::Com::Biblibre::PatronImport&method=editfieldmappings&import_id=$import_id");
+        return;
+    }
+
+    my $saved_plugins = GetFromTable($plugin->{transformation_plugins_table},
+        { import_id => $import_id, destination => $destination });
+
+    foreach my $tr_plugin (@$tr_plugins) {
+        $tr_plugin->{checked} = 0;
+        foreach my $saved_plugin (@$saved_plugins) {
+            if ($tr_plugin->{code} eq $saved_plugin->{transformation_plugin}) {
+                $tr_plugin->{checked} = 1;
+            }
+        }
+    }
+
+    $template->param(
+        import_id => $import_id,
+        tr_plugins => $tr_plugins,
         destination => $destination
     );
 

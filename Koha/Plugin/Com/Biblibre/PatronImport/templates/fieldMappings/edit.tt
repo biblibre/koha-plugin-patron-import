@@ -142,7 +142,8 @@ Field mappings</div>
                                             [% mapping.destination %]
                                         </td>
                                         <td>
-                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editvaluemappings&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.count %])</a>
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editvaluemappings&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.value_count %])</a>
+                                            <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=edittransformationplugins&import_id=[% import_id %]&destination=[% mapping.destination %]">Transformation plugins ([% mapping.plugin_count %])</a>
                                             <a class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
                                     </tr>

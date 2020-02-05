@@ -3,6 +3,7 @@ package Koha::Plugin::Com::Biblibre::PatronImport::Helper::Mapping;
 use Modern::Perl;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( PatronFields );
+use Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins;
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(process_mapping);
@@ -23,8 +24,8 @@ sub process_mapping {
 
     my $borrower = {};
     my $patron = Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron->new();
-    my ($map, $valuesmapping)
-        = @{$conf}{qw(map valuesmapping)};
+    my ($map, $valuesmapping, $transformationplugins)
+        = @{$conf}{qw(map valuesmapping transformationplugins)};
 
     # Calling preprocess hook.
     Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_mapping_preprocess', [$data, $borrower]);
@@ -53,6 +54,7 @@ sub process_mapping {
         next unless exists $data->{ $source };
 
         my $value = $data->{ $source };
+        $value = applyTransformationPlugins( $transformationplugins, $target, $value );
         $borrower->{ $target } = mapvalues( $valuesmapping, $target, $value );
     }
 
@@ -63,6 +65,27 @@ sub process_mapping {
     map_patron_object($patron, $borrower);
 
     return $patron;
+}
+
+sub applyTransformationPlugins {
+    my ($transformationplugins, $target, $value) = @_;
+
+    my $target_plugins = $transformationplugins->{$target};
+    unless ($target_plugins) {
+        return $value;
+    }
+
+    no strict;
+    foreach my $name ( @$target_plugins ) {
+        my $tr_plugin = Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::get($name);
+
+        next unless $tr_plugin;
+        my $package = $tr_plugin->{package};
+        $value = &{ "${package}::transform" }( $value );
+    }
+    use strict;
+
+    return $value;
 }
 
 sub mapvalues {
