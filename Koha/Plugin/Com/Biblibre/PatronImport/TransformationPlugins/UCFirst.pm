@@ -5,7 +5,9 @@ use Modern::Perl;
 sub transform {
     my ($value) = @_;
 
-    return ucfirst($value);
+    $value =~ s/([\w']+)/\u\L$1/g;
+
+    return $value;
 }
 
 1;

@@ -6,7 +6,7 @@ our $plugins = {
     uc_first => {
         code => 'uc_first',
         name => 'UC first',
-        description => 'Upper case first value letter',
+        description => 'Upper case first value letter of each words in the string ("Foo Bar", Foo-Bar)',
         package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::UCFirst'
     },
     uc_all => {
