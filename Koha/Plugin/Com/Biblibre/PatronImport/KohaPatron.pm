@@ -279,6 +279,12 @@ sub to_koha {
             return;
         }
 
+        # Update password.
+        my $userid = $stored_patron->userid();
+        if ($userid && $patron{password}) {
+            $stored_patron->update_password($userid, $patron{password});
+        }
+
         $import->{logger}->Add(
             'success',
             "Patron successfully updated",
