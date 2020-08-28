@@ -328,7 +328,7 @@ sub to_koha {
         );
 
         my $result = $this->add_debarment($borrowernumber);
-        if ( $result eq 'error' ) {
+        if ( $result && $result eq 'error' ) {
             $import->{logger}->Add(
                 'error',
                 "Unable to add debarment for this patron",
@@ -337,7 +337,7 @@ sub to_koha {
             );
         }
 
-        if ( $result eq 'ok' ) {
+        if ( $result && $result eq 'ok' ) {
             $import->{logger}->Add(
                 'info',
                 "Debarment added",
