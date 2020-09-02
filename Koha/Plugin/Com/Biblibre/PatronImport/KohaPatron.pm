@@ -282,7 +282,14 @@ sub to_koha {
         # Update password.
         my $userid = $stored_patron->userid();
         if ($userid && $patron{password}) {
-            $stored_patron->update_password($userid, $patron{password});
+            # Koha < 19.11
+            if ($stored_patron->can('update_password')) {
+                $stored_patron->update_password($userid, $patron{password});
+            }
+            # Koha >= 19.11
+            if ($stored_patron->can('set_password')) {
+                $stored_patron->set_password({ password => $patron{password} });
+            }
         }
 
         $import->{logger}->Add(
