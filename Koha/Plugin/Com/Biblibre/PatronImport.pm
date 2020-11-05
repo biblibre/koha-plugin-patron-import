@@ -52,7 +52,8 @@ sub new {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config::load_conf($import_id);
         my $config = get_conf();
 
-        my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger->new($import_id);
+        my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger
+            ->new($import_id, $args->{info_logs}, $args->{success_log});
 
         $self->{id} = $import_id;
         $self->{from} = $args->{from};

@@ -6,7 +6,7 @@ use DateTime;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 sub new {
-    my ( $class, $import_id ) = @_;
+    my ( $class, $import_id, $info_logs, $success_logs ) = @_;
 
     my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new({
         enable_plugins  => 1,
@@ -15,6 +15,8 @@ sub new {
     my $self = {
         import_id => $import_id,
         plugin => $plugin,
+        info_logs => $info_logs || 0,
+        success_logs => $success_logs || 0,
         stats => {
             new => 0,
             updated => 0,
@@ -98,6 +100,14 @@ sub Extractstats {
 
 sub Add {
     my ( $self, $reason, $message, $borrowernumber, $patron ) = @_;
+
+    if ($reason eq 'info' && $self->{info_logs} == 0) {
+        return;
+    }
+
+    if ($reason eq 'success' && $self->{success_logs} == 0) {
+        return;
+    }
 
     my $now = DateTime->now;
     my $userid = $patron->{userid} || 'Unknown';
