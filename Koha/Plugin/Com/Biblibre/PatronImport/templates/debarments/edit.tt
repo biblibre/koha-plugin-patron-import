@@ -52,10 +52,9 @@
 <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
 
-<div id="doc3" class="yui-t1">
-    <div id="bd">
-        <div id="yui-main">
-            <div class="yui-b">
+<div class="main container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-sm-push-2">
                 <h2> Configure debarments</h2>
 
                 <form method="POST">
@@ -101,12 +100,10 @@
 
                     <input type="submit" value="Save"/>
                 </form>
-
-            </div> <!-- yui-b -->
-        </div> <!-- yui-main -->
-        <div class="yui-b noprint">
+            </div>
+        <div class="col-sm-2 col-sm-pull-10">
             [% INCLUDE 'tools-menu.inc' %]
-        </div> <!-- yui-b -->
-    </div> <!-- bd -->
-</div> <!-- doc3 -->
+        </div>
+    </div> <!-- row -->
+</div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]
