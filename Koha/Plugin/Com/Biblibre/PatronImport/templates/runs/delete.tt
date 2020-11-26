@@ -17,10 +17,9 @@ margin-left: 7px;
 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=[% import_id %]">View runs</a> &rsaquo;
 Delete run</div>
 
-<div id="doc3" class="yui-t1">
-    <div id="bd">
-        <div id="yui-main">
-            <div class="yui-b">
+<div class="main container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-sm-push-2">
                 <h2> Delete run #[% id %]</h2>
                 <h4>Are you sure you want to delete stats and logs for this run ?</h4>
                 <form class="form-inline" method="POST">
@@ -34,11 +33,10 @@ Delete run</div>
                 </form>
                 <a id="cancel" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=[% import_id %]">Cancel</a>
 
-            </div> <!-- yui-b -->
-        </div> <!-- yui-main -->
-        <div class="yui-b noprint">
+            </div>
+        <div class="col-sm-2 col-sm-pull-10">
             [% INCLUDE 'tools-menu.inc' %]
-        </div> <!-- yui-b -->
-    </div> <!-- bd -->
-</div> <!-- doc3 -->
+        </div>
+    </div> <!-- row -->
+</div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]
