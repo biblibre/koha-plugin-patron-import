@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.1';
+our $VERSION = '1.2';
 
 our $metadata = {
     name => 'Patron import',
@@ -51,9 +51,11 @@ sub new {
         my $import_id = $args->{import_id};
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config::load_conf($import_id);
         my $config = get_conf();
+        $config->{info_logs} = $args->{info_logs};
+        $config->{success_log} = $args->{success_log};
 
         my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger
-            ->new($import_id, $args->{info_logs}, $args->{success_log});
+            ->new($import_id, $config);
 
         $self->{id} = $import_id;
         $self->{from} = $args->{from};
@@ -319,6 +321,8 @@ sub install {
 sub upgrade {
     my ( $self, $args ) = @_;
 
+    my $DBversion = $self->retrieve_data('__INSTALLED_VERSION__');
+
     my $dbh = C4::Context->dbh;
     my $import_table = $self->get_qualified_table_name('import');
     my $transformation_plugins_table = $self->get_qualified_table_name('transformation_plugins');
@@ -332,6 +336,13 @@ sub upgrade {
             CONSTRAINT transformation_plugins_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
+
+    if ($DBversion < '1.2') {
+        my $dbh = C4::Context->dbh;
+        $dbh->do("ALTER TABLE $import_table ADD COLUMN clear_logs INT(5) AFTER autocardnumber;");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.2'});
 
     return 1;
 }

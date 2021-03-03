@@ -6,7 +6,7 @@ use DateTime;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 sub new {
-    my ( $class, $import_id, $info_logs, $success_logs ) = @_;
+    my ( $class, $import_id, $config ) = @_;
 
     my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new({
         enable_plugins  => 1,
@@ -15,8 +15,9 @@ sub new {
     my $self = {
         import_id => $import_id,
         plugin => $plugin,
-        info_logs => $info_logs || 0,
-        success_logs => $success_logs || 0,
+        info_logs => $config->{info_logs} || 0,
+        success_logs => $config->{success_logs} || 0,
+        config => $config,
         stats => {
             new => 0,
             updated => 0,
@@ -82,6 +83,19 @@ sub Stop {
             );
         }
     }
+
+    $self->clear;
+}
+
+sub clear {
+    my ( $self ) = @_;
+
+    my $interval = $self->{config}{clear_logs};
+    my $run_table = $self->{plugin}{runs_table},
+
+    my $dbh = C4::Context->dbh;
+
+    $dbh->do("DELETE FROM $run_table WHERE DATE(start) < CURDATE() - INTERVAL $interval DAY;");
 }
 
 sub Extractstats {
