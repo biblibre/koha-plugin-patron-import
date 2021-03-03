@@ -93,6 +93,19 @@
                                 </div>
                             </li>
 
+                            <li>
+                                <label for="clear_log_older_than">Clear reports and logs older than:</label>
+                                [% IF clear_logs  %]
+                                    <input id="clear_log_older_than" name="clear_log_older_than" type="number" value="[% clear_logs %]" style="width: 4em;" min="1" max="99">
+                                [% ELSE %]
+                                    <input id="clear_log_older_than" name="clear_log_older_than" type="number" value="5" style="width: 4em;" min="1" max="99">
+                                [% END %]
+                                <span><b>day(s)</b></span>
+                                <div class="hint">
+                                    Automatically clear reports and logs older than X day(s) in database.
+                                </div>
+                            </li>
+
                         </ol>
                     </fieldset>
 

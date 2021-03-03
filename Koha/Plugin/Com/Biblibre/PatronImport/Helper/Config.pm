@@ -45,6 +45,7 @@ sub _load_db_conf {
     $conf->{setup} = $setup;
     $conf->{createonly} = $import_settings->{createonly} || 0;
     $conf->{autocardnumber} = $import_settings->{autocardnumber} || 'no';
+    $conf->{clear_logs} = $import_settings->{clear_logs} || 5;
 
     $conf->{map} = _load_field_mappings($import_id);
     $conf->{valuesmapping} = _load_value_mappings($import_id);
