@@ -320,7 +320,7 @@ sub install {
             id int(11) NOT NULL AUTO_INCREMENT,
             import_id int(11) NOT NULL,
             name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-            PRIMARY KEY (id)
+            PRIMARY KEY (id),
             CONSTRAINT import_exclusions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
@@ -332,7 +332,7 @@ sub install {
             rule_id int(11) NOT NULL,
             koha_field varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-            PRIMARY KEY (id)
+            PRIMARY KEY (id),
             CONSTRAINT import_exclusions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $exclusions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
