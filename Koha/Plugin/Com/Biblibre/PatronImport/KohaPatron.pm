@@ -586,7 +586,7 @@ sub to_skip {
 
     my $conf = $this->{import}{config};
 
-    my $rules = $conf->{exclude} || ();
+    my $rules = $conf->{exclusions} || ();
     foreach my $rule (@$rules) {
         return 1 if $this->_rule_match($rule);
     }
