@@ -8,6 +8,7 @@ use C4::Context;
 use DateTime;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::CSVConfig;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(get_conf);
@@ -39,6 +40,8 @@ sub _load_db_conf {
     $tables->{erasables_table} = $plugin->{erasables_table};
     $tables->{default_values_table} = $plugin->{default_values_table};
     $tables->{debarments_table} = $plugin->{debarments_table};
+    $tables->{exclusions_rules_table} = $plugin->{exclusions_rules_table};
+    $tables->{exclusions_fields_table} = $plugin->{exclusions_fields_table};
 
     my $conf;
     my ( $setup, $import_settings) = _load_setup($import_id);
@@ -55,6 +58,7 @@ sub _load_db_conf {
     $conf->{protected} = _load_protected($import_id);
     $conf->{erasable} = _load_erasables($import_id);
     $conf->{debarments} = _load_debarments($import_id);
+    $conf->{exclusions} = _load_exclusions($import_id);
 
     return $conf;
 }
@@ -212,6 +216,27 @@ sub _load_debarments {
     }
 
     return $values;
+}
+
+sub _load_exclusions {
+    my $import_id = shift;
+    my $rules_table = $tables->{exclusions_rules_table};
+    my $fields_table = $tables->{exclusions_fields_table};
+
+    my $exclusions_rules;
+
+    my $rules = GetFromTable($rules_table, { import_id => $import_id});
+    foreach my $rule (@$rules) {
+        my $fields = GetFromTable($fields_table, { rule_id => $rule->{id}});
+        if ($fields) {
+            my $mappings = {};
+            foreach my $field ( @$fields ) {
+                $mappings->{$field->{koha_field}} = $field->{value};
+            }
+            push(@{ $exclusions_rules }, $mappings);
+        }
+    }
+    return $exclusions_rules;
 }
 
 sub _get_table_values {
