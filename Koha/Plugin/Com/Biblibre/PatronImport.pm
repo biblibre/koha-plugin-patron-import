@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.2';
+our $VERSION = '1.3';
 
 our $metadata = {
     name => 'Patron import',
@@ -41,6 +41,8 @@ sub new {
     $self->{erasables_table}  = $self->get_qualified_table_name('erasables');
     $self->{default_values_table}  = $self->get_qualified_table_name('default_values');
     $self->{debarments_table} = $self->get_qualified_table_name('debarments');
+    $self->{exclusions_rules_table} = $self->get_qualified_table_name('exclusions_rules');
+    $self->{exclusions_fields_table} = $self->get_qualified_table_name('exclusions_fields');
 
     # Used by PatronImport/cron/run-import.pl
     if ( $args->{import_id} ) {
@@ -163,6 +165,13 @@ sub editdebarments {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Debarments;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Debarments::edit($self, $args);
+}
+
+sub editexclusions {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Exclusions;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Exclusions::edit($self, $args);
 }
 
 sub install {
@@ -305,6 +314,29 @@ sub install {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
 
+    my $exclusions_table = $self->get_qualified_table_name('exclusions_rules');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $exclusions_table (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            import_id int(11) NOT NULL,
+            name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (id)
+            CONSTRAINT import_exclusions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
+    my $exclusions_fields_table = $self->get_qualified_table_name('exclusions_fields');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $exclusions_fields_table (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            rule_id int(11) NOT NULL,
+            koha_field varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (id)
+            CONSTRAINT import_exclusions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $exclusions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
     my $debarments_table = $self->get_qualified_table_name('debarments');
     $dbh->do("
         CREATE TABLE IF NOT EXISTS $debarments_table (
@@ -343,7 +375,32 @@ sub upgrade {
         $dbh->do("ALTER TABLE $import_table ADD COLUMN clear_logs INT(5) AFTER autocardnumber;");
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.2'});
+    if ($DBversion < '1.3') {
+        my $exclusions_table = $self->get_qualified_table_name('exclusions_rules');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $exclusions_table (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                import_id int(11) NOT NULL,
+                name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                PRIMARY KEY (id),
+                CONSTRAINT import_exclusions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
+
+        my $exclusions_fields_table = $self->get_qualified_table_name('exclusions_fields');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $exclusions_fields_table (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                rule_id int(11) NOT NULL,
+                koha_field varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                PRIMARY KEY (id),
+                CONSTRAINT import_exclusions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $exclusions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.3'});
 
     return 1;
 }
