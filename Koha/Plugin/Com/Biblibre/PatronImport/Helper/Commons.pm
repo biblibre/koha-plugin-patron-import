@@ -13,7 +13,6 @@ our @EXPORT = qw(
 use Modern::Perl;
 
 use C4::Context;
-use C4::Members::AttributeTypes;
 
 use Koha::Patrons;
 use Koha::Patron::Attribute::Types;
@@ -50,8 +49,8 @@ sub valid_field {
 
     return 1 if defined($borrowers_fields->{$field});
 
-    my @attributes = map $_->{"code"}, C4::Members::AttributeTypes::GetAttributeTypes;
-    return 2 if in_array(\@attributes, $field);
+    my @codes = Koha::Patron::Attribute::Types->search->get_column('code');
+    return 2 if in_array(\@codes, $field);
     return 0;
 }
 

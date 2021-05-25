@@ -363,12 +363,14 @@ sub to_koha {
     }
 
     $this->{'borrowernumber'} = $borrowernumber;
+    my $patron_orm = Koha::Patrons->find($borrowernumber);
 
     Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
 
     if ( $extended_attributes ) {
         foreach my $attribute ( @$extended_attributes ) {
-            C4::Members::Attributes::UpdateBorrowerAttribute($borrowernumber, $attribute);
+            $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations->delete;
+            $patron_orm->add_extended_attribute($attribute);
         }
     }
 
