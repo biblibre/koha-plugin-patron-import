@@ -123,7 +123,7 @@ sub Add {
         return;
     }
 
-    my $now = DateTime->now;
+    my $now = DateTime->now( time_zone => 'local' );
     my $userid = $patron->{userid} || 'Unknown';
     my $cardnumber = $patron->{cardnumber} || 'Unknown';
     my $surname = $patron->{surname} || '';
