@@ -20,6 +20,7 @@ sub SupportedEOL {
 
 sub SupportedQuoteChar {
     return [
+        { code => 'none', name => 'None' },
         { code => 'simple', name => "Simple quote (')" },
         { code => 'double', name => 'Double quote (")' }
     ];
@@ -41,6 +42,10 @@ sub FormatSettings {
     $settings->{eol} = _formatEOL($settings->{eol});
     $settings->{quote_char} = _formatQuoteChar($settings->{quote_char});
     $settings->{sep_char} = _formatSepChar($settings->{sep_char});
+
+    if ($settings->{quote_char} eq '') {
+	delete $settings->{quote_char};
+    }
     return $settings;
 }
 
@@ -73,7 +78,7 @@ sub _formatQuoteChar {
         return "\"";
     }
 
-    die "Unsupported quote char: $quote_char"
+    return '';
 }
 
 sub _formatSepChar {
