@@ -41,12 +41,20 @@ sub edit {
 
     if ( $op eq 'add_rule' ) {
         my $name = $cgi->param('name');
+        my $origin = $cgi->param('origin');
+
+        if ($origin) {
+            $origin = 'koha';
+        } else {
+            $origin = 'ext';
+        }
 
         InsertInTable(
             $plugin->{exclusions_rules_table},
             {
                 name      => $name,
                 import_id => $import_id,
+                origin => $origin,
             }
         );
     }
