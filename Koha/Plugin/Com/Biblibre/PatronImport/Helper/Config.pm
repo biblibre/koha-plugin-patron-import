@@ -229,9 +229,13 @@ sub _load_exclusions {
     foreach my $rule (@$rules) {
         my $fields = GetFromTable($fields_table, { rule_id => $rule->{id}});
         if ($fields) {
-            my $mappings = {};
+            my $mappings = {
+                origin => $rule->{origin},
+                fields => {}
+            };
+            $mappings->{origin} = $rule->{origin};
             foreach my $field ( @$fields ) {
-                $mappings->{$field->{koha_field}} = $field->{value};
+                $mappings->{fields}->{$field->{koha_field}} = $field->{value};
             }
             push(@{ $exclusions_rules }, $mappings);
         }

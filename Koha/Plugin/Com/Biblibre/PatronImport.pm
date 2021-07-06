@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.3';
+our $VERSION = '1.4';
 
 our $metadata = {
     name => 'Patron import',
@@ -320,6 +320,7 @@ sub install {
             id int(11) NOT NULL AUTO_INCREMENT,
             import_id int(11) NOT NULL,
             name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            origin ENUM('ext', 'koha') COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (id),
             CONSTRAINT import_exclusions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -398,9 +399,16 @@ sub upgrade {
                 CONSTRAINT import_exclusions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $exclusions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
+
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.3'});
+    if ($DBversion < '1.4') {
+        my $dbh = C4::Context->dbh;
+        my $exclusions_table = $self->get_qualified_table_name('exclusions_rules');
+        $dbh->do("ALTER TABLE $exclusions_table ADD COLUMN origin ENUM('ext', 'koha') NOT NULL AFTER name;");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.4'});
 
     return 1;
 }

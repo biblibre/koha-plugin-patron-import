@@ -267,6 +267,23 @@ sub to_koha {
 
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_update', [\%patron, $extended_attributes]);
         my $stored_patron = Koha::Patrons->find( $borrowernumber );
+
+        # Exclude rules based on koha account.
+        my $rules = $conf->{exclusions} || ();
+        foreach my $rule (@$rules) {
+            next if $rule->{origin} eq 'ext';
+            if ($this->_rule_match($rule, $stored_patron->unblessed())) {
+                $this->{status} = 'skipped';
+                $import->{logger}->Add(
+                    'info',
+                    "$patron_info_str has been skipped (from koha)",
+                    '',
+                    \%patron
+                );
+                return;
+            }
+        }
+
         eval { my $success = $stored_patron->set(\%patron)->store; };
         if ( $@ ) {
             $this->{status} = 'error';
@@ -588,19 +605,28 @@ sub to_skip {
 
     my $rules = $conf->{exclusions} || ();
     foreach my $rule (@$rules) {
+        next if $rule->{origin} eq 'koha';
         return 1 if $this->_rule_match($rule);
     }
     return 0;
 }
 
 sub _rule_match {
-    my ($this, $rule) = @_;
+    my ($this, $rule, $patron) = @_;
 
-    foreach my $field (keys %{ $rule }) {
-        if (is_set($this->{$field}) && $this->{$field} ne $rule->{$field}) {
+    unless(keys %{ $rule->{fields} }) {
+        return 0;
+    }
+
+    unless ($patron) {
+        $patron = $this;
+    }
+
+    foreach my $field (keys %{ $rule->{fields} }) {
+        if (is_set($patron->{$field}) && $patron->{$field} ne $rule->{fields}->{$field}) {
             return 0;
         }
-        elsif (is_empty($this->{$field}) && $rule->{$field} eq '') {
+        elsif (is_empty($patron->{$field}) && $rule->{fields}->{$field} eq '') {
             return 0;
         }
     }
