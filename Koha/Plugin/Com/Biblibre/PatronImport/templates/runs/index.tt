@@ -15,7 +15,7 @@
 </script>
 <style>
     #table {
-        max-width: 55%;
+        max-width: 75%;
     }
     #toolbar {
         margin-bottom: 25px;
@@ -50,7 +50,7 @@ View runs</div>
                                 <tr>
                                     <th></th>
                                     <th colspan="2">Dates</th>
-                                    <th colspan="5">Borrowers processed</th>
+                                    <th colspan="6">Borrowers processed</th>
                                     <th colspan="2">Actions</th>
                                 </tr>
                                 <tr>
@@ -59,6 +59,7 @@ View runs</div>
                                     <th>End</th>
                                     <th>New</th>
                                     <th>Updated</th>
+                                    <th>Deleted</th>
                                     <th>Skipped</th>
                                     <th>Error</th>
                                     <th>Total</th>
@@ -74,6 +75,7 @@ View runs</div>
                                         <td>[% run.end %]</td>
                                         <td>[% run.new %]</td>
                                         <td>[% run.updated %]</td>
+                                        <td>[% run.deleted %]</td>
                                         <td>[% run.skipped %]</td>
                                         <td>[% run.error %]</td>
                                         <td><strong>[% run.total %]</strong></td>

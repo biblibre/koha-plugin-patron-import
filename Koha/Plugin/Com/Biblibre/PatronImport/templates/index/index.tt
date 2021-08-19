@@ -46,6 +46,7 @@
                                 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editprotected&import_id=[% i.id %]">Protected/erasables</a> - 
                                 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editdefault&import_id=[% i.id %]">Default values</a> - 
                                 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editexclusions&import_id=[% i.id %]">Exclusion</a> - 
+                                <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editdeletions&import_id=[% i.id %]">Deletion</a> - 
                                 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editdebarments&import_id=[% i.id %]">Debarments</a> 
                             </li>
                             <li>
