@@ -41,6 +41,7 @@ sub InitRun {
             start       => $now->ymd . ' ' . $now->hms,
             new         => 0,
             updated     => 0,
+            deleted     => 0,
             skipped     => 0,
             error       => 0
         }
@@ -61,6 +62,7 @@ sub Stop {
             end     => $now->ymd . ' ' . $now->hms,
             new     => $self->{stats}{new},
             updated => $self->{stats}{updated} ,
+            deleted => $self->{stats}{deleted} ,
             skipped => $self->{stats}{skipped},
             error   => $self->{stats}{error}
         },

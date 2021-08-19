@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.4';
+our $VERSION = '1.5';
 
 our $metadata = {
     name => 'Patron import',
@@ -43,6 +43,8 @@ sub new {
     $self->{debarments_table} = $self->get_qualified_table_name('debarments');
     $self->{exclusions_rules_table} = $self->get_qualified_table_name('exclusions_rules');
     $self->{exclusions_fields_table} = $self->get_qualified_table_name('exclusions_fields');
+    $self->{deletions_rules_table} = $self->get_qualified_table_name('deletions_rules');
+    $self->{deletions_fields_table} = $self->get_qualified_table_name('deletions_fields');
 
     # Used by PatronImport/cron/run-import.pl
     if ( $args->{import_id} ) {
@@ -174,6 +176,13 @@ sub editexclusions {
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Exclusions::edit($self, $args);
 }
 
+sub editdeletions {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Deletions;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::Deletions::edit($self, $args);
+}
+
 sub install {
     my ( $self, $args ) = @_;
 
@@ -204,6 +213,7 @@ sub install {
             end datetime NULL,
             new int(11) NOT NULL,
             updated int(11) NOT NULL,
+            deleted int(11) NOT NULL,
             skipped int(11) NOT NULL,
             error int(11) NOT NULL,
             PRIMARY KEY (id),
@@ -338,6 +348,29 @@ sub install {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
 
+    my $deletions_table = $self->get_qualified_table_name('deletions_rules');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $deletions_table (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            import_id int(11) NOT NULL,
+            name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (id),
+            CONSTRAINT import_deletions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
+    my $deletions_fields_table = $self->get_qualified_table_name('deletions_fields');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $deletions_fields_table (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            rule_id int(11) NOT NULL,
+            field varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (id),
+            CONSTRAINT import_deletions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $deletions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
     my $debarments_table = $self->get_qualified_table_name('debarments');
     $dbh->do("
         CREATE TABLE IF NOT EXISTS $debarments_table (
@@ -408,7 +441,35 @@ sub upgrade {
         $dbh->do("ALTER TABLE $exclusions_table ADD COLUMN origin ENUM('ext', 'koha') NOT NULL AFTER name;");
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.4'});
+    if ($DBversion < '1.5') {
+        my $runs_table = $self->get_qualified_table_name('runs');
+        my $deletions_table = $self->get_qualified_table_name('deletions_rules');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $deletions_table (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                import_id int(11) NOT NULL,
+                name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                PRIMARY KEY (id),
+                CONSTRAINT import_deletions_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
+
+        my $deletions_fields_table = $self->get_qualified_table_name('deletions_fields');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $deletions_fields_table (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                rule_id int(11) NOT NULL,
+                field varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                PRIMARY KEY (id),
+                CONSTRAINT import_deletions_fields_fk_1 FOREIGN KEY (rule_id) REFERENCES $deletions_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
+
+        $dbh->do("ALTER TABLE $runs_table ADD COLUMN deleted INT(11) NOT NULL AFTER updated;");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.5'});
 
     return 1;
 }

@@ -42,6 +42,8 @@ sub _load_db_conf {
     $tables->{debarments_table} = $plugin->{debarments_table};
     $tables->{exclusions_rules_table} = $plugin->{exclusions_rules_table};
     $tables->{exclusions_fields_table} = $plugin->{exclusions_fields_table};
+    $tables->{deletions_rules_table} = $plugin->{deletions_rules_table};
+    $tables->{deletions_fields_table} = $plugin->{deletions_fields_table};
 
     my $conf;
     my ( $setup, $import_settings) = _load_setup($import_id);
@@ -59,6 +61,7 @@ sub _load_db_conf {
     $conf->{erasable} = _load_erasables($import_id);
     $conf->{debarments} = _load_debarments($import_id);
     $conf->{exclusions} = _load_exclusions($import_id);
+    $conf->{deletions} = _load_deletions($import_id);
 
     return $conf;
 }
@@ -241,6 +244,29 @@ sub _load_exclusions {
         }
     }
     return $exclusions_rules;
+}
+
+sub _load_deletions {
+    my $import_id = shift;
+    my $rules_table = $tables->{deletions_rules_table};
+    my $fields_table = $tables->{deletions_fields_table};
+
+    my $deletions_rules;
+
+    my $rules = GetFromTable($rules_table, { import_id => $import_id});
+    foreach my $rule (@$rules) {
+        my $fields = GetFromTable($fields_table, { rule_id => $rule->{id}});
+        if ($fields) {
+            my $mappings = {
+                fields => {}
+            };
+            foreach my $field ( @$fields ) {
+                $mappings->{fields}->{$field->{field}} = $field->{value};
+            }
+            push(@{ $deletions_rules }, $mappings);
+        }
+    }
+    return $deletions_rules;
 }
 
 sub _get_table_values {
