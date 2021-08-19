@@ -179,17 +179,12 @@ sub to_koha {
     # Verifying date
     $this->_check_dates_format(\%patron);
 
-    # Verifying branchcode categorycode
+    # Empty branchcode and categorycode
+    # if it is not correct.
     for (qw/branchcode categorycode/) {
         my $func = "_check_$_";
         unless ( $this->$func($patron{$_}) ) {
             $patron{$_} = '';
-            $import->{logger}->Add(
-                'info',
-                "Invalid $_, replaced by ''",
-                '',
-                \%patron
-            );
         }
     }
 
@@ -222,6 +217,22 @@ sub to_koha {
     my $exists = 0;
     if ( $borrowernumber ) {
         $exists = 1;
+
+        # Deletion rules.
+        my $deletion_rules = $conf->{deletions} || ();
+        foreach my $rule (@$deletion_rules) {
+            if ($this->_rule_match($rule, \%patron)) {
+                $this->{status} = 'deleted';
+                Koha::Patrons->find( $borrowernumber )->delete();
+                $import->{logger}->Add(
+                    'info',
+                    "$patron_info_str has been deleted",
+                    '',
+                    \%patron
+                );
+                return;
+            }
+        }
 
         # Here we keep original patron because some fields
         # we need in logger could be deleted if protected.
