@@ -211,6 +211,14 @@ sub to_koha {
        return;
     }
 
+    # Check for message preferences protection.
+    my $protect_message_preferences = 0;
+    foreach ( @{ $conf->{protected} } ) {
+	if ( $_ eq '[message_preferences]' ) {
+	    $protect_message_preferences = 1;
+	}
+    }
+
     if ($borrowernumber && $conf->{createonly}) {
         return 0;
     }
@@ -418,7 +426,9 @@ sub to_koha {
     $this->{'borrowernumber'} = $borrowernumber;
     my $patron_orm = Koha::Patrons->find($borrowernumber);
 
-    Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
+    if ( $exists == 0 or $protect_message_preferences == 0 ) {
+	Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
+    }
 
     if ( $extended_attributes ) {
         foreach my $attribute ( @$extended_attributes ) {
@@ -709,7 +719,7 @@ sub _rule_match_delete {
 sub to_protect {
     my ( $this, $borrowernumber, $field ) = @_;
     return if $field eq 'permissions';
-    return if $field eq 'message_preferences';
+    return if $field eq '[message_preferences]';
 
     my $dbh = C4::Context->dbh;
     my $query = "SELECT $field FROM borrowers WHERE borrowernumber=?";
