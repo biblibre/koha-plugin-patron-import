@@ -51,9 +51,8 @@ sub process_mapping {
     # Transform data.
     foreach my $target ( keys %rmap ) {
         my $source = $rmap{ $target };
-        next unless exists $data->{ $source };
 
-        my $value = $data->{ $source };
+        my $value = $data->{ $source } || '';
         $value = applyTransformationPlugins( $transformationplugins, $target, $value );
         $borrower->{ $target } = mapvalues( $valuesmapping, $target, $value );
     }
@@ -75,15 +74,17 @@ sub applyTransformationPlugins {
         return $value;
     }
 
-    no strict;
     foreach my $name ( @$target_plugins ) {
         my $tr_plugin = Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::get($name);
 
         next unless $tr_plugin;
         my $package = $tr_plugin->{package};
+        my $plugin_path = $package;
+        $plugin_path =~ s/::/\//g;
+        $plugin_path =~ s/$/.pm/;
+        require $plugin_path;
         $value = &{ "${package}::transform" }( $value );
     }
-    use strict;
 
     return $value;
 }

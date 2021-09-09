@@ -21,6 +21,7 @@ sub new {
         stats => {
             new => 0,
             updated => 0,
+	    deleted => 0,
             skipped => 0,
             error => 0,
             fields => {}
