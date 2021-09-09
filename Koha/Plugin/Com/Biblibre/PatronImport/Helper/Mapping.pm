@@ -82,8 +82,10 @@ sub applyTransformationPlugins {
         my $plugin_path = $package;
         $plugin_path =~ s/::/\//g;
         $plugin_path =~ s/$/.pm/;
+        no strict 'refs';
         require $plugin_path;
         $value = &{ "${package}::transform" }( $value );
+        use strict;
     }
 
     return $value;
