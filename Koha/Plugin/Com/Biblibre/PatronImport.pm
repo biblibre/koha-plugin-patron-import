@@ -16,7 +16,7 @@ our $metadata = {
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
     date_updated => '2019-07-02',
-    minimum_version => '20.11.00.000',
+    minimum_version => '20.11',
     maximum_version => '',
     version => $VERSION,
 };
