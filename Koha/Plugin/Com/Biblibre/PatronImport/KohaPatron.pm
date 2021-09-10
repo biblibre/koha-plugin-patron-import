@@ -221,17 +221,42 @@ sub to_koha {
         # Deletion rules.
         my $deletion_rules = $conf->{deletions} || ();
         foreach my $rule (@$deletion_rules) {
-            if ($this->_rule_match($rule, \%patron)) {
-                $this->{status} = 'deleted';
-                Koha::Patrons->find( $borrowernumber )->delete();
-                $import->{logger}->Add(
-                    'info',
-                    "$patron_info_str has been deleted",
-                    '',
-                    \%patron
-                );
-                return;
-            }
+	    if ($this->_rule_match_delete($rule, \%patron)) {
+		my $to_delete = Koha::Patrons->find( $borrowernumber );
+
+		if ( my $charges = $to_delete->account->non_issues_charges ) {
+		    $this->{status} = 'error';
+		    $import->{logger}->Add(
+			'error',
+			"Failed to delete patron $borrowernumber: patron has $charges in fines",
+			'',
+			\%patron
+		    );
+		    return;
+		}
+
+		my $checkouts = $to_delete->checkouts;
+		if ( my $count_checkouts = $checkouts->count() ) {
+		    $this->{status} = 'error';
+		    $import->{logger}->Add(
+			'error',
+			"Failed to delete patron $borrowernumber: patron has $count_checkouts checkouts",
+			'',
+			\%patron
+		    );
+		    return;
+		}
+
+		$to_delete->delete();
+		$this->{status} = 'deleted';
+		$import->{logger}->Add(
+		    'info',
+		    "$patron_info_str has been deleted",
+		    '',
+		    \%patron
+		);
+		return;
+	    }
         }
 
         # Here we keep original patron because some fields
@@ -398,7 +423,15 @@ sub to_koha {
     if ( $extended_attributes ) {
         foreach my $attribute ( @$extended_attributes ) {
             $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations->delete;
-            $patron_orm->add_extended_attribute($attribute);
+            eval { $patron_orm->add_extended_attribute($attribute); };
+	    if ($@) {
+		$import->{logger}->Add(
+		    'error',
+		    "Unable to add attribute: $@",
+		    $borrowernumber,
+		    \%patron
+            );
+	    }
         }
     }
 
@@ -640,6 +673,33 @@ sub _rule_match {
             return 0;
         }
         elsif (is_empty($patron->{$field}) && $rule->{fields}->{$field} eq '') {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+sub _rule_match_delete {
+    my ($this, $rule, $patron) = @_;
+
+    unless(keys %{ $rule->{fields} }) {
+        return 0;
+    }
+
+    unless ($patron) {
+        $patron = $this;
+    }
+
+    foreach my $field (keys %{ $rule->{fields} }) {
+	unless ( defined($patron->{$field}) ) {
+            return 0;
+	}
+
+	if ( $patron->{$field} eq '' ) {
+            return 0;
+	}
+
+        if ( $patron->{$field} ne $rule->{fields}->{$field} ) {
             return 0;
         }
     }
