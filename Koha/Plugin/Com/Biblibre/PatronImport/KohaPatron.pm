@@ -311,12 +311,13 @@ sub to_koha {
 
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_update', [\%patron, $extended_attributes]);
         my $stored_patron = Koha::Patrons->find( $borrowernumber );
+        my $stored_extended_attributes = $stored_patron->extended_attributes()->unblessed;
 
         # Exclude rules based on koha account.
         my $rules = $conf->{exclusions} || ();
         foreach my $rule (@$rules) {
             next if $rule->{origin} eq 'ext';
-            if ($this->_rule_match($rule, $stored_patron->unblessed())) {
+            if ($this->_rule_match_exclusion($rule, $stored_patron->unblessed(), $stored_extended_attributes)) {
                 $this->{status} = 'skipped';
                 $import->{logger}->Add(
                     'info',
@@ -710,6 +711,34 @@ sub _rule_match_delete {
 	}
 
         if ( $patron->{$field} ne $rule->{fields}->{$field} ) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+sub _rule_match_exclusion {
+    my ($this, $rule, $patron, $extended_attributes) = @_;
+
+    unless(keys %{ $rule->{fields} }) {
+        return 0;
+    }
+
+    my $data = $patron;
+    foreach my $attr ( @$extended_attributes ) {
+        $data->{ $attr->{code} } = $attr->{attribute};
+    }
+
+    foreach my $field (keys %{ $rule->{fields} }) {
+        unless ( defined($data->{$field}) ) {
+            return 0;
+        }
+
+        if ( $data->{$field} eq '' ) {
+            return 0;
+        }
+
+        if ( $data->{$field} ne $rule->{fields}->{$field} ) {
             return 0;
         }
     }

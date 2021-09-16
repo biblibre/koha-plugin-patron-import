@@ -68,7 +68,7 @@ sub edit {
         }
     }
 
-    my $columns = PatronFields();
+    my $columns = PatronFields(1);
 
     $template->param(
         import_id => $import_id,
