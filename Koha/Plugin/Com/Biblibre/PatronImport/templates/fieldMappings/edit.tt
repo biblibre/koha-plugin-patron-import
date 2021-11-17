@@ -134,7 +134,7 @@ Field mappings</div>
                                     <tr>
                                         <td>
                                             <input type="hidden" name="source_field" value="[% mapping.source %]"/>
-                                            [% mapping.source %]
+                                            [% mapping.source | html %]
                                         </td>
                                         <td>
                                             <input type="hidden" name="koha_field" value="[% mapping.destination %]"/>

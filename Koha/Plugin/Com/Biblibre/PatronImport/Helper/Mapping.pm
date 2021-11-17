@@ -52,7 +52,7 @@ sub process_mapping {
     foreach my $target ( keys %rmap ) {
         my $source = $rmap{ $target };
 
-        my $value = $data->{ $source } || '';
+        my $value = GetMappedField($data, $source);
         $value = applyTransformationPlugins( $transformationplugins, $target, $value );
         $borrower->{ $target } = mapvalues( $valuesmapping, $target, $value );
     }
@@ -64,6 +64,38 @@ sub process_mapping {
     map_patron_object($patron, $borrower);
 
     return $patron;
+}
+
+sub GetMappedField {
+    my ($data, $source) = @_;
+
+    unless ($source =~ /<</) {
+        my $value = $data->{ $source } || '';
+        return $value;
+    }
+
+    my $value = $source;
+    while ($source =~ /<<([a-zA-Z0-9\|]+)>>/g) {
+        my $token = $1;
+
+        if ($token =~ /\|\|/) {
+            my @tokens = split('\|\|', $token);
+            my $val = '';
+            foreach my $t ( @tokens ) {
+                if ($data->{$t}) {
+                    $val = $data->{$t};
+                    last;
+                }
+            }
+            $token =~ s/\|\|/\\|\\|/g; # Escape pipes to match them.
+            $value =~ s/<<$token>>/$val/g;
+            return $value;
+        }
+
+        my $val = $data->{$token} || '';
+        $value =~ s/<<$token>>/$val/g;
+    }
+    return $value;
 }
 
 sub applyTransformationPlugins {
