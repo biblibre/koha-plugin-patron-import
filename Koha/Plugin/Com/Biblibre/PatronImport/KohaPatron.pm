@@ -309,9 +309,13 @@ sub to_koha {
             }
         }
 
-        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_update', [\%patron, $extended_attributes]);
         my $stored_patron = Koha::Patrons->find( $borrowernumber );
         my $stored_extended_attributes = $stored_patron->extended_attributes()->unblessed;
+
+        Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins(
+            'patron_import_patron_update',
+            [\%patron, $extended_attributes, $stored_patron, $stored_extended_attributes]
+        );
 
         # Exclude rules based on koha account.
         my $rules = $conf->{exclusions} || ();
