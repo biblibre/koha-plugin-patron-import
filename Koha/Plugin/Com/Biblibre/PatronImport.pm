@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.5';
+our $VERSION = '1.6';
 
 our $metadata = {
     name => 'Patron import',
@@ -198,6 +198,7 @@ sub install {
             autocardnumber varchar(20) COLLATE utf8_unicode_ci NULL,
             clear_logs INT(5) COLLATE utf8_unicode_ci NULL,
             flow_settings text COLLATE utf8_unicode_ci NULL,
+            plugins_enabled text COLLATE utf8_unicode_ci NULL,
             created_on datetime NOT NULL,
             last_run datetime NOT NULL,
             PRIMARY KEY (id)
@@ -469,7 +470,11 @@ sub upgrade {
         $dbh->do("ALTER TABLE $runs_table ADD COLUMN deleted INT(11) NOT NULL AFTER updated;");
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.5'});
+    if ($DBversion < '1.6') {
+        $dbh->do("ALTER TABLE $import_table ADD COLUMN plugins_enabled text COLLATE utf8_unicode_ci  NULL AFTER flow_settings;");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.6'});
 
     return 1;
 }

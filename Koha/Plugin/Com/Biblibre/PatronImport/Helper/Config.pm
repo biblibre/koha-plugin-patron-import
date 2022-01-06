@@ -51,6 +51,7 @@ sub _load_db_conf {
     $conf->{createonly} = $import_settings->{createonly} || 0;
     $conf->{autocardnumber} = $import_settings->{autocardnumber} || 'no';
     $conf->{clear_logs} = $import_settings->{clear_logs} || 5;
+    $conf->{plugins_enabled} = $import_settings->{plugins_enabled};
 
     $conf->{map} = _load_field_mappings($import_id);
     $conf->{valuesmapping} = _load_value_mappings($import_id);
@@ -155,6 +156,12 @@ sub _load_setup {
     $sth->execute($import_id);
 
     my $values = $sth->fetchrow_hashref;
+    my @plugins_enabled = split(',', $values->{plugins_enabled});
+    $values->{plugins_enabled} = {};
+    foreach my $plugin ( @plugins_enabled ) {
+        $values->{plugins_enabled}{$plugin} = 1;
+    }
+
     my $settings = from_json($values->{flow_settings});
 
     if ( $values->{type} eq 'file-csv' ) {

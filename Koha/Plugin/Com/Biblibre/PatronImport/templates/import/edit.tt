@@ -205,6 +205,27 @@
                         <legend>LDAP settings</legend>
                     </fieldset>
 
+                    [% IF available_plugins %]
+                        <fieldset class="rows" id="plugins">
+                            <legend>Available plugins</legend>
+                            <ol>
+                                [% FOREACH name IN available_plugins.keys %]
+                                    <li>
+                                        [% IF available_plugins.$name.enabled == 1 %]
+                                            <input type="checkbox" id="[% available_plugins.$name.class %]" name="[% available_plugins.$name.class %]" checked>
+                                        [% ELSE %]
+                                            <input type="checkbox" id="[% available_plugins.$name.class %]" name="[% available_plugins.$name.class %]">
+                                        [% END %]
+                                        <label for="[% available_plugins.$name.class %]">[% name %]</label>
+                                        <div class="hint">
+                                            Implements method(s): [% available_plugins.$name.methods.join(', ') %]
+                                        </div>
+                                    </li>
+                                [% END %]
+                            </ol>
+                        </fieldset>
+                    [% END %]
+
                     <input type="submit" value="Save"/>
                 </form>
             </div>
