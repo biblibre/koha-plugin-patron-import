@@ -6,6 +6,7 @@ use JSON qw( to_json from_json );
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::CSVConfig qw( :DEFAULT );
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
 
 sub edit {
     my ( $plugin, $params ) = @_;
@@ -19,6 +20,8 @@ sub edit {
         { code => 'file-csv', name => 'CSV file'},
         { code => 'ldap', name => 'LDAP connection'},
     ];
+
+    my $available_plugins = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::get_candidates();
 
     $template->param(
         import_types => $flow_types,
@@ -35,13 +38,25 @@ sub edit {
         my $autocardnumber = $cgi->param('autocardnumber');
         my $clear_logs = $cgi->param('clear_log_older_than');
         my $flow_settings = _handle_flow_settings($cgi);
+
+        my @plugins_enabled;
+        foreach my $plugin_name ( keys %$available_plugins ) {
+            my $plugin_class = $available_plugins->{$plugin_name}{class};
+            my $enabled = $cgi->param($plugin_class);
+
+            if ($enabled) {
+                push @plugins_enabled, $plugin_class;
+            }
+        }
+
         my $values = {
             name => $name,
             type => $type,
             createonly => $createonly,
             autocardnumber => $autocardnumber,
             clear_logs => $clear_logs,
-            flow_settings => $flow_settings
+            flow_settings => $flow_settings,
+            plugins_enabled => join(',', @plugins_enabled)
         };
 
         if (my $existing = GetFirstFromTable( $plugin->{import_table}, { id => $id } )) {
@@ -61,6 +76,13 @@ sub edit {
     if ( $id ) {
         my $import = GetFirstFromTable($plugin->{import_table}, { id => $id });
 
+        my @plugin_enabled = split(',', $import->{plugins_enabled});
+        foreach my $name ( keys %$available_plugins ) {
+            if ( grep $_ eq $available_plugins->{ $name }{class}, @plugin_enabled ) {
+                $available_plugins->{ $name }{enabled} = 1;
+            }
+        }
+
         my $flow_settings = from_json($import->{flow_settings}) if $import->{flow_settings};
         $template->param(
             id => $import->{id},
@@ -72,6 +94,10 @@ sub edit {
             %{ $flow_settings }
         );
     }
+
+    $template->param(
+        available_plugins => $available_plugins
+    );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
     print $template->output();
