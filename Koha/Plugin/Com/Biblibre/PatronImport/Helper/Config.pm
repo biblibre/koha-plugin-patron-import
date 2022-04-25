@@ -156,7 +156,9 @@ sub _load_setup {
     $sth->execute($import_id);
 
     my $values = $sth->fetchrow_hashref;
-    my @plugins_enabled = split(',', $values->{plugins_enabled});
+
+    my $plugins_enabled_value = $values->{plugins_enabled} // '';
+    my @plugins_enabled = split(',', $plugins_enabled_value);
     $values->{plugins_enabled} = {};
     foreach my $plugin ( @plugins_enabled ) {
         $values->{plugins_enabled}{$plugin} = 1;
