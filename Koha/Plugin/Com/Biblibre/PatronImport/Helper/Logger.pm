@@ -16,7 +16,7 @@ sub new {
         import_id => $import_id,
         plugin => $plugin,
         info_logs => $config->{info_logs} || 0,
-        success_logs => $config->{success_logs} || 0,
+        success_logs => $config->{success_log} || 0,
         config => $config,
         stats => {
             new => 0,
