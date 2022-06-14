@@ -436,8 +436,12 @@ sub to_koha {
     }
 
     if ( $extended_attributes ) {
+	my $already_deleted;
         foreach my $attribute ( @$extended_attributes ) {
-            $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations->delete;
+            unless ( defined($already_deleted->{ $attribute->{code} }) ) {
+                $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations->delete;
+                $already_deleted->{ $attribute->{code} } = 1;
+            }
             eval { $patron_orm->add_extended_attribute($attribute); };
             if ($@) {
                 $import->{logger}->Add(
