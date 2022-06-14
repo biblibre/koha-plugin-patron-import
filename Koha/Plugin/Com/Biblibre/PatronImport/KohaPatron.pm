@@ -436,12 +436,30 @@ sub to_koha {
     }
 
     if ( $extended_attributes ) {
-	my $already_deleted;
         foreach my $attribute ( @$extended_attributes ) {
-            unless ( defined($already_deleted->{ $attribute->{code} }) ) {
-                $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations->delete;
-                $already_deleted->{ $attribute->{code} } = 1;
-            }
+	    my $ext_attr_orm = $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations;
+
+	    # If the attribut is multi-valued, don't delete them.
+	    # If the attribut exists with the same value, don't insert again.
+	    my $delete = 1;
+	    my $insert = 1;
+	    if ( $ext_attr_orm->count() > 1) {
+		$delete = 0;
+		while ( my $a = $ext_attr_orm->next ) {
+		    if ( $a->attribute eq $attribute->{attribute} ) {
+			$insert = 0;
+		    }
+		}
+	    }
+
+	    if ( $delete ) {
+		$ext_attr_orm->delete;
+	    }
+
+	    unless ( $insert ) {
+		next;
+	    }
+
             eval { $patron_orm->add_extended_attribute($attribute); };
             if ($@) {
                 $import->{logger}->Add(
