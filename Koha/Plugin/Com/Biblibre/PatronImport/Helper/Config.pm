@@ -44,6 +44,7 @@ sub _load_db_conf {
     $tables->{exclusions_fields_table} = $plugin->{exclusions_fields_table};
     $tables->{deletions_rules_table} = $plugin->{deletions_rules_table};
     $tables->{deletions_fields_table} = $plugin->{deletions_fields_table};
+    $tables->{extended_attributes_table} = $plugin->{extended_attributes_table};
 
     my $conf;
     my ( $setup, $import_settings) = _load_setup($import_id);
@@ -63,6 +64,7 @@ sub _load_db_conf {
     $conf->{debarments} = _load_debarments($import_id);
     $conf->{exclusions} = _load_exclusions($import_id);
     $conf->{deletions} = _load_deletions($import_id);
+    $conf->{extendedattributes} = _load_extendedattributes($import_id);
 
     return $conf;
 }
@@ -276,6 +278,19 @@ sub _load_deletions {
         }
     }
     return $deletions_rules;
+}
+
+sub _load_extendedattributes {
+    my $import_id = shift;
+    my $extended_attributes_table = $tables->{extended_attributes_table};
+    my $extendedattributes = GetFromTable($extended_attributes_table, { import_id => $import_id});
+
+    my $conf_extendedattributes;
+    foreach my $e ( @$extendedattributes ) {
+	$conf_extendedattributes->{ $e->{code} } = $e;
+    }
+
+    return $conf_extendedattributes
 }
 
 sub _get_table_values {
