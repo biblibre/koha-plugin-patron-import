@@ -1,0 +1,95 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Configure Koha patron imports</title>
+[% INCLUDE 'doc-head-close.inc' %]
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
+<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+
+<div class="main container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-sm-push-2">
+	    <h2> Configure extended attributes behavior</h2>
+                <form method="POST">
+                    <input type="hidden" name="class" value="[% CLASS %]"/>
+                    <input type="hidden" name="method" value="[% METHOD %]"/>
+                    <input type="hidden" name="op" value="save"/>
+
+                    <input type="hidden" name="import_id" value="[% import_id %]"/>
+
+		    <div>
+			<table>
+			    <tr>
+				<th>Attribute type</th>
+				<th>Repeatable</th>
+				<th>If only one value</th>
+				<th>If many values</th>
+			    </tr>
+			    [% FOREACH attr IN attr_types %]
+				<tr>
+				    <td>[% attr.description %] ([% attr.code %])</td>
+				    <td>[% attr.repeatable %]</td>
+				    <td>
+					<select name="[% attr.code %]_one_value">
+					    [% IF attr.behaviour_one_value == 'update' %]
+						<option value="update" selected>Update existing</option>
+					    [% ELSE %]
+						<option value="update">Update existing</option>
+					    [% END %]
+
+					    [% IF attr.behaviour_one_value == 'add' %]
+						<option value="add" selected>Always add</option>
+					    [% ELSE %]
+						<option value="add">Always add</option>
+					    [% END %]
+
+					    [% IF attr.behaviour_one_value == 'add_dedup' %]
+						<option value="add_dedup" selected>Add if the value does not exists</option>
+					    [% ELSE %]
+						<option value="add_dedup">Add if the value does not exists</option>
+					    [% END %]
+
+					    [% IF attr.behaviour_one_value == 'nothing' %]
+						<option value="nothing" selected>Do nothing</option>
+					    [% ELSE %]
+						<option value="nothing">Do nothing</option>
+					    [% END %]
+					</select>
+				    </td>
+				    <td>
+					<select name="[% attr.code %]_many_values" [% IF attr.repeatable == 0 %]disabled[% END %]>
+					    [% IF attr.behaviour_many_values == 'add' %]
+						<option value="add" selected>Always add</option>
+					    [% ELSE %]
+						<option value="add">Always add</option>
+					    [% END %]
+
+					    [% IF attr.behaviour_many_values == 'add_dedup' %]
+						<option value="add_dedup" selected>Add if the value does not exists</option>
+					    [% ELSE %]
+						<option value="add_dedup">Add if the value does not exists</option>
+					    [% END %]
+
+					    [% IF attr.behaviour_many_values == 'nothing' %]
+						<option value="nothing" selected>Do nothing</option>
+					    [% ELSE %]
+						<option value="nothing">Do nothing</option>
+					    [% END %]
+					</select>
+				    </td>
+				</tr>
+			    [% END %]
+			</table>
+		    </div>
+		    <br />
+                    <input type="submit" value="Save"/>
+		</form>
+	</div>
+        <div class="col-sm-2 col-sm-pull-10">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div>
+    </div> <!-- row -->
+</div> <!-- main container-fluid -->

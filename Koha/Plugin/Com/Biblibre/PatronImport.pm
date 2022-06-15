@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.6';
+our $VERSION = '1.7';
 
 our $metadata = {
     name => 'Patron import',
@@ -45,6 +45,7 @@ sub new {
     $self->{exclusions_fields_table} = $self->get_qualified_table_name('exclusions_fields');
     $self->{deletions_rules_table} = $self->get_qualified_table_name('deletions_rules');
     $self->{deletions_fields_table} = $self->get_qualified_table_name('deletions_fields');
+    $self->{extended_attributes_table} = $self->get_qualified_table_name('extended_attributes');
 
     # Used by PatronImport/cron/run-import.pl
     if ( $args->{import_id} ) {
@@ -181,6 +182,13 @@ sub editdeletions {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::Deletions;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Deletions::edit($self, $args);
+}
+
+sub extendedattributes {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::ExtendedAttributes;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::ExtendedAttributes::edit($self, $args);
 }
 
 sub install {
@@ -384,6 +392,18 @@ sub install {
             CONSTRAINT import_debarments_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
+
+    my $extended_attributes_table = $self->get_qualified_table_name('extended_attributes');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $extended_attributes_table (
+            import_id int(11) NOT NULL,
+            code varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            behaviour_one_value varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+            behaviour_many_values varchar(55) COLLATE utf8_unicode_ci NULL,
+            repeatable tinyint COLLATE utf8_unicode_ci NOT NULL,
+            CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
 }
 
 sub upgrade {
@@ -474,7 +494,22 @@ sub upgrade {
         $dbh->do("ALTER TABLE $import_table ADD COLUMN plugins_enabled text COLLATE utf8_unicode_ci  NULL AFTER flow_settings;");
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.6'});
+
+    if ($DBversion < '1.7') {
+	my $extended_attributes_table = $self->get_qualified_table_name('extended_attributes');
+	$dbh->do("
+	    CREATE TABLE IF NOT EXISTS $extended_attributes_table (
+		import_id int(11) NOT NULL,
+		code varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		behaviour_one_value varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+		behaviour_many_values varchar(55) COLLATE utf8_unicode_ci NULL,
+		repeatable tinyint COLLATE utf8_unicode_ci NOT NULL,
+		CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+	    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	");
+    }
+
+    $self->store_data({'__INSTALLED_VERSION__' => '1.7'});
 
     return 1;
 }

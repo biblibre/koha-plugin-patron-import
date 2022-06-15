@@ -11,6 +11,7 @@ use Koha::Patron::Debarments;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( :DEFAULT );
 
 sub new {
@@ -436,32 +437,20 @@ sub to_koha {
     }
 
     if ( $extended_attributes ) {
+	my $extended_attributes_rules = $conf->{extendedattributes};
         foreach my $attribute ( @$extended_attributes ) {
-	    my $ext_attr_orm = $patron_orm->extended_attributes->search( { 'me.code' => $attribute->{code} } )->filter_by_branch_limitations;
+	    my $attr_rules = $extended_attributes_rules->{ $attribute->{code} } || '';
 
-	    # If the attribut is multi-valued, don't delete them.
-	    # If the attribut exists with the same value, don't insert again.
-	    my $delete = 1;
-	    my $insert = 1;
-	    if ( $ext_attr_orm->count() > 1) {
-		$delete = 0;
-		while ( my $a = $ext_attr_orm->next ) {
-		    if ( $a->attribute eq $attribute->{attribute} ) {
-			$insert = 0;
-		    }
-		}
+	    my $error;
+	    unless ( $attr_rules ) {
+		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save($attribute, $patron_orm);
 	    }
 
-	    if ( $delete ) {
-		$ext_attr_orm->delete;
+	    if ( $attr_rules ) {
+		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save_according_to_rules($attribute, $attr_rules, $patron_orm);
 	    }
 
-	    unless ( $insert ) {
-		next;
-	    }
-
-            eval { $patron_orm->add_extended_attribute($attribute); };
-            if ($@) {
+            if ($error) {
                 $import->{logger}->Add(
                     'error',
                     "Unable to add attribute: $@",
