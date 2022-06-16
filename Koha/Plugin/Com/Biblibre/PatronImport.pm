@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.7';
+our $VERSION = '1.8';
 
 our $metadata = {
     name => 'Patron import',
@@ -286,6 +286,7 @@ sub install {
             destination varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             input varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             output varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            operator varchar(55) COLLATE utf8_unicode_ci NULL,
             PRIMARY KEY (import_id, destination, input),
             CONSTRAINT field_mapping_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -507,6 +508,11 @@ sub upgrade {
 		CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
 	    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 	");
+    }
+
+    if ($DBversion < '1.8') {
+        my $value_mappings_table = $self->get_qualified_table_name('value_mappings');
+        $dbh->do("ALTER TABLE $value_mappings_table ADD COLUMN operator varchar(55) COLLATE utf8_unicode_ci NULL AFTER output;");
     }
 
     $self->store_data({'__INSTALLED_VERSION__' => '1.7'});

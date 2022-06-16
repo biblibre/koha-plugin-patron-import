@@ -27,7 +27,6 @@
             var input_value = $(line).find('input[data-id="input"]').val();
             if ( input_value.length > 0 ) {
                 var new_line = clone_line( line );
-console.log(new_line);
                 new_line.appendTo($('table#value_mappings>tbody'));
                 clean_line(line);
 
@@ -80,6 +79,13 @@ Mappings</div>
                             <tr>
                                 <td><input type="text" data-id="input"/></td>
                                 <td><input type="text" data-id="output"/></td>
+                                <td>
+                                    <select data-id="operator"/>
+                                        <option value="">Equals</option>
+                                        <option value="start">Start with</option>
+                                        <option value="contains">Contains</option>
+                                    </select>
+                                </td>
                                 <td><a class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
                             </tr>
 
@@ -92,6 +98,22 @@ Mappings</div>
                                     <td>
                                         <input type="hidden" name="output" value="[% mapping.output %]"/>
                                         [% mapping.output %]
+                                    </td>
+                                    <td>
+                                        <select data-id="operator"/>
+                                            <option value="">Equals</option>
+                                            [% IF mapping.operator == 'start' %]
+                                                <option value="start" selected>Start with</option>
+                                            [% ELSE %]
+                                                <option value="start">Start with</option>
+                                            [% END %]
+
+                                            [% IF mapping.operator == 'contains' %]
+                                                <option value="contains" selected>Contains</option>
+                                            [% ELSE %]
+                                                <option value="contains">Contains</option>
+                                            [% END %]
+                                        </select>
                                     </td>
                                     <td>
                                         <a class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>

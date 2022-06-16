@@ -107,7 +107,11 @@ sub _load_value_mappings {
         my $input = $m->{input};
         my $output = $m->{output};
 
-        $mappings->{$dest}{$input} = $output;
+        #$mappings->{$dest}{$input} = $output;
+        $mappings->{$dest}{$input} = {
+            output => $output,
+            operator => $m->{operator}
+        };
     }
 
     return $mappings;

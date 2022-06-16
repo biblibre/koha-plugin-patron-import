@@ -130,15 +130,26 @@ sub mapvalues {
         return $value;
     }
 
-    if ( my $v = $valuemapping->{$transformedkey} ) {
-        my $rv;
-        ref $v eq "HASH" and $rv = $v->{$value} and return $rv;
-        # No key in transformation for $value.
-        return $value;
-    } else {
-        # No transformation key for $value.
-        return $value;
+    my $v = $valuemapping->{ $transformedkey };
+    foreach my $input ( keys %$v ) {
+        my $rule = $v->{$input};
+        my $output = $rule->{output};
+        my $operator = $rule->{operator} || '';
+
+        unless ( $operator ) {
+            return $output if $input eq $value;
+        }
+
+        if ( $operator eq 'start' ) {
+            return $output if $value =~ /^$input/;
+        }
+
+        if ( $operator eq 'contains' ) {
+            return $output if $value =~ /$input/;
+        }
     }
+
+    return $value;
 }
 
 sub map_patron_object {
