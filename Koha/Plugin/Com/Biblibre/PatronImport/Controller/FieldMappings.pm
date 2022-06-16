@@ -107,6 +107,7 @@ sub editvalues {
     if ( $op eq 'save' ) {
         my @input_values = $cgi->param('input');
         my @output_values = $cgi->param('output');
+        my @operators = $cgi->param('operator');
         my $is_error = 0;
         eval {
             Delete($plugin->{value_mappings_table},
@@ -114,6 +115,7 @@ sub editvalues {
             for my $i ( 0 .. scalar(@input_values) - 1 ) {
                 my $input_value = $input_values[$i];
                 my $output_value = $output_values[$i];
+                my $operator = $operators[$i];
 
                 InsertInTable(
                     $plugin->{value_mappings_table},
@@ -121,7 +123,8 @@ sub editvalues {
                         import_id => $import_id,
                         destination => $destination,
                         input => $input_value,
-                        output => $output_value
+                        output => $output_value,
+                        operator => $operator
                     }
                 );
             }
