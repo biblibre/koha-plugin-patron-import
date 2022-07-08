@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.8';
+our $VERSION = '1.9';
 
 our $metadata = {
     name => 'Patron import',
@@ -35,6 +35,7 @@ sub new {
     $self->{run_logs_table}  = $self->get_qualified_table_name('run_logs');
     $self->{field_mappings_table}  = $self->get_qualified_table_name('field_mappings');
     $self->{value_mappings_table}  = $self->get_qualified_table_name('value_mappings');
+    $self->{value_mappings_default_table}  = $self->get_qualified_table_name('value_mappings_default');
     $self->{transformation_plugins_table}  = $self->get_qualified_table_name('transformation_plugins');
     $self->{matching_points_table}  = $self->get_qualified_table_name('matching_points');
     $self->{protected_table}  = $self->get_qualified_table_name('protected');
@@ -292,6 +293,17 @@ sub install {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
 
+    my $value_mappings_default_table = $self->get_qualified_table_name('value_mappings_default');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $value_mappings_default_table (
+            import_id int(11) NOT NULL,
+            destination varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            default_value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (import_id, destination),
+            CONSTRAINT field_mapping_default_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
+
     my $transformation_plugins_table = $self->get_qualified_table_name('transformation_plugins');
     $dbh->do("
         CREATE TABLE IF NOT EXISTS $transformation_plugins_table (
@@ -513,6 +525,19 @@ sub upgrade {
     if ($DBversion < '1.8') {
         my $value_mappings_table = $self->get_qualified_table_name('value_mappings');
         $dbh->do("ALTER TABLE $value_mappings_table ADD COLUMN operator varchar(55) COLLATE utf8_unicode_ci NULL AFTER output;");
+    }
+
+    if ($DBversion < '1.9') {
+        my $value_mappings_default_table = $self->get_qualified_table_name('value_mappings_default');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $value_mappings_default_table (
+                import_id int(11) NOT NULL,
+                destination varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                default_value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                PRIMARY KEY (import_id, destination),
+                CONSTRAINT field_mapping_default_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
     }
 
     $self->store_data({'__INSTALLED_VERSION__' => '1.7'});

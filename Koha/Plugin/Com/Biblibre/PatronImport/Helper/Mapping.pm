@@ -24,8 +24,8 @@ sub process_mapping {
 
     my $borrower = {};
     my $patron = Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron->new();
-    my ($map, $valuesmapping, $transformationplugins)
-        = @{$conf}{qw(map valuesmapping transformationplugins)};
+    my ($map, $valuesmapping, $valuesmapping_default, $transformationplugins)
+        = @{$conf}{qw(map valuesmapping valuesmapping_default transformationplugins)};
 
     # Calling preprocess hook.
     Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_mapping_preprocess', [$data, $borrower]);
@@ -52,9 +52,10 @@ sub process_mapping {
     foreach my $target ( keys %rmap ) {
         my $source = $rmap{ $target };
 
+	my $default = $valuesmapping_default->{ $target };
         my $value = GetMappedField($data, $source);
         $value = applyTransformationPlugins( $transformationplugins, $target, $value );
-        $borrower->{ $target } = mapvalues( $valuesmapping, $target, $value );
+        $borrower->{ $target } = mapvalues( $valuesmapping, $default, $target, $value );
     }
 
     # Calling postprocess hook.
@@ -124,7 +125,7 @@ sub applyTransformationPlugins {
 }
 
 sub mapvalues {
-    my ($valuemapping, $transformedkey, $value) = @_;
+    my ($valuemapping, $default, $transformedkey, $value) = @_;
 
     if ( !defined($value) || $value eq '' ) {
         return $value;
@@ -147,6 +148,10 @@ sub mapvalues {
         if ( $operator eq 'contains' ) {
             return $output if $value =~ /$input/;
         }
+    }
+
+    if ($default) {
+	return $default;
     }
 
     return $value;
