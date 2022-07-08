@@ -100,7 +100,7 @@ Mappings</div>
                                         [% mapping.output %]
                                     </td>
                                     <td>
-                                        <select data-id="operator"/>
+                                        <select name="operator"/>
                                             <option value="">Equals</option>
                                             [% IF mapping.operator == 'start' %]
                                                 <option value="start" selected>Start with</option>
