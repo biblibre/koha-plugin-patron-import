@@ -123,7 +123,14 @@ Mappings</div>
                         </tbody>
                     </table>
 
-                    <button class="btn btn-default" type="submit" name="op" value="edit"><i class="fa fa-hdd-o" aria-hidden="true"></i> Save</button>
+		    <div style="margin-top: 10px;">
+			<label>If none of this rules match: </label><input type="text" name="default" value="[% default_value %]"/>
+			<div class="hint">Leave empty to let this field unchanged.</div>
+		    </div>
+
+		    <div style="margin-top: 10px;">
+			<button class="btn btn-default" type="submit" name="op" value="edit"><i class="fa fa-hdd-o" aria-hidden="true"></i> Save</button>
+		    </div>
                 </form>
             </div>
         <div class="col-sm-2 col-sm-pull-10">

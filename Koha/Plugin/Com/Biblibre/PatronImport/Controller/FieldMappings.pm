@@ -108,6 +108,7 @@ sub editvalues {
         my @input_values = $cgi->param('input');
         my @output_values = $cgi->param('output');
         my @operators = $cgi->param('operator');
+        my $default = $cgi->param('default');
         my $is_error = 0;
         eval {
             Delete($plugin->{value_mappings_table},
@@ -128,6 +129,18 @@ sub editvalues {
                     }
                 );
             }
+
+            Delete($plugin->{value_mappings_default_table},
+                { import_id => $import_id, destination => $destination });
+
+            InsertInTable(
+                $plugin->{value_mappings_default_table},
+                {
+                    import_id => $import_id,
+                    destination => $destination,
+                    default_value => $default,
+                }
+            );
         };
         if ( $@ ) {
             $template->param( error => $@ );
@@ -143,10 +156,14 @@ sub editvalues {
     my $mappings = GetFromTable($plugin->{value_mappings_table},
         { import_id => $import_id, destination => $destination });
 
+    my $default = GetFirstFromTable($plugin->{value_mappings_default_table},
+        { import_id => $import_id, destination => $destination });
+
     $template->param(
         import_id => $import_id,
         mappings => $mappings,
-        destination => $destination
+        destination => $destination,
+        default_value => $default->{default_value}
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
