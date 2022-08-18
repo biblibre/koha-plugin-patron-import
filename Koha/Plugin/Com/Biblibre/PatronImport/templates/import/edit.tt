@@ -203,6 +203,65 @@
 
                     <fieldset class="rows" id="ldap">
                         <legend>LDAP settings</legend>
+
+                        <ol>
+                            <li>
+                                <label for="ldap_host">Host or IP address :</label>
+                                [% IF ldap_host %]
+                                    <input name="ldap_host" type="text" value="[% ldap_host %]" size="60"/>
+                                [% ELSE %]
+                                    <input name="ldap_host" type="text" size="60"/>
+                                [% END %]
+                                <div class="hint">LDAP server URL or IP address.</div>
+                            </li>
+                            <li>
+                                <label for="anonymous_bind">Anonymous bind :</label>
+                                [% IF anonymous_bind %]
+                                    <input name="anonymous_bind" type="checkbox" checked="checked"/>
+                                [% ELSE %]
+                                    <input name="anonymous_bind" type="checkbox"/>
+                                [% END %]
+                                <div class="hint">
+                                    Check for an authentication without distinguished name (login) and password.
+                                </div>
+                            </li>
+                            <li>
+                                <label for="ldap_user">User (DN) :</label>
+                                [% IF ldap_user %]
+                                    <input name="ldap_user" type="text" value="[% ldap_user %]" size="60"/>
+                                [% ELSE %]
+                                    <input name="ldap_user" type="text" size="60"/>
+                                [% END %]
+                                <div class="hint">Distinguished name of a user allowed to read the directory.</div>
+                            </li>
+                            <li>
+                                <label for="ldap_pass">Password :</label>
+                                [% IF ldap_pass %]
+                                    <input name="ldap_pass" type="text" value="[% ldap_pass %]" size="25"/>
+                                [% ELSE %]
+                                    <input name="ldap_pass" type="text" size="25"/>
+                                [% END %]
+                                <div class="hint">Distinguished name of a user allowed to read the directory.</div>
+                            </li>
+                            <li>
+                                <label for="search_base">Search base :</label>
+                                [% IF search_base %]
+                                    <input name="search_base" type="text" value="[% search_base %]" size="35"/>
+                                [% ELSE %]
+                                    <input name="search_base" type="text" size="35"/>
+                                [% END %]
+                                <div class="hint">The base organisational unit to search.</div>
+                            </li>
+                            <li>
+                                <label for="search_filter">Search filter :</label>
+                                [% IF search_filter %]
+                                    <input name="search_filter" type="text" value="[% search_filter %]" size="35"/>
+                                [% ELSE %]
+                                    <input name="search_filter" type="text" size="35"/>
+                                [% END %]
+                                <div class="hint">A valide LDAP filter. See https://ldap.com/ldap-filters/</div>
+                            </li>
+                        </ol>
                     </fieldset>
 
                     [% IF available_plugins %]

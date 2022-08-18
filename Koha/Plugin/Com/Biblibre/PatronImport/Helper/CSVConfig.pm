@@ -44,7 +44,7 @@ sub FormatSettings {
     $settings->{sep_char} = _formatSepChar($settings->{sep_char});
 
     if ($settings->{quote_char} eq '') {
-	delete $settings->{quote_char};
+        delete $settings->{quote_char};
     }
     return $settings;
 }

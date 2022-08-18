@@ -18,7 +18,7 @@ sub edit {
 
     my  $flow_types = [
         { code => 'file-csv', name => 'CSV file'},
-        { code => 'ldap', name => 'LDAP connection'},
+        { code => 'ldap', name => 'LDAP server'},
     ];
 
     my $available_plugins = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::get_candidates();
@@ -136,6 +136,10 @@ sub _handle_flow_settings {
     if ( $cgi->param('type') eq 'file-csv' ) {
         return _handle_csv($cgi);
     }
+
+    if ($cgi->param('type') eq 'ldap' ) {
+        return _handle_ldap($cgi);
+    }
 }
 
 sub _handle_csv {
@@ -149,6 +153,21 @@ sub _handle_csv {
         quote_char          => $cgi->param('quote_char') || "",
         empty_is_undef      => $cgi->param('empty_is_undef') ? 1 : 0,
         allow_loose_quotes  => $cgi->param('allow_loose_quotes') ? 1 : 0,
+    };
+
+    return to_json($settings);
+}
+
+sub _handle_ldap {
+    my ( $cgi ) = @_;
+
+    my $settings = {
+        ldap_host           => $cgi->param('ldap_host') || '',
+        anonymous_bind      => $cgi->param('anonymous_bind') ? 1 : 0,
+        ldap_user           => $cgi->param('ldap_user') || "",
+        ldap_pass           => $cgi->param('ldap_pass') || "",
+        search_base         => $cgi->param('search_base') || "",
+        search_filter       => $cgi->param('search_filter') || "",
     };
 
     return to_json($settings);
