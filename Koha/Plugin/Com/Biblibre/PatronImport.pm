@@ -59,6 +59,7 @@ sub new {
         my $config = get_conf();
         $config->{info_logs} = $args->{info_logs};
         $config->{success_log} = $args->{success_log};
+        $config->{debug} = $args->{debug};
 
         my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger
             ->new($import_id, $config);
@@ -66,6 +67,7 @@ sub new {
         $self->{id} = $import_id;
         $self->{from} = $args->{from};
         $self->{'dry-run'} = $args->{dry_run};
+        $self->{'debug'} = $args->{debug};
         $self->{config} = $config;
         $self->{logger} = $logger;
     }
@@ -601,6 +603,12 @@ sub run_import {
 
     while ( my $borrower = $source->next ) {
         $borrower->to_koha($self);
+
+	if ( $self->{debug} ) {
+            print "Patron for Koha:\n";
+            warn $borrower->as_text;
+            print "===========================================\n";
+	}
 
         $self->{logger}->Extractstats( $borrower );
     }
