@@ -408,6 +408,7 @@ sub to_koha {
                 $borrowernumber,
                 \%patron
             );
+            $this->{'status'} = 'error';
         }
 
         if ( $result && $result eq 'ok' ) {
@@ -460,7 +461,7 @@ sub add_debarment {
     my $debarment_conf = $self->{import}{config}{debarments};
 
     if ( $debarment_conf->{suspend} ) {
-        eval { AddDebarment(
+        eval { Koha::Patron::Debarments::AddDebarment(
                 {   borrowernumber => $borrowernumber,
                     type           => 'MANUAL',
                     comment        => $debarment_conf->{'comment'},
