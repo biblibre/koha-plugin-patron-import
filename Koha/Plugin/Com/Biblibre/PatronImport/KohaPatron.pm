@@ -564,6 +564,9 @@ sub _patron_exists {
     my $sth = $dbh->prepare($query);
     $sth->execute(@sqlargs);
     my $result = $sth->fetchrow_array;
+
+    Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_exists', [$this, $result]);
+    
     return $result;
 }
 
