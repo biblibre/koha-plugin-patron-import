@@ -142,4 +142,16 @@ sub patron_import_to_skip {
 }
 ```
 
+##### patron_import_patron_exists
+
+Called to define an additionnal condition after matchingpoint result.  
+`$patron` is the mapped incoming patron.
+`$borrowernumber` is the borrowernumber found (or not) by matchingpoint
+
+```perl
+sub patron_import_patron_exists {
+    my ($self, $patron, $borrowernumber) = @_;
+}
+```
+
 Now you created your add-on, you will have to install it. See the [Install / use add-on](install-add-on.md) page.
