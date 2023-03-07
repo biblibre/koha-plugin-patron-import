@@ -8,6 +8,14 @@ To create new import, click on "New import" button on the plugin's home configur
 * **Auto Cardnumber**: Let the plugin create cardnumber for your borrowers
 * **Clear reports and logs older than**: Number if days import reports are kept in database. After, they are deleted
 
+## Export / Import configuration
+
+You can export your configuration by clicking on the link "Export this configuration", an entry appears and you can choose the name of your `YAML` file. 
+
+From here you can also apply a configuration from a (well structured) `YAML` file. On an existing import profile or directly with a new profile.
+
+![Configuration Handler](img/config-handler.png)
+
 ### CSV Settings
 
 * **CSV path**: Path of the CSV file to import. If empty, you should specified it as a parameter of import command
