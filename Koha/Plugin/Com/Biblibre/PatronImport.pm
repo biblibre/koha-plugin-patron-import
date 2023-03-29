@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use C4::Context;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
+use Mojo::JSON qw(decode_json);;
 
 use base qw(Koha::Plugins::Base);
 
@@ -47,6 +48,7 @@ sub new {
     $self->{deletions_rules_table} = $self->get_qualified_table_name('deletions_rules');
     $self->{deletions_fields_table} = $self->get_qualified_table_name('deletions_fields');
     $self->{extended_attributes_table} = $self->get_qualified_table_name('extended_attributes');
+    $self->{patrons_history_table} = $self->get_qualified_table_name('patrons_history');
 
     # Used by PatronImport/cron/run-import.pl
     if ( $args->{import_id} ) {
@@ -64,12 +66,16 @@ sub new {
         my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger
             ->new($import_id, $config);
 
+        my $history = Koha::Plugin::Com::Biblibre::PatronImport::Helper::History
+            ->new($logger);
+
         $self->{id} = $import_id;
         $self->{from} = $args->{from};
         $self->{'dry-run'} = $args->{dry_run};
         $self->{'debug'} = $args->{debug};
         $self->{config} = $config;
         $self->{logger} = $logger;
+        $self->{history} = $history;
     }
 
     return $self;
@@ -192,6 +198,21 @@ sub extendedattributes {
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::ExtendedAttributes;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::ExtendedAttributes::edit($self, $args);
+}
+
+sub api_routes {
+    my ( $self, $args ) = @_;
+
+    my $spec_str = $self->mbf_read('openapi.json');
+    my $spec     = decode_json($spec_str);
+
+    return $spec;
+}
+
+sub api_namespace {
+    my ( $self ) = @_;
+    
+    return 'patron-import';
 }
 
 sub install {
@@ -419,6 +440,16 @@ sub install {
             CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
+
+    my $patrons_history_table = $self->get_qualified_table_name('patrons_history');
+    $dbh->do("
+        CREATE TABLE IF NOT EXISTS $patrons_history_table (
+            run_id int(11) NULL,
+	    borrowernumber int(11) NOT NULL,
+	    action varchar(25) NOT NULL,
+            action_date datetime NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ");
 }
 
 sub upgrade {
@@ -538,6 +569,18 @@ sub upgrade {
                 default_value varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                 PRIMARY KEY (import_id, destination),
                 CONSTRAINT field_mapping_default_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
+    }
+
+    if ($DBversion < '2.0') {
+        my $patrons_history_table = $self->get_qualified_table_name('patrons_history');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $patrons_history_table (
+                run_id int(11) NULL,
+                borrowernumber int(11) NOT NULL,
+                action varchar(25) NOT NULL,
+                action_date datetime NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
     }
