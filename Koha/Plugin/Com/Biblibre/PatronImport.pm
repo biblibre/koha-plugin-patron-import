@@ -8,7 +8,7 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '1.9';
+our $VERSION = '2.0';
 
 our $metadata = {
     name => 'Patron import',
@@ -540,7 +540,7 @@ sub upgrade {
         ");
     }
 
-    $self->store_data({'__INSTALLED_VERSION__' => '1.7'});
+    $self->store_data({'__INSTALLED_VERSION__' => $VERSION});
 
     return 1;
 }
