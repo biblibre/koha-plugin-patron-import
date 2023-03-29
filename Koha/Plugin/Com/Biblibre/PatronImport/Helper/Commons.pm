@@ -35,7 +35,7 @@ sub PatronFields {
 
     return \@columns unless $want_extended_attr;
 
-    my @attribute_types = map { { code => $_->code, description => $_->description } } Koha::Patron::Attribute::Types->search();
+    my @attribute_types = map { { code => $_->code, description => $_->description } } Koha::Patron::Attribute::Types->search->as_list;
     push @columns, @attribute_types;
 
     return \@columns;
