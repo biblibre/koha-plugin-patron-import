@@ -32,7 +32,8 @@ sub SupportedSepChar {
         { code => 'comma', name => "Comma (,)" },
         { code => 'pipe', name => "Pipe (|)" },
         { code => 'tab', name => "Tabulation (\\t)" },
-        { code => 'sharp', name => "Sharp (#)" }
+        { code => 'sharp', name => "Sharp (#)" },
+        { code => 'asterisk', name => "Asterisk (*)" }
     ];
 }
 
@@ -102,6 +103,10 @@ sub _formatSepChar {
 
     if ( $sep_char eq 'sharp' ) {
         return "#";
+    }
+
+    if ( $sep_char eq 'asterisk' ) {
+        return "*";
     }
 
     die "Unsupported char separator: $sep_char";
