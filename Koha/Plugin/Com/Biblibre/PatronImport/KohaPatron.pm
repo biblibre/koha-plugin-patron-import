@@ -698,9 +698,9 @@ sub to_skip {
 }
 
 sub _rule_match {
-    my ($this, $rule, $patron) = @_;
+    my ( $this, $rule, $patron ) = @_;
 
-    unless(keys %{ $rule->{fields} }) {
+    unless ( keys %{ $rule->{fields} } ) {
         return 0;
     }
 
@@ -708,14 +708,27 @@ sub _rule_match {
         $patron = $this;
     }
 
-    foreach my $field (keys %{ $rule->{fields} }) {
-        if (is_set($patron->{$field}) && $patron->{$field} ne $rule->{fields}->{$field}) {
+    foreach my $field ( keys %{ $rule->{fields} } ) {
+        if ( is_set( $patron->{$field} ) && $patron->{$field} ne $rule->{fields}->{$field} ) {
+            return 0;
+        } elsif ( is_empty( $patron->{$field} ) && $rule->{fields}->{$field} eq '' ) {
             return 0;
         }
-        elsif (is_empty($patron->{$field}) && $rule->{fields}->{$field} eq '') {
-            return 0;
+
+        foreach my $xattr ( @{ $patron->{xattr} } ) {
+            my $code      = $xattr->{code};
+            my $attribute = $xattr->{attribute};
+
+            if ( $code eq $field ) {
+                if ( is_set($attribute) && $attribute ne $rule->{fields}->{$field} ) {
+                    return 0;
+                } elsif ( is_empty($attribute) && $rule->{fields}->{$field} eq '' ) {
+                    return 0;
+                }
+            }
         }
     }
+
     return 1;
 }
 
