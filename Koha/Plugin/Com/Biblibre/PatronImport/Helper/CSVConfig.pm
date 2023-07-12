@@ -22,7 +22,8 @@ sub SupportedQuoteChar {
     return [
         { code => 'none', name => 'None' },
         { code => 'simple', name => "Simple quote (')" },
-        { code => 'double', name => 'Double quote (")' }
+        { code => 'double', name => 'Double quote (")' },
+        { code => 'asterisk', name => "Asterisk (*)" }
     ];
 }
 
@@ -77,6 +78,10 @@ sub _formatQuoteChar {
 
     if ( $quote_char eq 'double' ) {
         return "\"";
+    }
+
+    if ( $quote_char eq 'asterisk' ) {
+        return "*";
     }
 
     return '';
