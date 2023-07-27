@@ -8,15 +8,15 @@ use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '2.0';
+our $VERSION = '2.1';
 
 our $metadata = {
     name => 'Patron import',
     author => 'Alex Arnaud <alex.arnaud@biblibre.com>',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2019-07-02',
-    minimum_version => '20.11',
+    date_updated => '2023-07-27',
+    minimum_version => '22.11',
     maximum_version => '',
     version => $VERSION,
 };
@@ -207,6 +207,7 @@ sub install {
             type varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             createonly tinyint COLLATE utf8_unicode_ci NULL,
             autocardnumber varchar(20) COLLATE utf8_unicode_ci NULL,
+            welcome_message tinyint COLLATE utf8_unicode_ci NULL,
             clear_logs INT(5) COLLATE utf8_unicode_ci NULL,
             flow_settings text COLLATE utf8_unicode_ci NULL,
             plugins_enabled text COLLATE utf8_unicode_ci NULL,
@@ -540,6 +541,11 @@ sub upgrade {
                 CONSTRAINT field_mapping_default_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
+    }
+
+    if ($DBversion < '2.1') {
+        my $import_table = $self->get_qualified_table_name('import');
+        $dbh->do("ALTER TABLE $import_table ADD COLUMN welcome_message tinyint COLLATE utf8_unicode_ci NULL;");
     }
 
     $self->store_data({'__INSTALLED_VERSION__' => $VERSION});

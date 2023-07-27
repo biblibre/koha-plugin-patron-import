@@ -52,6 +52,7 @@ sub _load_db_conf {
     $conf->{setup} = $setup;
     $conf->{createonly} = $import_settings->{createonly} || 0;
     $conf->{autocardnumber} = $import_settings->{autocardnumber} || 'no';
+    $conf->{welcome_message} = $import_settings->{welcome_message} || 0;
     $conf->{clear_logs} = $import_settings->{clear_logs} || 5;
     $conf->{plugins_enabled} = $import_settings->{plugins_enabled};
 

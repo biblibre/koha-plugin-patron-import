@@ -94,6 +94,18 @@
                             </li>
 
                             <li>
+                                <label for="welcome_message">Send email to new patrons :</label>
+                                [% IF welcome_message %]
+                                    <input name="welcome_message" type="checkbox" checked="checked"/>
+                                [% ELSE %]
+                                    <input name="welcome_message" type="checkbox"/>
+                                [% END %]
+                                <div class="hint">
+                                    "WELCOME" notice is used.
+                                </div>
+                            </li>
+
+                            <li>
                                 <label for="clear_log_older_than">Clear reports and logs older than:</label>
                                 [% IF clear_logs  %]
                                     <input id="clear_log_older_than" name="clear_log_older_than" type="number" value="[% clear_logs %]" style="width: 4em;" min="1" max="99">

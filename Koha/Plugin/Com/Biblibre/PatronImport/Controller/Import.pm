@@ -36,6 +36,7 @@ sub edit {
         my $type = $cgi->param('type');
         my $createonly = $cgi->param('createonly') ? 1 : 0;
         my $autocardnumber = $cgi->param('autocardnumber');
+        my $welcome_message = $cgi->param('welcome_message') ? 1 : 0;
         my $clear_logs = $cgi->param('clear_log_older_than');
         my $flow_settings = _handle_flow_settings($cgi);
 
@@ -54,6 +55,7 @@ sub edit {
             type => $type,
             createonly => $createonly,
             autocardnumber => $autocardnumber,
+            welcome_message => $welcome_message,
             clear_logs => $clear_logs,
             flow_settings => $flow_settings,
             plugins_enabled => join(',', @plugins_enabled)
@@ -90,6 +92,7 @@ sub edit {
             type => $import->{type},
             createonly => $import->{createonly},
             autocardnumber => $import->{autocardnumber},
+            welcome_message => $import->{welcome_message},
             clear_logs => $import->{clear_logs},
             %{ $flow_settings }
         );
