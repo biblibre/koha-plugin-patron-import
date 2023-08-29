@@ -40,33 +40,38 @@ ARCHIVES_DIR=/home/koha/patrons/archives
 # Logging
 LOG_DIR=/home/koha/patrons/archives/logs
 
-if [ -f $FILE ] then
+if [ ! -d "$LOG_DIR" ]; then
+    echo "Creating directory structure: $LOG_DIR"
+    mkdir -p "$LOG_DIR"
+fi
+
+if [ -f "$FILE" ]; then
     echo "Import file $FILE"
-    if [ -z "$LOG_DIR" ] then
-        perl $PI_PATH/cron/run-import.pl -f $FILE -i <import-id> >> $LOG_DIR/<student>_$TODAY.log 2>&1
+    if [ -n "$LOG_DIR" ]; then
+        perl "$PI_PATH/cron/run-import.pl" -f "$FILE" -i <import-id> >> "$LOG_DIR/<student>_$TODAY.log" 2>&1
     else
-        perl $PI_PATH/cron/run-import.pl -f $FILE -i <import-id> >> /dev/null 2>&1
+        perl "$PI_PATH/cron/run-import.pl" -f "$FILE" -i <import-id> >> /dev/null 2>&1
     fi
 
     if (( ARCHIVES_DAYS > 0 )); then
-        mv $FILE $ARCHIVES_DIR/students_$TODAY.csv
+        mv "$FILE" "$ARCHIVES_DIR/students_$TODAY.csv"
     fi
 fi
 
-if [ -f $FILE2 ] then
+if [ -f "$FILE2" ]; then
     echo "Import file $FILE2"
-    if [ -z "$LOG_DIR" ] then
-        perl $PI_PATH/cron/run-import.pl -f $FILE2 -i <import-id> >> $LOG_DIR/<staff>_$TODAY.log 2>&1
+    if [ -n "$LOG_DIR" ]; then
+        perl "$PI_PATH/cron/run-import.pl" -f "$FILE2" -i <import-id> >> "$LOG_DIR/<staff>_$TODAY.log" 2>&1
     else
-        perl $PI_PATH/cron/run-import.pl -f $FILE2 -i <import-id> >> /dev/null 2>&1
+        perl "$PI_PATH/cron/run-import.pl" -f "$FILE2" -i <import-id> >> /dev/null 2>&1
     fi
 
     if (( ARCHIVES_DAYS > 0 )); then
-        mv $FILE2 $ARCHIVES_DIR/<staff>_$TODAY.csv
+        mv "$FILE2" "$ARCHIVES_DIR/<staff>_$TODAY.csv"
     fi
 fi
 
 # Purge
 if (( ARCHIVES_DAYS > 0 )); then
-    find $ARCHIVES_DIR -maxdepth 1 -mtime +$ARCHIVES_DAYS -name '*.csv' -delete
+    find "$ARCHIVES_DIR" -maxdepth 1 -mtime "+$ARCHIVES_DAYS" -name '*.csv' -delete
 fi
