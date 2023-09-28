@@ -173,7 +173,10 @@ sub map_patron_object {
         if ( exists $borrowers_fields->{ $key } ) {
             $patron->{ $key } = $borrower->{ $key };
         } else {
-            push @{ $patron->{xattr} }, { code => $key, attribute => $borrower->{ $key } };
+            if(ref($borrower->{$key}) ne 'ARRAY') {
+                $borrower->{$key} = [$borrower->{$key}];
+            }
+            push @{ $patron->{xattr} }, { code => $key, attribute => $_ } for @{$borrower->{$key}};
         }
     }
 }
