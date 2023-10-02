@@ -97,6 +97,19 @@ sub deleteimport {
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::Import::delete($self, $args);
 }
 
+sub configexport {
+    my ($self, $args) = @_;  
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler::configexport($self, $args);
+}
+sub configapply {
+    my ($self, $args) = @_;
+
+    use Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler;
+    Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler::configapply($self, $args);
+}
+
 sub editfieldmappings {
     my ($self, $args) = @_;
 
