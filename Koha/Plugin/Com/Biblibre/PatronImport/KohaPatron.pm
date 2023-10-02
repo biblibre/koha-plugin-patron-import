@@ -63,7 +63,7 @@ sub _as_text {
     foreach my $key ( sort keys %$this ) {
         if ( $key ne "xattr" && $key ne "permissions" && $key ne "setup" ) {
             my $value = $this->{ $key } // '';
-            $out .= "$key: $value\n";
+            $out .= "\t$key: $value\n";
         }
     }
     return $out;
@@ -73,11 +73,11 @@ sub _xattr_as_text {
     my $this = shift;
     my $out;
 
-    $out .= "Extended attributes:\n" if $this->{xattr};
+    $out .= "\tExtended attributes:\n" if $this->{xattr};
     foreach my $xattr ( @{ $this->{xattr} } ) {
         my $code = $xattr->{code};
         my $value = $xattr->{attribute} || '';
-        $out .= "    - $code: $value\n" if $value ne '';
+        $out .= "\t\t- $code: $value\n" if $value ne '';
     }
     $out .= "\n";
     return $out;
@@ -593,6 +593,11 @@ sub _set_default {
             $patron->{$default_field} = $defaults->{$default_field};
             $this->{$default_field} = $defaults->{$default_field};
             my $replaced = $patron->{$default_field};
+
+            if ( $conf->{debug} ) {
+                print "\t$default_field replaced with \"$replaced\"\n";
+            }
+
             $this->{import}->{logger}->Add(
                 'info',
                 "$default_field Replaced with $replaced",
@@ -600,6 +605,10 @@ sub _set_default {
                 $patron
             );
         }
+    }
+
+    if ( $conf->{debug} ) {
+        print "\n";
     }
 }
 

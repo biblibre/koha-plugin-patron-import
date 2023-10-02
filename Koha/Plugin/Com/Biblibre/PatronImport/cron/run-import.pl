@@ -8,13 +8,14 @@ use Koha::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
-my ( $from, $import_id, $dry_run, $info_logs, $success_log );
+my ( $from, $import_id, $dry_run, $info_logs, $success_log, $debug );
 GetOptions (
     'from|f=s' => \$from,
     'import-id|i=i' => \$import_id,
     'dry-run' => \$dry_run,
     'info-logs' => \$info_logs,
-    'success-log' => \$success_log
+    'success-log' => \$success_log,
+    'debug' => \$debug
 );
 
 if (!$import_id && $from) {
@@ -38,7 +39,8 @@ foreach my $import ( @$imports ) {
         from            => $from,
         dry_run         => $dry_run,
         info_logs       => $info_logs,
-        success_log     => $success_log
+        success_log     => $success_log,
+        debug           => $debug
     });
 
     $plugin->run_import();

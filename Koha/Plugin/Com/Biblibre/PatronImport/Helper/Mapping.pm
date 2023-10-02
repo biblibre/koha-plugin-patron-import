@@ -22,6 +22,15 @@ sub process_mapping {
 
     my $conf = get_conf;
 
+    if ( $conf->{debug} ) {
+        print "Raw data:\n";
+        foreach my $key ( keys %$data ) {
+            my $v = $data->{ $key } || '';
+            print "\t$key: $v\n";
+        }
+        print "\n";
+    }
+
     my $borrower = {};
     my $patron = Koha::Plugin::Com::Biblibre::PatronImport::KohaPatron->new();
     my ($map, $valuesmapping, $valuesmapping_default, $transformationplugins)
