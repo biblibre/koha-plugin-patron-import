@@ -17,6 +17,7 @@ sub new {
         plugin => $plugin,
         info_logs => $config->{info_logs} || 0,
         success_logs => $config->{success_log} || 0,
+        dry_run => $config->{dry_run} || 0,
         config => $config,
         stats => {
             new => 0,
@@ -33,19 +34,20 @@ sub new {
 
 sub InitRun {
     my ( $self ) = @_;
-
+    
     my $now = DateTime->now( time_zone => 'local' );
     my $run_id = InsertInTable(
         $self->{plugin}{runs_table},
-        {
-            import_id   => $self->{import_id},
-            start       => $now->ymd . ' ' . $now->hms,
-            new         => 0,
-            updated     => 0,
-            deleted     => 0,
-            skipped     => 0,
-            error       => 0
-        }
+       {   import_id => $self->{import_id},
+            start     => $now->ymd . ' ' . $now->hms,
+            new       => 0,
+            updated   => 0,
+            deleted   => 0,
+            skipped   => 0,
+            error     => 0,
+            dry_run   => $self->{dry_run}
+}
+
     );
 
     $self->{run_id} = $run_id;
