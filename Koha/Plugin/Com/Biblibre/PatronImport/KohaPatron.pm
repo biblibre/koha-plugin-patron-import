@@ -718,7 +718,7 @@ sub _rule_match {
     foreach my $field ( keys %{ $rule->{fields} } ) {
         if ( is_set( $patron->{$field} ) && $patron->{$field} ne $rule->{fields}->{$field} ) {
             return 0;
-        } elsif ( is_empty( $patron->{$field} ) && $rule->{fields}->{$field} eq '' ) {
+        } elsif ( is_empty( $patron->{$field} ) && $rule->{fields}->{$field} ne '' ) {
             return 0;
         }
 
@@ -729,7 +729,7 @@ sub _rule_match {
             if ( $code eq $field ) {
                 if ( is_set($attribute) && $attribute ne $rule->{fields}->{$field} ) {
                     return 0;
-                } elsif ( is_empty($attribute) && $rule->{fields}->{$field} eq '' ) {
+                } elsif ( is_empty($attribute) && $rule->{fields}->{$field} ne '' ) {
                     return 0;
                 }
             }
