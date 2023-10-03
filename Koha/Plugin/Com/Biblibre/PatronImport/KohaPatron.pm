@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use C4::Context;
 use C4::Members;
+use C4::Letters qw( GetPreparedLetter EnqueueLetter );
 use Koha::Patron;
 use Koha::Patrons;
 use Koha::Patron::Attribute::Types;
@@ -439,6 +440,34 @@ sub to_koha {
 
     $this->{'borrowernumber'} = $borrowernumber;
     my $patron_orm = Koha::Patrons->find($borrowernumber);
+
+     if ($conf->{welcome_message}) {
+            my $emailaddr = $patron_orm->email;
+            if ($emailaddr) {
+            eval {
+                    my $letter = GetPreparedLetter(
+                        module      => 'members',
+                        letter_code => 'WELCOME',
+                        branchcode  => $patron_orm->branchcode,
+                        lang        => $patron_orm->lang || 'default',
+                        tables      => {
+                            'branches'  => $patron_orm->branchcode,
+                            'borrowers' => $patron_orm->borrowernumber,
+                        },
+                        want_librarian => 1,
+                    ) or return;
+
+                    my $message_id = EnqueueLetter(
+                        {
+                            letter                 => $letter,
+                            borrowernumber         => $patron_orm->id,
+                            to_address             => $emailaddr,
+                            message_transport_type => 'email'
+                        }
+                    );
+                };
+            }
+        }
 
     if ( $exists == 0 or $protect_message_preferences == 0 ) {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
