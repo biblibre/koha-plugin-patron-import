@@ -1,0 +1,142 @@
+
+{
+  "/history/by_run/{run_id}": {
+    "get": {
+      "x-mojo-to": "Com::Biblibre::PatronImport::Controller::History#by_run",
+      "operationId": "PatronImportHistoryRun",
+      "tags": ["patron-import"],
+      "parameters": [
+        {
+          "name": "run_id",
+          "in": "path",
+          "description": "Internal run identifier",
+          "required": true,
+          "type": "integer"
+        },
+        {
+          "name": "_match",
+          "in": "query",
+          "description": "Matching criteria",
+          "required": false,
+          "type": "string",
+          "enum": [
+            "contains",
+            "exact",
+            "starts_with",
+            "ends_with"          ]
+        },
+        {
+          "name": "_order_by",
+          "in": "query",
+          "description": "Sorting criteria",
+          "required": false,
+          "type": "array",
+          "collectionFormat": "csv",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "_page",
+          "in": "query",
+          "description": "Page number, for paginated object listing",
+          "required": false,
+          "type": "integer"
+        },
+        {
+          "name": "_per_page",
+          "in": "query",
+          "description": "Page size, for paginated object listing",
+          "required": false,
+          "type": "integer"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "A run patron history",
+          "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                    "run_id": {
+                      "description": "The run identifier",
+                      "type": "integer"
+                    },
+                    "borrowernumber": {
+                        "description": "The patron identifier",
+                        "type": "integer"
+                    },
+                    "action": {
+                        "description": "The action name",
+                        "type": "string"
+                    },
+                    "action_date": {
+                      "description": "The action date",
+                      "type": "string"
+                    }
+                }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "No permission",
+          "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "description": "Error message",
+              "type": "string"
+            }
+          }
+        }
+        },
+        "404": {
+          "description": "No history for the given run",
+          "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "description": "Error message",
+              "type": "string"
+            }
+          }
+        }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "description": "Error message",
+              "type": "string"
+            }
+          }
+        }
+        }
+      },
+      "x-koha-authorization": {
+        "permissions": {
+          "parameters": "reports"
+        }
+      }
+    }
+  }
+}
+  

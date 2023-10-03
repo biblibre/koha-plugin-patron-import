@@ -12,6 +12,7 @@ use Koha::Patron::Debarments;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::History;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( :DEFAULT );
 
 sub new {
@@ -264,6 +265,8 @@ sub to_koha {
 		    '',
 		    \%patron
 		);
+
+		$import->{history}->is_deleted($borrowernumber);
 		return;
 	    }
         }
@@ -366,6 +369,8 @@ sub to_koha {
             \%kept_patron
         );
 
+	$import->{history}->is_updated($borrowernumber);
+
         $this->{'status'} = 'updated';
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_updated', $borrowernumber);
     } else {
@@ -400,6 +405,8 @@ sub to_koha {
             $borrowernumber,
             \%patron
         );
+
+	$import->{history}->is_created($borrowernumber);
 
         my $result = $this->add_debarment($borrowernumber);
         if ( $result && $result eq 'error' ) {
