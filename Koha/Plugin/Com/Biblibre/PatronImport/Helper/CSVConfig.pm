@@ -22,7 +22,8 @@ sub SupportedQuoteChar {
     return [
         { code => 'none', name => 'None' },
         { code => 'simple', name => "Simple quote (')" },
-        { code => 'double', name => 'Double quote (")' }
+        { code => 'double', name => 'Double quote (")' },
+        { code => 'asterisk', name => "Asterisk (*)" }
     ];
 }
 
@@ -32,7 +33,8 @@ sub SupportedSepChar {
         { code => 'comma', name => "Comma (,)" },
         { code => 'pipe', name => "Pipe (|)" },
         { code => 'tab', name => "Tabulation (\\t)" },
-        { code => 'sharp', name => "Sharp (#)" }
+        { code => 'sharp', name => "Sharp (#)" },
+        { code => 'asterisk', name => "Asterisk (*)" }
     ];
 }
 
@@ -78,6 +80,10 @@ sub _formatQuoteChar {
         return "\"";
     }
 
+    if ( $quote_char eq 'asterisk' ) {
+        return "*";
+    }
+
     return '';
 }
 
@@ -102,6 +108,10 @@ sub _formatSepChar {
 
     if ( $sep_char eq 'sharp' ) {
         return "#";
+    }
+
+    if ( $sep_char eq 'asterisk' ) {
+        return "*";
     }
 
     die "Unsupported char separator: $sep_char";
