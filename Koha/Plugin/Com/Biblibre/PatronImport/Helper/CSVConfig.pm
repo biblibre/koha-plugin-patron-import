@@ -107,4 +107,75 @@ sub _formatSepChar {
     die "Unsupported char separator: $sep_char";
 }
 
+sub UnformatSettings {
+    my ( $settings ) = @_;
+
+    $settings->{eol} = _unformatEOL($settings->{eol});
+    $settings->{quote_char} = _unformatQuoteChar($settings->{quote_char});
+    $settings->{sep_char} = _unformatSepChar($settings->{sep_char});
+
+    if ($settings->{quote_char} eq '') {
+        delete $settings->{quote_char};
+    }
+    return $settings;
+}
+
+sub _unformatEOL {
+    my ( $eol ) = @_;
+
+    if ( $eol eq "\n" ) {
+        return 'line_feed';
+    }
+
+    if ( $eol eq "\r" ) {
+        return 'carriage_return';
+    }
+
+    if ( $eol eq "\r\n" ) {
+        return 'carriage_return_line_feed';
+    }
+
+    die "Unsupported line end: $eol"
+}
+
+sub _unformatQuoteChar {
+    my ( $quote_char ) = @_;
+
+    if ( $quote_char eq "'" ) {
+        return "simple";
+    }
+
+    if ( $quote_char eq "\"" ) {
+        return "double";
+    }
+
+    return '';
+}
+
+sub _unformatSepChar {
+    my ( $sep_char ) = @_;
+
+    if ( $sep_char eq ';' ) {
+        return "semicolon";
+    }
+
+    if ( $sep_char eq ',' ) {
+        return "comma";
+    }
+
+    if ( $sep_char eq '|' ) {
+        return "pipe";
+    }
+
+    if ( $sep_char eq "\t" ) {
+        return "tab";
+    }
+
+    if ( $sep_char eq '#' ) {
+        return "sharp";
+    }
+
+    die "Unsupported char separator: $sep_char";
+}
+
 1;
