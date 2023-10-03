@@ -61,6 +61,12 @@
 				    </td>
 				    <td>
 					<select name="[% attr.code %]_many_values" [% IF attr.repeatable == 0 %]disabled[% END %]>
+					    [% IF attr.behaviour_many_values == 'update' %]
+						<option value="update" selected>Update existing</option>
+					    [% ELSE %]
+						<option value="update">Update existing</option>
+					    [% END %]
+					    
 					    [% IF attr.behaviour_many_values == 'add' %]
 						<option value="add" selected>Always add</option>
 					    [% ELSE %]
