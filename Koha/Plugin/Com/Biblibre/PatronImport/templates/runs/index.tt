@@ -20,6 +20,10 @@
     #toolbar {
         margin-bottom: 25px;
     }
+    .dry-run td:not(.actions){
+        font-style: italic;
+        color: grey;
+    }
 </style>
 </head>
 <body>
@@ -69,7 +73,7 @@ View runs</div>
                             </thead>
                             <tbody>
                                 [% FOREACH run IN runs %]
-                                    <tr>
+                                    <tr [% IF run.dry_run == 1 %]class= "dry-run"[% END %]>
                                         <td>#[% run.id %]</td>
                                         <td>[% run.start %]</td>
                                         <td>[% run.end %]</td>
@@ -79,12 +83,15 @@ View runs</div>
                                         <td>[% run.skipped %]</td>
                                         <td>[% run.error %]</td>
                                         <td><strong>[% run.total %]</strong></td>
-                                        <td>
+                                        <td class='actions'>
                                             <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundetails&id=[% run.id %]">Details</a> 
                                             <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=runlogs&id=[% run.id %]">Logs</a> 
                                             <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=rundelete&id=[% run.id %]">Delete</a> 
                                         </td>
-                                        <td><input type="checkbox" name="delete" value="[% run.id %]" class="delete"></td>
+                                        <td>
+                                            <input type="checkbox" name="delete" value="[% run.id %]" class="delete">
+                                            [% IF run.dry_run == 1 %](test mode)[% END %]
+                                        </td>
                                     </tr>
                                 [% END %]
                             </tbody>
