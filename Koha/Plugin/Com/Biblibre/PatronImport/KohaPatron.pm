@@ -104,10 +104,9 @@ sub addXattributes {
 
 sub is_xattr {
     my $xattr = shift;
+    my $attribute_types = { map { $_->code => $_->unblessed } Koha::Patron::Attribute::Types->search->as_list };
 
-    my $attribute_type = Koha::Patron::Attribute::Types->find($xattr);
-
-    if ( $attribute_type ) {
+    if ( $attribute_types->{$xattr} ) {
         return 1;
     }
 
@@ -473,33 +472,19 @@ sub to_koha {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
     }
 
-    if ( $extended_attributes ) {
-	my $extended_attributes_rules = $conf->{extendedattributes};
-        foreach my $attribute ( @$extended_attributes ) {
-	    my $attr_rules = $extended_attributes_rules->{ $attribute->{code} } || '';
+    if ($extended_attributes) {
+        my $extended_attributes_rules = $conf->{extendedattributes};
+        my $error =
+          Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::process(
+            $extended_attributes, $extended_attributes_rules, $patron_orm );
 
-	    my $error;
-	    unless ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save($attribute, $patron_orm);
-	    }
-
-	    if ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save_according_to_rules($attribute, $attr_rules, $patron_orm);
-	    }
-
-            if ($error) {
-                $import->{logger}->Add(
-                    'error',
-                    "Unable to add attribute: $@",
-                    $borrowernumber,
-                    \%patron
-                );
-                $this->{'status'} = 'error';
-            }
+        if ($error) {
+            $import->{logger}
+              ->Add( 'error', $error, $borrowernumber, \%patron );
+            $this->{'status'} = 'error';
         }
     }
 
-    $borrowernumber;
 }
 
 sub add_debarment {
@@ -745,22 +730,24 @@ sub _rule_match {
     }
 
     foreach my $field ( keys %{ $rule->{fields} } ) {
-        if ( is_set( $patron->{$field} ) && $patron->{$field} ne $rule->{fields}->{$field} ) {
-            return 0;
-        } elsif ( is_empty( $patron->{$field} ) && $rule->{fields}->{$field} ne '' ) {
-            return 0;
-        }
+        if( is_xattr($field) ) {
+            foreach my $xattr ( @{ $patron->{xattr} } ) {
+                my $code      = $xattr->{code};
+                my $attribute = $xattr->{attribute};
 
-        foreach my $xattr ( @{ $patron->{xattr} } ) {
-            my $code      = $xattr->{code};
-            my $attribute = $xattr->{attribute};
-
-            if ( $code eq $field ) {
-                if ( is_set($attribute) && $attribute ne $rule->{fields}->{$field} ) {
-                    return 0;
-                } elsif ( is_empty($attribute) && $rule->{fields}->{$field} ne '' ) {
-                    return 0;
+                if ( $code eq $field ) {
+                    if ( is_set($attribute) && $attribute ne $rule->{fields}->{$field} ) {
+                        return 0;
+                    } elsif ( is_empty($attribute) && $rule->{fields}->{$field} ne '' ) {
+                        return 0;
+                    }
                 }
+            }
+        } else {
+            if ( is_set( $patron->{$field} ) && $patron->{$field} ne $rule->{fields}->{$field} ) {
+                return 0;
+            } elsif ( is_empty( $patron->{$field} ) && $rule->{fields}->{$field} ne '' ) {
+                return 0;
             }
         }
     }

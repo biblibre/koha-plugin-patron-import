@@ -40,17 +40,18 @@
 						<option value="update">Update existing</option>
 					    [% END %]
 
-					    [% IF attr.behaviour_one_value == 'add' %]
-						<option value="add" selected>Always add</option>
-					    [% ELSE %]
-						<option value="add">Always add</option>
-					    [% END %]
-
-					    [% IF attr.behaviour_one_value == 'add_dedup' %]
-						<option value="add_dedup" selected>Add if the value does not exists</option>
-					    [% ELSE %]
-						<option value="add_dedup">Add if the value does not exists</option>
-					    [% END %]
+						[% IF attr.repeatable == 1 %]
+							[% IF attr.behaviour_one_value == 'add' %]
+								<option value="add" selected>Always add</option>
+							[% ELSE %]
+								<option value="add">Always add</option>
+							[% END %]
+							[% IF attr.behaviour_one_value == 'add_dedup' %]
+								<option value="add_dedup" selected>Add if the value does not exists</option>
+							[% ELSE %]
+								<option value="add_dedup">Add if the value does not exists</option>
+							[% END %]
+						[% END %]
 
 					    [% IF attr.behaviour_one_value == 'nothing' %]
 						<option value="nothing" selected>Do nothing</option>
@@ -61,6 +62,12 @@
 				    </td>
 				    <td>
 					<select name="[% attr.code %]_many_values" [% IF attr.repeatable == 0 %]disabled[% END %]>
+					    [% IF attr.behaviour_many_values == 'update' %]
+						<option value="update" selected>Update existing</option>
+					    [% ELSE %]
+						<option value="update">Update existing</option>
+					    [% END %]
+					    
 					    [% IF attr.behaviour_many_values == 'add' %]
 						<option value="add" selected>Always add</option>
 					    [% ELSE %]
