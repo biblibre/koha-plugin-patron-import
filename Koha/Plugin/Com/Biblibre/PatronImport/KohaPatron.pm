@@ -473,33 +473,19 @@ sub to_koha {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
     }
 
-    if ( $extended_attributes ) {
-	my $extended_attributes_rules = $conf->{extendedattributes};
-        foreach my $attribute ( @$extended_attributes ) {
-	    my $attr_rules = $extended_attributes_rules->{ $attribute->{code} } || '';
+    if ($extended_attributes) {
+        my $extended_attributes_rules = $conf->{extendedattributes};
+        my $error =
+          Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::process(
+            $extended_attributes, $extended_attributes_rules, $patron_orm );
 
-	    my $error;
-	    unless ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save($attribute, $patron_orm);
-	    }
-
-	    if ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save_according_to_rules($attribute, $attr_rules, $patron_orm);
-	    }
-
-            if ($error) {
-                $import->{logger}->Add(
-                    'error',
-                    "Unable to add attribute: $@",
-                    $borrowernumber,
-                    \%patron
-                );
-                $this->{'status'} = 'error';
-            }
+        if ($error) {
+            $import->{logger}
+              ->Add( 'error', $error, $borrowernumber, \%patron );
+            $this->{'status'} = 'error';
         }
     }
 
-    $borrowernumber;
 }
 
 sub add_debarment {
