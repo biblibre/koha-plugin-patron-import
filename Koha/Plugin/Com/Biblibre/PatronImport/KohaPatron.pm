@@ -104,10 +104,9 @@ sub addXattributes {
 
 sub is_xattr {
     my $xattr = shift;
+    my $attribute_types = { map { $_->code => $_->unblessed } Koha::Patron::Attribute::Types->search->as_list };
 
-    my $attribute_type = Koha::Patron::Attribute::Types->find($xattr);
-
-    if ( $attribute_type ) {
+    if ( $attribute_types->{$xattr} ) {
         return 1;
     }
 
