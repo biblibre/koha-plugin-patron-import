@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use C4::Context;
 use C4::Members;
+use C4::Letters qw( GetPreparedLetter EnqueueLetter );
 use Koha::Patron;
 use Koha::Patrons;
 use Koha::Patron::Attribute::Types;
@@ -103,10 +104,9 @@ sub addXattributes {
 
 sub is_xattr {
     my $xattr = shift;
+    my $attribute_types = { map { $_->code => $_->unblessed } Koha::Patron::Attribute::Types->search->as_list };
 
-    my $attribute_type = Koha::Patron::Attribute::Types->find($xattr);
-
-    if ( $attribute_type ) {
+    if ( $attribute_types->{$xattr} ) {
         return 1;
     }
 
@@ -440,37 +440,51 @@ sub to_koha {
     $this->{'borrowernumber'} = $borrowernumber;
     my $patron_orm = Koha::Patrons->find($borrowernumber);
 
+     if ($conf->{welcome_message}) {
+            my $emailaddr = $patron_orm->email;
+            if ($emailaddr) {
+            eval {
+                    my $letter = GetPreparedLetter(
+                        module      => 'members',
+                        letter_code => 'WELCOME',
+                        branchcode  => $patron_orm->branchcode,
+                        lang        => $patron_orm->lang || 'default',
+                        tables      => {
+                            'branches'  => $patron_orm->branchcode,
+                            'borrowers' => $patron_orm->borrowernumber,
+                        },
+                        want_librarian => 1,
+                    ) or return;
+
+                    my $message_id = EnqueueLetter(
+                        {
+                            letter                 => $letter,
+                            borrowernumber         => $patron_orm->id,
+                            to_address             => $emailaddr,
+                            message_transport_type => 'email'
+                        }
+                    );
+                };
+            }
+        }
+
     if ( $exists == 0 or $protect_message_preferences == 0 ) {
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::MessagePreferences::set($borrowernumber, \%patron);
     }
 
-    if ( $extended_attributes ) {
-	my $extended_attributes_rules = $conf->{extendedattributes};
-        foreach my $attribute ( @$extended_attributes ) {
-	    my $attr_rules = $extended_attributes_rules->{ $attribute->{code} } || '';
+    if ($extended_attributes) {
+        my $extended_attributes_rules = $conf->{extendedattributes};
+        my $error =
+          Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::process(
+            $extended_attributes, $extended_attributes_rules, $patron_orm );
 
-	    my $error;
-	    unless ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save($attribute, $patron_orm);
-	    }
-
-	    if ( $attr_rules ) {
-		$error = Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::save_according_to_rules($attribute, $attr_rules, $patron_orm);
-	    }
-
-            if ($error) {
-                $import->{logger}->Add(
-                    'error',
-                    "Unable to add attribute: $@",
-                    $borrowernumber,
-                    \%patron
-                );
-                $this->{'status'} = 'error';
-            }
+        if ($error) {
+            $import->{logger}
+              ->Add( 'error', $error, $borrowernumber, \%patron );
+            $this->{'status'} = 'error';
         }
     }
 
-    $borrowernumber;
 }
 
 sub add_debarment {

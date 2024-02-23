@@ -73,9 +73,5 @@ fi
 
 # Purge
 if (( ARCHIVES_DAYS > 0 )); then
-<<<<<<< HEAD
     find "$ARCHIVES_DIR" -maxdepth 1 -mtime "+$ARCHIVES_DAYS" -name '*.csv' -delete
-=======
-    find $ARCHIVES_DIR -maxdepth 1 -mtime +$ARCHIVES_DAYS -name '*.csv' -delete
->>>>>>> add-array-format-xattr
 fi
