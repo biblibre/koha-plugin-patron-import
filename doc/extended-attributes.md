@@ -22,7 +22,6 @@ So we make possible to not erase non-repeatbale attributes (and so add values) t
 ### Extended attributes behavior
 
 * **Update existing**: erase the existing value. Avalaible only in the case it already have only one value,
-* **Always add**: will always add the value to the attribute,
 * **Add if the value does not exists**: check if the incoming match an existing value. If yes do nothing. Else add a new one,
 * **Do nothing**: Nothing is added or updated,
 
