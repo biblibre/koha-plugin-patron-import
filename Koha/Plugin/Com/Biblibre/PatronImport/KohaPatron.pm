@@ -474,14 +474,16 @@ sub to_koha {
 
     if ($extended_attributes) {
         my $extended_attributes_rules = $conf->{extendedattributes};
-        my $error =
+        my @errors =
           Koha::Plugin::Com::Biblibre::PatronImport::Helper::ExtendedAttributes::process(
             $extended_attributes, $extended_attributes_rules, $patron_orm );
 
-        if ($error) {
-            $import->{logger}
-              ->Add( 'error', $error, $borrowernumber, \%patron );
-            $this->{'status'} = 'error';
+        if (@errors) {
+            foreach my $error (@errors) {
+                $import->{logger}
+                  ->Add( 'error', $error, $borrowernumber, \%patron );
+                $this->{'status'} = 'error';
+            }
         }
     }
 

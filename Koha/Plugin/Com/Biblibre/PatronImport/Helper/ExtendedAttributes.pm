@@ -69,14 +69,18 @@ sub process {
 
     $patron_orm->extended_attributes->search( { code => { -in => [ keys %new_xattrs ] } } )->delete;
 
+    my @errors;
     foreach my $code ( keys %new_xattrs ) {
         my $attributes = $new_xattrs{$code};
         foreach my $attribute ( @{$attributes} ) {
             eval { $patron_orm->add_extended_attribute( { code => $code, attribute => $attribute } ); };
             if ($@) {
-                return "$code => $attribute Unable to add attribute: $@";
+                push @errors, "$code => $attribute Unable to add attribute: $@";
             }
         }
+    }
+    if (@errors) {
+        return @errors;
     }
 }
 
