@@ -23,12 +23,6 @@ sub process {
                     if ( $rules->{$code}->{behaviour_one_value} eq 'update' ) {
                         push @{ $new_xattrs{$code} }, $value;
                     }
-                    if (   $rules->{$code}->{behaviour_one_value} eq 'add'
-                        && $rules->{$code}->{repeatable} == 1 )
-                    {
-                        push @{ $patron_attrs->{$code} }, $value;
-                        $new_xattrs{$code} = $patron_attrs->{$code};
-                    }
                     if (   $rules->{$code}->{behaviour_one_value} eq 'add_dedup'
                         && $rules->{$code}->{repeatable} == 1 )
                     {
@@ -43,12 +37,6 @@ sub process {
                 if ( $count > 1 ) {
                     if ( $rules->{$code}->{behaviour_many_values} eq 'update' ) {
                         push @{ $new_xattrs{$code} }, $value;
-                    }
-                    if (   $rules->{$code}->{behaviour_many_values} eq 'add'
-                        && $rules->{$code}->{repeatable} == 1 )
-                    {
-                        push @{ $patron_attrs->{$code} }, $value;
-                        $new_xattrs{$code} = $patron_attrs->{$code};
                     }
                     if (   $rules->{$code}->{behaviour_many_values} eq 'add_dedup'
                         && $rules->{$code}->{repeatable} == 1 )
