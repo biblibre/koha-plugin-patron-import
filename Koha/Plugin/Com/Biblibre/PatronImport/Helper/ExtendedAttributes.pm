@@ -67,9 +67,7 @@ sub process {
             }
         }
     }
-    if (@errors) {
-        return @errors;
-    }
+    return @errors;
 }
 
 sub _get_patron_xattrs {
