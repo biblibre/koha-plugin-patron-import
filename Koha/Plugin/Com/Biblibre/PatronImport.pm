@@ -461,8 +461,8 @@ sub install {
     $dbh->do("
         CREATE TABLE IF NOT EXISTS $patrons_history_table (
             run_id int(11) NULL,
-	    borrowernumber int(11) NOT NULL,
-	    action varchar(25) NOT NULL,
+            borrowernumber int(11) NOT NULL,
+            action varchar(25) NOT NULL,
             action_date datetime NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     ");
@@ -558,17 +558,17 @@ sub upgrade {
 
 
     if ($DBversion < '1.7') {
-	my $extended_attributes_table = $self->get_qualified_table_name('extended_attributes');
-	$dbh->do("
-	    CREATE TABLE IF NOT EXISTS $extended_attributes_table (
-		import_id int(11) NOT NULL,
-		code varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-		behaviour_one_value varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-		behaviour_many_values varchar(55) COLLATE utf8_unicode_ci NULL,
-		repeatable tinyint COLLATE utf8_unicode_ci NOT NULL,
-		CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
-	    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-	");
+        my $extended_attributes_table = $self->get_qualified_table_name('extended_attributes');
+        $dbh->do("
+            CREATE TABLE IF NOT EXISTS $extended_attributes_table (
+                import_id int(11) NOT NULL,
+                code varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                behaviour_one_value varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+                behaviour_many_values varchar(55) COLLATE utf8_unicode_ci NULL,
+                repeatable tinyint COLLATE utf8_unicode_ci NOT NULL,
+                CONSTRAINT import_extended_attributes_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ");
     }
 
     if ($DBversion < '1.8') {
@@ -673,11 +673,11 @@ sub run_import {
     while ( my $borrower = $source->next ) {
         $borrower->to_koha($self);
 
-	if ( $self->{debug} ) {
+        if ( $self->{debug} ) {
             print "Patron for Koha:\n";
             warn $borrower->as_text;
             print "===========================================\n";
-	}
+        }
 
         $self->{logger}->Extractstats( $borrower );
     }

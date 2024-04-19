@@ -48,6 +48,4 @@ Automating is the fact of adding the import in a cronjob. This needs important i
 * The **time** of the import. Important to avoid processing during hours of use/opening.
 * **Where** the CSV file will be uploaded on the server (not for LDAP).
 * How the CSV file will be **named** (not for LDAP). This name could contain a date part that will be replaced with the current date when importing it (Pay attention to the import time in this case. A file could be uploaded at 11:50 pm and imported at 00:30 am the day after).
-	
-
 
