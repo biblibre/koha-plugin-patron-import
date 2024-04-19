@@ -103,10 +103,10 @@
                                         [% END %]
                                 </span>
                             </li>
-			    <li>
-				<span><strong>Identifier: </strong>[% i.id %]</span>
-				<span class="hint">(use this identifier to launch import with cron script: `perl cron/run-import.pl -i [% i.id %]`)</span>
-			    </li>
+                            <li>
+                                <span><strong>Identifier: </strong>[% i.id %]</span>
+                                <span class="hint">(use this identifier to launch import with cron script: `perl cron/run-import.pl -i [% i.id %]`)</span>
+                            </li>
                             <li>
                                 <span><strong>created on: </strong>[% i.created_on %]</span>
                                 <span>

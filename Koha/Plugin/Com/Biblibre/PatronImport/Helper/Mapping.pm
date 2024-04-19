@@ -61,7 +61,7 @@ sub process_mapping {
     foreach my $target ( keys %rmap ) {
         my $source = $rmap{ $target };
 
-	my $default = $valuesmapping_default->{ $target };
+        my $default = $valuesmapping_default->{ $target };
         my $value = GetMappedField($data, $source);
         $value = applyTransformationPlugins( $transformationplugins, $target, $value );
         $borrower->{ $target } = mapvalues( $valuesmapping, $default, $target, $value );
@@ -160,7 +160,7 @@ sub mapvalues {
     }
 
     if ($default) {
-	return $default;
+        return $default;
     }
 
     return $value;
