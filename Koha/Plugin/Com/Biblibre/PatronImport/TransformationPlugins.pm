@@ -40,16 +40,16 @@ our $plugins = {
         package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::RightTrim'
     },
     today =>{
-	code => 'today',
-	name => "Today's date",
-	'description' => "Set the field value with today's date. For new borrowers only, just protect the field.",
-	package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::Today'
+        code => 'today',
+        name => "Today's date",
+        'description' => "Set the field value with today's date. For new borrowers only, just protect the field.",
+        package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::Today'
     },
     date =>{
-	code => 'date',
-	name => "SQL date",
-	'description' => "Transform Ymd, Y/m/d or d/m/Y to SQL format: Y-m-d",
-	package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::Date'
+        code => 'date',
+        name => "SQL date",
+        'description' => "Transform Ymd, Y/m/d or d/m/Y to SQL format: Y-m-d",
+        package => 'Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::Date'
     },
 };
 

@@ -10,7 +10,7 @@ Once you [created your import](import.md), you can see it in the plugin configur
 To add a field mapping, enter a field name in the left side od the table (column Source field), that should correspond to an existing field in your source data, and select the koha field to map with. Click on add button.
 
 ![Field mapping](img/field-mapping.jpg)
-	
+
 ### Implicit mappings
 
 If your source field's name match a koha field name, you do not have to explicitly create the mapping. The plugin will implicitly made it.

@@ -7,17 +7,17 @@ sub transform {
 
     # Ymd
     if ($value =~ /^(\d{4})(\d{2})(\d{2})$/ ) {
-	return "$1-$2-$3";
+        return "$1-$2-$3";
     }
 
     # Y/m/d
     if ($value =~ /^(\d{4})\/(\d{2})\/(\d{2})$/ ) {
-	return "$1-$2-$3";
+        return "$1-$2-$3";
     }
 
     # d/m/Y
     if ($value =~ /^(\d{2})\/(\d{2})\/(\d{4})$/ ) {
-	return "$3-$2-$1";
+        return "$3-$2-$1";
     }
 }
 

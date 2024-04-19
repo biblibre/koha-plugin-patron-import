@@ -216,9 +216,9 @@ sub to_koha {
     # Check for message preferences protection.
     my $protect_message_preferences = 0;
     foreach ( @{ $conf->{protected} } ) {
-	if ( $_ eq '[message_preferences]' ) {
-	    $protect_message_preferences = 1;
-	}
+        if ( $_ eq '[message_preferences]' ) {
+            $protect_message_preferences = 1;
+        }
     }
 
     if ($borrowernumber && $conf->{createonly}) {
@@ -231,44 +231,44 @@ sub to_koha {
         # Deletion rules.
         my $deletion_rules = $conf->{deletions} || ();
         foreach my $rule (@$deletion_rules) {
-	    if ($this->_rule_match_delete($rule, \%patron)) {
-		my $to_delete = Koha::Patrons->find( $borrowernumber );
+            if ($this->_rule_match_delete($rule, \%patron)) {
+                my $to_delete = Koha::Patrons->find( $borrowernumber );
 
-		if ( my $charges = $to_delete->account->non_issues_charges ) {
-		    $this->{status} = 'error';
-		    $import->{logger}->Add(
-			'error',
-			"Failed to delete patron $borrowernumber: patron has $charges in fines",
-			'',
-			\%patron
-		    );
-		    return;
-		}
+                if ( my $charges = $to_delete->account->non_issues_charges ) {
+                    $this->{status} = 'error';
+                    $import->{logger}->Add(
+                        'error',
+                        "Failed to delete patron $borrowernumber: patron has $charges in fines",
+                        '',
+                        \%patron
+                    );
+                    return;
+                }
 
-		my $checkouts = $to_delete->checkouts;
-		if ( my $count_checkouts = $checkouts->count() ) {
-		    $this->{status} = 'error';
-		    $import->{logger}->Add(
-			'error',
-			"Failed to delete patron $borrowernumber: patron has $count_checkouts checkouts",
-			'',
-			\%patron
-		    );
-		    return;
-		}
+                my $checkouts = $to_delete->checkouts;
+                if ( my $count_checkouts = $checkouts->count() ) {
+                    $this->{status} = 'error';
+                    $import->{logger}->Add(
+                        'error',
+                        "Failed to delete patron $borrowernumber: patron has $count_checkouts checkouts",
+                        '',
+                        \%patron
+                    );
+                    return;
+                }
 
-		$to_delete->delete();
-		$this->{status} = 'deleted';
-		$import->{logger}->Add(
-		    'info',
-		    "$patron_info_str has been deleted",
-		    '',
-		    \%patron
-		);
+                $to_delete->delete();
+                $this->{status} = 'deleted';
+                $import->{logger}->Add(
+                    'info',
+                    "$patron_info_str has been deleted",
+                    '',
+                    \%patron
+                );
 
-		$import->{history}->is_deleted($borrowernumber);
-		return;
-	    }
+                $import->{history}->is_deleted($borrowernumber);
+                return;
+            }
         }
 
         # Here we keep original patron because some fields
@@ -369,7 +369,7 @@ sub to_koha {
             \%kept_patron
         );
 
-	$import->{history}->is_updated($borrowernumber);
+        $import->{history}->is_updated($borrowernumber);
 
         $this->{'status'} = 'updated';
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Plugins::callPlugins('patron_import_patron_updated', $borrowernumber);
@@ -406,7 +406,7 @@ sub to_koha {
             \%patron
         );
 
-	$import->{history}->is_created($borrowernumber);
+        $import->{history}->is_created($borrowernumber);
 
         my $result = $this->add_debarment($borrowernumber);
         if ( $result && $result eq 'error' ) {
@@ -769,13 +769,13 @@ sub _rule_match_delete {
     }
 
     foreach my $field (keys %{ $rule->{fields} }) {
-	unless ( defined($patron->{$field}) ) {
+        unless ( defined($patron->{$field}) ) {
             return 0;
-	}
+        }
 
-	if ( $patron->{$field} eq '' ) {
+        if ( $patron->{$field} eq '' ) {
             return 0;
-	}
+        }
 
         if ( $patron->{$field} ne $rule->{fields}->{$field} ) {
             return 0;
