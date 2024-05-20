@@ -40,6 +40,7 @@ sub edit {
     }
 
     my $defaults = GetFromTable($plugin->{extended_attributes_table}, { import_id => $import_id});
+    
     foreach my $default ( @$defaults ) {
         foreach my $attr_type ( @$attr_types_unblessed ) {
             if ( $default->{code} eq $attr_type->{code} ) {
@@ -51,7 +52,8 @@ sub edit {
 
     $template->param(
         import_id => $import_id,
-        attr_types => $attr_types_unblessed
+        attr_types => $attr_types_unblessed,
+        table_not_empty => scalar(@$defaults)
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
