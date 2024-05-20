@@ -6,13 +6,16 @@
 [% INCLUDE 'header.inc' %]
 [% INCLUDE 'cat-search.inc' %]
 <div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo; Koha Patron Import</div>
+<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
 <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
-
+Extended attributes</div>
 <div class="main container-fluid">
     <div class="row">
         <div class="col-sm-10 col-sm-push-2">
             <h2> Configure extended attributes behavior</h2>
+            [% UNLESS table_not_empty %]
+                <div class="dialog message">None rules is configured in database. Patron extended attributes from source will be ignored.</div>
+            [% END %]
             <form method="POST">
                 <input type="hidden" name="class" value="[% CLASS %]"/>
                 <input type="hidden" name="method" value="[% METHOD %]"/>
@@ -32,6 +35,11 @@
                                 <td>[% attr.repeatable %]</td>
                                 <td>
                                     <select name="[% attr.code %]_one_value">
+                                        [% IF attr.behaviour_one_value == 'nothing' %]
+                                            <option value="nothing" selected>Do nothing</option>
+                                        [% ELSE %]
+                                            <option value="nothing">Do nothing</option>
+                                        [% END %]
                                         [% IF attr.behaviour_one_value == 'update' %]
                                             <option value="update" selected>Update existing</option>
                                         [% ELSE %]
@@ -44,15 +52,15 @@
                                                 <option value="add_dedup">Add if the value does not exists</option>
                                             [% END %]
                                         [% END %]
-                                        [% IF attr.behaviour_one_value == 'nothing' %]
-                                            <option value="nothing" selected>Do nothing</option>
-                                        [% ELSE %]
-                                            <option value="nothing">Do nothing</option>
-                                        [% END %]
                                     </select>
                                 </td>
                                 <td>
                                     <select name="[% attr.code %]_many_values" [% IF attr.repeatable == 0 %]disabled[% END %]>
+                                        [% IF attr.behaviour_many_values == 'nothing' %]
+                                            <option value="nothing" selected>Do nothing</option>
+                                        [% ELSE %]
+                                            <option value="nothing">Do nothing</option>
+                                        [% END %]
                                         [% IF attr.behaviour_many_values == 'update' %]
                                             <option value="update" selected>Update existing</option>
                                         [% ELSE %]
@@ -62,11 +70,6 @@
                                             <option value="add_dedup" selected>Add if the value does not exists</option>
                                         [% ELSE %]
                                             <option value="add_dedup">Add if the value does not exists</option>
-                                        [% END %]
-                                        [% IF attr.behaviour_many_values == 'nothing' %]
-                                            <option value="nothing" selected>Do nothing</option>
-                                        [% ELSE %]
-                                            <option value="nothing">Do nothing</option>
                                         [% END %]
                                     </select>
                                 </td>
