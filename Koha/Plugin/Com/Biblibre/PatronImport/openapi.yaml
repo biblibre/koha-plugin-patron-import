@@ -1,0 +1,46 @@
+swagger: "2.0"
+paths:
+  /history/by_run/{run_id}:
+    get:
+      consumes:
+        - application/json
+      operationId: PatronImportHistoryRun
+      parameters:
+        - $ref: './openapi/definitions.yaml#/run'
+        - $ref: './openapi/definitions.yaml#/match'
+        - $ref: './openapi/definitions.yaml#/order_by'
+        - $ref: './openapi/definitions.yaml#/page'
+        - $ref: './openapi/definitions.yaml#/per_page'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Run actions list on patrons
+          schema:
+            type: array
+        400:
+          description: Bad parameters
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        401:
+          description: Unauthorized
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        403:
+          description: Access forbidden
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        500:
+          description: Internal error
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        503:
+          description: Under maintenance
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+      tags:
+        - patrons
+      x-koha-authorization:
+        permissions:
+          - reports
+      x-mojo-to: Com::Biblibre::PatronImport::Controller::History#by_run

@@ -1,0 +1,9 @@
+---
+name: _order_by
+in: query
+type: array
+items:
+  type: string
+collectionFormat: csv
+description: Sorting criteria
+required: false

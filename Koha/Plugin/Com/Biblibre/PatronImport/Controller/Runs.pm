@@ -146,6 +146,7 @@ sub delete {
 
     if ( $op eq 'delete_confirm' ) {
         Delete( $plugin->{runs_table}, { id => $id } );
+        Delete( $plugin->{patrons_history_table}, { run_id => $id } );
 
         my $import_id = $cgi->param('import_id');
         print $cgi->redirect("/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=$import_id");
@@ -168,6 +169,7 @@ sub batchdelete {
     my @ids = $cgi->multi_param('delete');
     foreach my $id ( @ids ) {
         Delete( $plugin->{runs_table}, { id => $id } );
+        Delete( $plugin->{patrons_history_table}, { run_id => $id } );
     }
 
     print $cgi->redirect("/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=$import_id");

@@ -1,0 +1,6 @@
+---
+name: _per_page
+in: query
+type: integer
+description: "Page size, for paginated object listing"
+required: false
