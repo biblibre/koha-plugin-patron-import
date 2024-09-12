@@ -96,11 +96,13 @@ sub clear {
     my ( $self ) = @_;
 
     my $interval = $self->{config}{clear_logs};
-    my $run_table = $self->{plugin}{runs_table},
+    my $run_table = $self->{plugin}{runs_table};
+    my $patrons_history_table = $self->{plugin}{patrons_history_table};
 
     my $dbh = C4::Context->dbh;
 
     $dbh->do("DELETE FROM $run_table WHERE DATE(start) < CURDATE() - INTERVAL $interval DAY;");
+    $dbh->do("DELETE FROM $patrons_history_table WHERE DATE(action_date) < CURDATE() - INTERVAL $interval DAY;");
 }
 
 sub Extractstats {
