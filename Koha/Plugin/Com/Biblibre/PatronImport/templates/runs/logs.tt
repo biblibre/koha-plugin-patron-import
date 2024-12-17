@@ -113,7 +113,7 @@ span {
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="userid"/>
                                             <input type="hidden" name="searchmember" value="[% log.userid %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -124,7 +124,7 @@ span {
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="cardnumber"/>
                                             <input type="hidden" name="searchmember" value="[% log.cardnumber %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -135,7 +135,7 @@ span {
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="standard"/>
                                             <input type="hidden" name="searchmember" value="[% log.firstname %] [% log.surname %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                         Unknown
