@@ -5,6 +5,7 @@ use Modern::Perl;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( PatronFields );
 use Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins;
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw(GetImportName);
 
 sub edit {
     my ($plugin, $params) = @_;
@@ -84,10 +85,11 @@ sub edit {
     my $columns = PatronFields(1);
 
     $template->param(
-        import_id => $import_id,
-        mappings => $mappings,
+        import_id       => $import_id,
+        import_name     => GetImportName($import_id),
+        mappings        => $mappings,
         matching_points => $matching_points,
-        columns => $columns
+        columns         => $columns
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
@@ -160,9 +162,10 @@ sub editvalues {
         { import_id => $import_id, destination => $destination });
 
     $template->param(
-        import_id => $import_id,
-        mappings => $mappings,
-        destination => $destination,
+        import_id     => $import_id,
+        import_name   => GetImportName($import_id),
+        mappings      => $mappings,
+        destination   => $destination,
         default_value => $default->{default_value}
     );
 
@@ -218,6 +221,7 @@ sub edittransformationplugins {
 
     $template->param(
         import_id => $import_id,
+        import_name => GetImportName($import_id),
         tr_plugins => $tr_plugins,
         destination => $destination
     );
@@ -293,6 +297,7 @@ sub editprotected {
 
     $template->param(
         import_id => $import_id,
+        import_name => GetImportName($import_id),
         protectables => $protectables,
         erasables => $erasables,
         protected => $protected,

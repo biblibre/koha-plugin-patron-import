@@ -3,6 +3,7 @@ package Koha::Plugin::Com::Biblibre::PatronImport::Controller::Runs;
 use Modern::Perl;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw(GetImportName);
 
 sub index {
     my ( $plugin, $params ) = @_;
@@ -23,8 +24,9 @@ sub index {
     }
 
     $template->param(
-        import_id => $import_id,
-        runs => $runs
+        import_id   => $import_id,
+        import_name => GetImportName($import_id),
+        runs        => $runs
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
@@ -63,9 +65,10 @@ sub details {
     }
 
     $template->param(
-        id => $id,
-        stats => $stats,
-        import_id => $runs->[0]->{import_id}
+        id          => $id,
+        stats       => $stats,
+        import_id   => $runs->[0]->{import_id},
+        import_name => GetImportName( $runs->[0]->{import_id} ),
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
@@ -121,11 +124,12 @@ sub logs {
         "$additional ORDER BY time" );
 
     $template->param(
-        id => $id,
-        import_id => $runs->[0]->{import_id},
-        logs => $logs,
-        error_checked => $error_checked,
-        info_checked => $info_checked,
+        id              => $id,
+        import_id       => $runs->[0]->{import_id},
+        import_name     => GetImportName( $runs->[0]->{import_id} ),
+        logs            => $logs,
+        error_checked   => $error_checked,
+        info_checked    => $info_checked,
         success_checked => $success_checked
     );
 
@@ -152,8 +156,9 @@ sub delete {
     }
 
     $template->param(
-        id => $id,
-        import_id => $runs->[0]->{import_id}
+        id          => $id,
+        import_id   => $runs->[0]->{import_id},
+        import_name => GetImportName( $runs->[0]->{import_id} ),
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');

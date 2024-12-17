@@ -6,6 +6,7 @@ use Koha::Patron::Attribute::Types;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( PatronFields );
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw(GetImportName);
 
 sub edit {
     my ( $plugin, $params ) = @_;
@@ -51,8 +52,9 @@ sub edit {
     }
 
     $template->param(
-        import_id => $import_id,
-        attr_types => $attr_types_unblessed,
+        import_id       => $import_id,
+        import_name     => GetImportName($import_id),
+        attr_types      => $attr_types_unblessed,
         table_not_empty => scalar(@$defaults)
     );
 
