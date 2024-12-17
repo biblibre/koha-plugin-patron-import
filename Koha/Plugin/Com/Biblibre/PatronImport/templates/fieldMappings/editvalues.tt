@@ -89,7 +89,7 @@
                                         <option value="contains">Contains</option>
                                     </select>
                                 </td>
-                                <td><a class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
+                                <td><a href="#" class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
                             </tr>
 
                             [% FOREACH mapping IN mappings %]

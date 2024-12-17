@@ -67,6 +67,7 @@
                 }).appendTo(li);
 
                 a = $('<a>').addClass('btn btn-default btn-xs delete_match');
+                a.attr('href', '#');
                 i = $('<i>').addClass('fa fa-trash');
                 i.appendTo(a);
                 a.find('i').after(' Delete');
@@ -130,7 +131,7 @@
                                             [% END %]
                                         </select>
                                     </td>
-                                    <td><a class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
+                                    <td><a href="#" class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
                                 </tr>
 
                                 [% FOREACH mapping IN mappings %]
@@ -146,7 +147,7 @@
                                         <td>
                                             <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=editvaluemappings&import_id=[% import_id %]&destination=[% mapping.destination %]">Value mappings ([% mapping.value_count %])</a>
                                             <a class="btn btn-default btn-xs" href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=edittransformationplugins&import_id=[% import_id %]&destination=[% mapping.destination %]">Transformation plugins ([% mapping.plugin_count %])</a>
-                                            <a class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>
+                                            <a href="#" class="btn btn-default btn-xs delete" style="cursor: pointer;"><i class="fa fa-trash"></i> Delete</a>
                                         </td>
                                     </tr>
                                 [% END %]
@@ -164,13 +165,13 @@
                                         <option value="[% column.code %]">[% column.description %]</option>
                                     [% END %]
                                 </select>
-                                <a class="btn btn-default btn-xs add_match"><i class="fa fa-plus"></i> Add</a>
+                                <a href="#" class="btn btn-default btn-xs add_match"><i class="fa fa-plus"></i> Add</a>
                             </li>
                             [% FOREACH mp IN matching_points %]
                                 <li class="list-group-item">
                                     [% mp.field %]
                                     <input type="hidden" name="matching_points" value="[% mp.field %]"/>
-                                    <a class="btn btn-default btn-xs delete_match"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href="#" class="btn btn-default btn-xs delete_match"><i class="fa fa-trash"></i> Delete</a>
                                 </li>
                             [% END %]
                         </ul>

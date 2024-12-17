@@ -25,6 +25,7 @@
                 }).appendTo(li);
 
                 a = $('<a>').addClass('btn btn-default btn-xs delete');
+                a.attr('href', '#');
                 i = $('<i>').addClass('fa fa-trash');
                 i.appendTo(a);
                 a.find('i').after(' Delete');
@@ -56,6 +57,7 @@
                 }).appendTo(li);
 
                 a = $('<a>').addClass('btn btn-default btn-xs delete');
+                a.attr('href', '#');
                 i = $('<i>').addClass('fa fa-trash');
                 i.appendTo(a);
                 a.find('i').after(' Delete');
@@ -109,13 +111,13 @@
                                     [% END %]
                                     <option value="[message_preferences]">[message_preferences]</option>
                                 </select>
-                                <a class="btn btn-default btn-xs add_protected"><i class="fa fa-plus"></i> Add</a>
+                                <a href="#" class="btn btn-default btn-xs add_protected"><i class="fa fa-plus"></i> Add</a>
                             </li>
                             [% FOREACH p IN protected %]
                                 <li class="list-group-item">
                                     [% p.field %]
                                     <input type="hidden" name="protected" value="[% p.field %]"/>
-                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href='#' class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
                                 </li>
                             [% END %]
                         </ul>
@@ -130,13 +132,13 @@
                                         <option value="[% e.code %]">[% e.description %]</option>
                                     [% END %]
                                 </select>
-                                <a class="btn btn-default btn-xs add_erasable"><i class="fa fa-plus"></i> Add</a>
+                                <a href="#" class="btn btn-default btn-xs add_erasable"><i class="fa fa-plus"></i> Add</a>
                             </li>
                             [% FOREACH e IN erased %]
                                 <li class="list-group-item">
                                     [% e.field %]
                                     <input type="hidden" name="erasable" value="[% e.field %]"/>
-                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href="#" class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
                                 </li>
                             [% END %]
                         </ul>
