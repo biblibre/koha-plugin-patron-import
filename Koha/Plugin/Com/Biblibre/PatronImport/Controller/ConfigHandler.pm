@@ -1,8 +1,10 @@
 package Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler;
 
 use Modern::Perl;
+use Mojo::Base 'Mojolicious::Controller';
 use YAML::XS qw(Dump LoadFile);
 
+use C4::Context;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config;
 
@@ -43,7 +45,34 @@ sub configapply {
 
     print $cgi->redirect('/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure');
     return;
+}
 
+sub get_ldap_conf {
+    my $c = shift->openapi->valid_input or return;
+
+    my $ldap_hash = C4::Context->config("ldapserver");
+
+    unless ($ldap_hash) {
+        return $c->render(
+            status  => 404,
+            openapi => {
+                error =>
+                    "No 'ldapserver' in server hash from KOHA_CONF: $ENV{KOHA_CONF}"
+            }
+        );
+    }
+    my $ldap_conf = $ldap_hash->{ldapserver};
+
+    return $c->render(
+        status  => 200,
+        openapi => {
+            host           => $ldap_conf->{hostname} || '',
+            anonymous_bind => $ldap_conf->{anonymous_bind},
+            user           => $ldap_conf->{user} || '',
+            password       => $ldap_conf->{pass} || '',
+            search_base    => $ldap_conf->{base} || '',
+        }
+    );
 }
 
 1;

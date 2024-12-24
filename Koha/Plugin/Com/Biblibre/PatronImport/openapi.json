@@ -1,10 +1,11 @@
-
 {
   "/history/by_run/{run_id}": {
     "get": {
       "x-mojo-to": "Com::Biblibre::PatronImport::Controller::History#by_run",
       "operationId": "PatronImportHistoryRun",
-      "tags": ["patron-import"],
+      "tags": [
+        "patron-import"
+      ],
       "parameters": [
         {
           "name": "run_id",
@@ -23,7 +24,8 @@
             "contains",
             "exact",
             "starts_with",
-            "ends_with"          ]
+            "ends_with"
+          ]
         },
         {
           "name": "_order_by",
@@ -58,27 +60,27 @@
         "200": {
           "description": "A run patron history",
           "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                    "run_id": {
-                      "description": "The run identifier",
-                      "type": "integer"
-                    },
-                    "borrowernumber": {
-                        "description": "The patron identifier",
-                        "type": "integer"
-                    },
-                    "action": {
-                        "description": "The action name",
-                        "type": "string"
-                    },
-                    "action_date": {
-                      "description": "The action date",
-                      "type": "string"
-                    }
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "run_id": {
+                  "description": "The run identifier",
+                  "type": "integer"
+                },
+                "borrowernumber": {
+                  "description": "The patron identifier",
+                  "type": "integer"
+                },
+                "action": {
+                  "description": "The action name",
+                  "type": "string"
+                },
+                "action_date": {
+                  "description": "The action date",
+                  "type": "string"
                 }
+              }
             }
           }
         },
@@ -97,38 +99,38 @@
         "403": {
           "description": "No permission",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         },
         "404": {
           "description": "No history for the given run",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         },
         "500": {
           "description": "Internal Server Error",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         }
       },
       "x-koha-authorization": {
@@ -137,6 +139,65 @@
         }
       }
     }
+  },
+  "/get-ldap-conf": {
+    "get": {
+      "x-mojo-to": "Com::Biblibre::PatronImport::Controller::ConfigHandler#get_ldap_conf",
+      "operationId": "PatronImportLdapConf",
+      "tags": [
+        "patron-import",
+        "ldap"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "The ldap configuration",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "description": "Host or IP adress of the LDAP server",
+                "type": "string"
+              },
+              "anonymous_bind": {
+                "description": "Anonymous bind option",
+                "type": "boolean"
+              },
+              "user": {
+                "description": "LDAP user",
+                "type": "string"
+              },
+              "password": {
+                "description": "LDAP user's password",
+                "type": "string"
+              },
+              "search_base": {
+                "description": "LDAP search base",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "No LDAP configuration found",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-koha-authorization": {
+          "permissions": {
+            "borrowers": "edit_borrowers"
+          }
+        }
+      }
+    }
   }
 }
-  
