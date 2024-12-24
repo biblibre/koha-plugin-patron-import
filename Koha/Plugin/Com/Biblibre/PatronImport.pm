@@ -9,14 +9,14 @@ use Mojo::JSON qw(decode_json);;
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '2.1';
+our $VERSION = '3.0';
 
 our $metadata = {
     name => 'Patron import',
     author => 'Alex Arnaud <alex.arnaud@biblibre.com>',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2024-01-10',
+    date_updated => '2024-12-24',
     minimum_version => '22.11',
     maximum_version => '',
     version => $VERSION,
@@ -57,6 +57,7 @@ sub new {
         use Koha::Plugin::Com::Biblibre::PatronImport::Source;
 
         my $import_id = $args->{import_id};
+        my $filename = $args->{from};
         Koha::Plugin::Com::Biblibre::PatronImport::Helper::Config::load_conf($import_id);
         my $config = get_conf();
         $config->{info_logs} = $args->{info_logs};
@@ -65,11 +66,10 @@ sub new {
         $config->{dry_run} = $args->{dry_run};
 
         my $logger = Koha::Plugin::Com::Biblibre::PatronImport::Helper::Logger
-            ->new($import_id, $config);
+            ->new($import_id, $filename, $config);
 
         my $history = Koha::Plugin::Com::Biblibre::PatronImport::Helper::History
             ->new($logger);
-
         $self->{id} = $import_id;
         $self->{from} = $args->{from};
         $self->{'dry-run'} = $args->{dry_run};
@@ -265,6 +265,7 @@ sub install {
             skipped int(11) NOT NULL,
             error int(11) NOT NULL,
             dry_run int(1) NOT NULL DEFAULT 0,
+            filename varchar(255) NULL,
             PRIMARY KEY (id),
             CONSTRAINT runs_fk_1 FOREIGN KEY (import_id) REFERENCES $import_table (id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -609,6 +610,11 @@ sub upgrade {
     if ($DBversion < '2.1') {
         my $import_table = $self->get_qualified_table_name('import');
         $dbh->do("ALTER TABLE $import_table ADD COLUMN welcome_message tinyint COLLATE utf8_unicode_ci NULL;");
+    }
+
+    if ($DBversion < '3.0') {
+        my $runs_table = $self->get_qualified_table_name('runs');
+        $dbh->do("ALTER TABLE $runs_table ADD COLUMN filename varchar(255) COLLATE utf8_unicode_ci NULL;");
     }
 
     $self->store_data({'__INSTALLED_VERSION__' => $VERSION});
