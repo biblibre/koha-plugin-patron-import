@@ -1,0 +1,69 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../protected_erasables_fields.rst:4
+msgid "Protected and erasables fields"
+msgstr "Champs protégés et effacables"
+
+#: ../../protected_erasables_fields.rst:6
+msgid ""
+"This page is accessible by clicking on `“Protected/erasables”` of your "
+"import in the configuration page."
+msgstr ""
+"Cette page est accessible en cliquant sur `“Protected/erasables”` depuis "
+"la page de configuration de l'import."
+
+#: ../../protected_erasables_fields.rst:10
+msgid "Protected fields"
+msgstr "Champs protégés"
+
+#: ../../protected_erasables_fields.rst:12
+msgid ""
+"Field protection prevents fields from being changed with a new value when"
+" updating a patron. The protection feature only affects the update."
+msgstr ""
+"La protection de champ évite que les champs ne soient modifiés lorsqu'un adhérent "
+"est mis à jour."
+
+#: ../../protected_erasables_fields.rst:15
+msgid "Note that only a non blank value can erase a field when updating."
+msgstr "A notre que seule une valeur non vide peut effacer un champ durant la mise à jour."
+
+#: ../../protected_erasables_fields.rst:17
+#: ../../protected_erasables_fields.rst:20
+msgid "Protected"
+msgstr "Champs protégés"
+
+#: ../../protected_erasables_fields.rst:23
+msgid "Erasable fields"
+msgstr "Champs effacables"
+
+#: ../../protected_erasables_fields.rst:25
+msgid ""
+"Erasure is the opposite of protecting. If want you want to force a blank "
+"incoming field to update the Koha field, so set the field as erasable."
+msgstr ""
+"L'effacement est l'exact opposé de la protection. Si vous voulez forcer une valeur vide  "
+"provenant de la source à mettre à jour le champ Koha correspondant alors définissez ce champ comme effacable."
+
+#: ../../protected_erasables_fields.rst:27
+#: ../../protected_erasables_fields.rst:30
+msgid "Erasable"
+msgstr "Effacable"
+

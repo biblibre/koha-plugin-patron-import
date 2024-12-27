@@ -1,0 +1,49 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../debarments.rst:4
+msgid "Debarments"
+msgstr "Suspensions"
+
+#: ../../debarments.rst:6
+msgid "Debarments allow to suspend all new patrons imported by the plugin."
+msgstr "Les suspensions vous autorisent à suspendre tous les nouveaux adhérents importés par le plugin."
+
+#: ../../debarments.rst:8
+msgid ""
+"To suspend new patrons, check the `\"Suspend new patron\"` option in "
+"debarments configuration page. Set a comment which will be shown in the "
+"debarredcomment column of borrowers table. And finally, set a duration "
+"(in days) until the patron will be debarred."
+msgstr ""
+"Pour suspendre les nouveaux adhérents, cocher l'option `\"Suspend new patron\"` dans la page de configuration "
+"concernant les suspensions. Ajouter un commentaire qui sera affiché dans la colonne correspondante de la table `borrowers`. "
+"Et vous pouvez configurer une date de fin (en jours) pour la suspension."
+
+#: ../../debarments.rst:12
+msgid ""
+"You can check `\"no limit\"` option so that the patron will be suspend "
+"until a librarian remove the debarment."
+msgstr ""
+"Vous pouvez cocher l'option `\"no limit\"` pour que l'adhérent soit suspendu jusqu'à ce qu'un libraire enlève la suspension."
+
+#: ../../debarments.rst:15 ../../debarments.rst:18
+msgid "Debarment"
+msgstr "Suspension"
+

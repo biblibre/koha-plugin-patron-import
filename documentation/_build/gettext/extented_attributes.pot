@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../extented_attributes.rst:4
+#: ../../extented_attributes.rst:22
+#: ../../extented_attributes.rst:25
+msgid "Extended attributes"
+msgstr ""
+
+#: ../../extented_attributes.rst:6
+msgid "This page is used to configure the behavior of each extended attribute of an existing patron when updating Koha patron."
+msgstr ""
+
+#: ../../extented_attributes.rst:8
+msgid "For each attribute, the behavior can be configured for differents situations:"
+msgstr ""
+
+#: ../../extented_attributes.rst:11
+msgid "If attribute is not repeatable, `\"If many values\"` select will be disabled."
+msgstr ""
+
+#: ../../extented_attributes.rst:13
+msgid "**Attribute is already defined with a value (only one)**"
+msgstr ""
+
+#: ../../extented_attributes.rst:14
+#: ../../extented_attributes.rst:18
+msgid "`Do nothing`: Nothing is added or updated"
+msgstr ""
+
+#: ../../extented_attributes.rst:15
+#: ../../extented_attributes.rst:19
+msgid "`Update existing`: erase the existing value"
+msgstr ""
+
+#: ../../extented_attributes.rst:17
+msgid "**Attribute is already defined with more than one value (many)**"
+msgstr ""
+
+#: ../../extented_attributes.rst:20
+msgid "`Add if the values does not exists`: add new value from incoming data if it does not exists"
+msgstr ""
+
+#: ../../extented_attributes.rst:28
+msgid "When `\"Update existing\"` is selected, check that the incoming data matches the data you wish to replace, even if there are empty data or strings on the attribute."
+msgstr ""

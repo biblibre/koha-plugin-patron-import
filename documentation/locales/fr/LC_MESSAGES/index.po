@@ -1,0 +1,231 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../index.rst:80
+msgid "Contents"
+msgstr "Contenus"
+
+#: ../../index.rst:2
+msgid "Introduction"
+msgstr ""
+
+#: ../../index.rst:4
+msgid ""
+"This plugin allows you to import patrons from a CSV file or by a LDAP "
+"server. Several mappings are available to define how to import the data."
+msgstr ""
+"Ce plugin vous permet d'importer des adhérents depuis un fichier CSV ou un serveur LDAP. "
+"Vous pouvez définir de multiples correspondances sur la manière de traiter les informations entrantes pour importer les données."
+
+#: ../../index.rst:7
+msgid ""
+"The creation of add-ons is possible in order to extend the capabilities "
+"of the plugin during the import process."
+msgstr ""
+"La création d'add-ons est possible afin d'étendre les capacités du plugin durant le processus d'import."
+
+#: ../../index.rst:10
+msgid "Before starting"
+msgstr "Avant de commencer"
+
+#: ../../index.rst:12
+msgid ""
+"Before configuring the plugin, here are the basic (and **important**) "
+"elements that you need to prepare."
+msgstr ""
+"Avant de configurer le plugin, vous trouverez ici les éléments de bases (et **importants**) "
+"que vous aurez besoin de préparer."
+
+#: ../../index.rst:15
+msgid "From which source ?"
+msgstr "Depuis quelle source ?"
+
+#: ../../index.rst:17
+msgid "CSV or LDAP"
+msgstr "CSV ou LDAP"
+
+#: ../../index.rst:19
+msgid ""
+"Ideally the csv should be encoded in utf8. The first line of the CSV must"
+" be the **column headers**."
+msgstr ""
+"Idéalement les colonnes du csv doivent être encodées en utf8. La première ligne devraient contenir les **en-têtes**."
+
+#: ../../index.rst:21
+msgid "For a LDAP import, this additional informations are needed:"
+msgstr "Pour un import LDAP, vous aurez besoin de ces informations additionnelles:"
+
+#: ../../index.rst:23
+msgid "**host and port** of the LDAP to be requested (IP address or URL)"
+msgstr "**l'hôte et le port** du serveur LDAP à requêter (adresse IP ou URL)"
+
+#: ../../index.rst:24
+msgid ""
+"an authorized **account** (distinguished name) and **password** to read "
+"the directory if the anonymous bind is not allowed"
+msgstr "un **compte** autorisé et un **mot de passe** afin de lire le répertoire LDAP si les demandes anonymes ne sont pas autorisées."
+
+#: ../../index.rst:25
+msgid ""
+"a **search base** that is kind a sub-directory where the accounts to "
+"import are"
+msgstr ""
+"une **base de recherche** qui est une sorte de sous-répertoire où se trouve les comptes à importer"
+
+#: ../../index.rst:26
+msgid ""
+"a **search filter** which allow the LDAP search to select only the wanted"
+" entries (optional)"
+msgstr "un **filtre de recherche** vous autorisant à effectuer une recherche LDAP pour sélectionner seulement les entrées souhaitées. (optionnel)"
+
+#: ../../index.rst:29
+msgid "Field mappings"
+msgstr "Correspondances des champs"
+
+#: ../../index.rst:31
+msgid "Create a mapping table between source fields and Koha fields."
+msgstr "Créer une table de correspondances entre les champs sources et les champs Koha."
+
+#: ../../index.rst:34
+msgid "Source field"
+msgstr "Champ source"
+
+#: ../../index.rst:34
+msgid "Koha field"
+msgstr "Champ Koha"
+
+#: ../../index.rst:36
+msgid "name"
+msgstr ""
+
+#: ../../index.rst:36
+msgid "surname"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "type"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "categorycode"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "mail"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "email"
+msgstr ""
+
+#: ../../index.rst:43
+msgid ""
+"If a source field is named the same way than the corresponding Koha "
+"field, the mapping is implicit and does not need to be defined in the "
+"configuration page. Unless the field value must correspond to a certain "
+"value or be transformed."
+msgstr ""
+"Si un champ source est nommé exactement de la même manière que le champ Koha correspondant, "
+"la correspondance est implicite et vous n'avez pas besoin de le définir dans la configuration. "
+"Sauf si vous y appliquer des correspondances de valeur ou des transformations. "
+
+#: ../../index.rst:47
+msgid "Value mappings"
+msgstr "Correspondances de valeur"
+
+#: ../../index.rst:49
+msgid ""
+"Define the values that need to be transformed before being imported into "
+"Koha, and provide a transformation table for each field that requires it."
+" Particularly for values that must correspond to an authorized value in "
+"Koha (e.g. categorycode, branchcode)."
+msgstr ""
+"Définissez les valeurs ayant besoin d'être transformées avant d'être importées dans Koha, "
+"et ajouter une transformation si le champ le nécessite. "
+"Particulièrement si les valeurs doivent correspondrent à des valeurs autorisées dans Koha (exemple: categorycode, branchcode)."
+
+#: ../../index.rst:52
+msgid ""
+"The transformation process allows regular expressions such as “strict "
+"equals”, “starts with”, “contains”. For very specific treatments, an add-"
+"on must be drawn up."
+msgstr ""
+"Le processus de transformation vous autorise à utiliser des expressions régulières comme 'strictement égal', "
+"'commence par', 'contient'. Pour chaque autre traitement spécifique, un add-on doit être écrit."
+
+#: ../../index.rst:56
+msgid "Matching point"
+msgstr "Point de dédoublonnage"
+
+#: ../../index.rst:58
+msgid ""
+"One or more fields to be used for deduplicate patrons. It is preferable "
+"to use unique fields (userid, cardnumber). Extended attributes can be "
+"used."
+msgstr "Un ou plusieurs champs sont utilisés pour dédoublonner les adhérents. "
+"Il est préférable d'utiliser un champ unique (userid, cardnumber). Les attributs étendus ne peuvent être utilisés".
+
+#: ../../index.rst:62
+msgid "Default values (optional but recommended)"
+msgstr "Valeurs par défaut (optionnelles mais recommandées)"
+
+#: ../../index.rst:64
+msgid ""
+"Set default for certain fields if they are empty (or invalid for "
+"categorycode and branchcode). The definition of default values for "
+"**categorycode and branchcode** should be systematic."
+msgstr ""
+"Définissez des valeurs par défaut pour certains champs s'ils sont vides (ou invalides pour categorycode et branchcode). "
+"La définition de valeurs par défaut pour les champs **categorycode et branchcode** devrait être systématique."
+
+#: ../../index.rst:68
+msgid "Automating"
+msgstr "Automatisation"
+
+#: ../../index.rst:70
+msgid ""
+"Automation involves adding the import to a :ref:`cronjob <tools>`. This "
+"requires some important information:"
+msgstr "L'automatisation implique d'ajouter un :ref:`cronjob <tools>`. Ceci est important pour son fonctionnement:"
+
+#: ../../index.rst:72
+msgid "**frequency** (each hour/day/week/month ?)"
+msgstr "**fréquence** (chaque heure/jour/semaine/mois ?)"
+
+#: ../../index.rst:73
+msgid "**time** important to avoid processing during hours of use/opening"
+msgstr "**moment** important afin d'éviter les imports durant les heures d'utilisation"
+
+#: ../../index.rst:74
+msgid "**where** the CSV file will be uploaded on the server (not for LDAP)"
+msgstr "**où** le fichier CSV sera envoyé sur le serveur (pas nécessaire pour le LDAP)"
+
+#: ../../index.rst:75
+msgid ""
+"**naming** of CSV file may contain a date part which will be replaced by "
+"the current date during import"
+msgstr "**nommage** du fichier CSV qui pourrait contenir une partie dynamique pour la date"
+
+#: ../../index.rst:78
+msgid ""
+"Pay attention to the import time. A file could be uploaded at 11:50 pm "
+"and imported at 00:30 am the day after."
+msgstr "Prêtez attention à l'heure d'import. Un fichier peut être envoyé à 23h50 "
+"et importé à 00h30 le jour d'après."
+

@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../deletions.rst:4
+msgid "Deletions"
+msgstr ""
+
+#: ../../deletions.rst:6
+msgid "Deletion rules are a set of fields/values defining which patrons are to be deleted in Koha."
+msgstr ""
+
+#: ../../deletions.rst:8
+msgid "Several conditions must be met to delete a patron:"
+msgstr ""
+
+#: ../../deletions.rst:10
+msgid "Entire rule fields must have been matched the incoming data"
+msgstr ""
+
+#: ../../deletions.rst:11
+msgid "Incoming data must have been associated with a corresponding patron in Koha with regard to the `matching point`"
+msgstr ""
+
+#: ../../deletions.rst:12
+msgid "Koha's target patron must not have any due charges"
+msgstr ""
+
+#: ../../deletions.rst:13
+msgid "Koha's target patron must not have any due checkouts"
+msgstr ""
+
+#: ../../deletions.rst:16
+msgid "Create a rule"
+msgstr ""
+
+#: ../../deletions.rst:18
+msgid "Type a rule name and click `\"Add\"` button."
+msgstr ""
+
+#: ../../deletions.rst:20
+#: ../../deletions.rst:23
+msgid "Add rule"
+msgstr ""
+
+#: ../../deletions.rst:26
+msgid "Add fields"
+msgstr ""
+
+#: ../../deletions.rst:28
+msgid "Select a field, entrer a value and click on the `\"Add\"` button."
+msgstr ""
+
+#: ../../deletions.rst:30
+msgid "Add field"
+msgstr ""

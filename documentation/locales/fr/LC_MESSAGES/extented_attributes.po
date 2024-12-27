@@ -1,0 +1,74 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../extented_attributes.rst:4 ../../extented_attributes.rst:22
+#: ../../extented_attributes.rst:25
+msgid "Extended attributes"
+msgstr "Attributs étendus"
+
+#: ../../extented_attributes.rst:6
+msgid ""
+"This page is used to configure the behavior of each extended attribute of"
+" an existing patron when updating Koha patron."
+msgstr ""
+"Cette page est utilisée pour configurer le comportement de chaque attribut étendu d'un adhérent Koha existant lors de sa mise à jour."
+
+#: ../../extented_attributes.rst:8
+msgid ""
+"For each attribute, the behavior can be configured for differents "
+"situations:"
+msgstr "Pour chacun des attributs, le comportement peut être configuré de différentes façons:"
+
+#: ../../extented_attributes.rst:11
+msgid ""
+"If attribute is not repeatable, `\"If many values\"` select will be "
+"disabled."
+msgstr "Si l'attribut est non répétable, le menu de sélection correspondant à `\"If many values\"` sera désactivé."
+
+#: ../../extented_attributes.rst:13
+msgid "**Attribute is already defined with a value (only one)**"
+msgstr "**L'attribut est déjà défini avec une valeur (seulement une)**"
+
+#: ../../extented_attributes.rst:14 ../../extented_attributes.rst:18
+msgid "`Do nothing`: Nothing is added or updated"
+msgstr "`Do nothing`: Rien ne sera ajouté ni mis à jour"
+
+#: ../../extented_attributes.rst:15 ../../extented_attributes.rst:19
+msgid "`Update existing`: erase the existing value"
+msgstr "`Update existing`: remplacement de la valeur existante par la valeur entrante"
+
+#: ../../extented_attributes.rst:17
+msgid "**Attribute is already defined with more than one value (many)**"
+msgstr "**L'attribut est déjà défini avec plus d'une valeur (plusieurs)**"
+
+#: ../../extented_attributes.rst:20
+msgid ""
+"`Add if the values does not exists`: add new value from incoming data if "
+"it does not exists"
+msgstr ""
+"`Add if the values does not exists`: ajoute la nouvelle valeur entrante seulement si elle n'existe pas déjà."
+
+#: ../../extented_attributes.rst:28
+msgid ""
+"When `\"Update existing\"` is selected, check that the incoming data "
+"matches the data you wish to replace, even if there are empty data or "
+"strings on the attribute."
+msgstr ""
+"Lorsque `\"Update existing\"` est sélectionné, vérifier que la donnée entrante corresponde avec la donnée "
+"que vous souhaitez remplacer, même si la donnée est vide ou contient une chaîne vide."

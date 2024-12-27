@@ -1,0 +1,301 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../define_mappings.rst:4
+msgid "Define mappings"
+msgstr "Définitions des correspondances"
+
+#: ../../define_mappings.rst:6
+msgid ""
+"Mapping definitions is a very important feature of this plugin, as it "
+"determines how the data will be interpreted."
+msgstr ""
+"Les correspondances sont une fonctionnalité essentielles de ce plugin puisque ce sont elles qui vont déterminer les données à traiter."
+
+#: ../../define_mappings.rst:8
+msgid ""
+"When you :ref:`created an import <create_import>`, you choose a *flow "
+"type* which is the source type of your data. Whichever type of source you"
+" import from, Patron-import will transform the source data into tabular "
+"data. This tabular data is referred to here as **incoming data**. "
+"Mappings are applied to the incoming data to create a Koha patron."
+msgstr ""
+"Quand vous :ref:`créez un import <create_import>`, vous choisissez une *source de données. "
+"Peu importe la source utilisée, le plugin transformera les données sources en tableau de données. "
+"Ce tableau sera référencé comme étant les **données entrantes**. Les correspondances seront appliquées sur ces données pour créer un adhérent Koha."
+
+#: ../../define_mappings.rst:12
+msgid "This data transformation involves several optional steps:"
+msgstr "Cette transformation des données implique plusieurs étapes facultatives:"
+
+#: ../../define_mappings.rst:15
+msgid "Fields mappings"
+msgstr "Correspondances des champs"
+
+#: ../../define_mappings.rst:17
+msgid ""
+"Field mapping consists in moving the incoming data field into the koha "
+"patron field. Basically, this means that we will tell Pattern-import: "
+"\"move the incoming data to the Koha field related to the patron\"."
+msgstr ""
+"La correspondance des champs consiste à ajouter les données entrantes dans les champs Koha de l'adhérent. "
+"Cela signifie simplement que nous disons au plugin: "
+"\"ajoute cette donnée dans ce champ Koha de l'adhérent\"."
+
+#: ../../define_mappings.rst:21
+msgid "Accessing mappings page"
+msgstr "Accès à la page des correspondances"
+
+#: ../../define_mappings.rst:23
+msgid ""
+"Once you've :ref:`created an import <create_import>`, you can view it on "
+"the plugin configuration home page. On this page, click on the “mappings”"
+" link."
+msgstr ""
+"Une fois que vous avez :ref:`crée un import <create_import>`, vous pouvez le voir "
+"sur la page d'accueil du plugin. Sur cette page, cliquez sur le lien “mappings”."
+
+#: ../../define_mappings.rst:26
+msgid "Add new field mapping"
+msgstr "Ajouter une nouvelle correspondance de champ"
+
+#: ../../define_mappings.rst:28
+msgid ""
+"To add a field match, enter the name of a field in the left-hand part of "
+"the table (Source field column). Which must match an existing field in "
+"your source data, and select the koha field to match. Click on `add` "
+"button."
+msgstr ""
+"Pour ajouter une correspondance, saisir le nom du champ de la source à gauche "
+"et sélectionnez le champ Koha à faire correspondre. Cliquer sur le bouton `add`."
+
+#: ../../define_mappings.rst:31 ../../define_mappings.rst:34
+msgid "Field mapping"
+msgstr "Correspondance de champ"
+
+#: ../../define_mappings.rst:37
+msgid "Implicit mappings"
+msgstr "Correspondances implicites"
+
+#: ../../define_mappings.rst:39
+msgid ""
+"If the name of your source field matches the name of a koha field, you "
+"don't need to explicitly create the match. The plugin will do this "
+"implicitly. For example, ``surname => surname`` is not required except if"
+" you have to apply value mapping or transformation plugin."
+msgstr ""
+"Si le nom du champ de la source correspond exactement au champ Koha, "
+"vous n'avez pas besoin de créer explicitement la correspondance. Le plugin le fera implicitement. "
+"Par exemple, ``surname => surname`` n'est pas requis, sauf si vous ajoutez une correspondance de valeur ou une transformation."
+
+#: ../../define_mappings.rst:43
+msgid "Tokens"
+msgstr ""
+
+#: ../../define_mappings.rst:45
+msgid ""
+"You can use tokens in the source field column. Tokens are source field "
+"names surrounded by square brackets. They are used for conditional "
+"matches or concatenation."
+msgstr ""
+"Vous pouvez utiliser des tokens pour le nom de vos champs source. Les tokens sont les noms "
+"entourés de chevrons. Ils sont utilisés pour des correspondances conditionnelles ou des concaténations."
+
+#: ../../define_mappings.rst:47
+msgid "Concatenation with comma"
+msgstr "Concaténation avec une virgule"
+
+#: ../../define_mappings.rst:50
+msgid ""
+"'num' and 'street' will be concatenated with ‘,’ as separator and mapped "
+"in the address koha field."
+msgstr ""
+"'num' et 'street' seront concaténés avec ‘,’ comme séparateur et correspondront au champ Koha de l'adresse."
+
+#: ../../define_mappings.rst:52
+msgid "Concatenation with pipe"
+msgstr "Concaténation avec pipe"
+
+#: ../../define_mappings.rst:55
+msgid "Email will be mapped if it is not empty. If it is, id will be."
+msgstr "L'email sera pris en compte s'il n'est pas vide. S'il l'est ce sera l'id qui le sera à sa place."
+
+#: ../../define_mappings.rst:58 ../../define_mappings.rst:74
+#: ../../define_mappings.rst:77
+msgid "Value mappings"
+msgstr "Correspondances de valeur"
+
+#: ../../define_mappings.rst:60
+msgid ""
+"Value mappings allow you to transform source field values into other "
+"values during the mapping process. Value matches are configured for each "
+"field mapping."
+msgstr ""
+"Les correspondances de valeur vous permettent de transformer les valeurs des champs entrants vers une autre valeur "
+"durant la prise en compte des correspondances. Les correspondances de valeur sont configurables pour chaque correspondance de champ."
+
+#: ../../define_mappings.rst:64
+msgid "Add new value mapping"
+msgstr "Ajouter une nouvelle correspondance de valeur"
+
+#: ../../define_mappings.rst:66
+msgid ""
+"In the field mapping page, click on `value mappings` button of the "
+"corresponding field mapping. In the table, add as any value mappings as "
+"you like and save."
+msgstr ""
+"Dans la page de correspondance des champs, cliquer sur le bouton `value mappings` "
+"du champ correspondant. Dans le tableau ajouter autant de correspondances de valeur que souhaité et sauvegarder."
+
+#: ../../define_mappings.rst:69
+msgid ""
+"The value on the left (input value) is the incoming value of your source "
+"field. The value on the right (output value) is the replacement value."
+msgstr ""
+"La valeur d'entrée (sur la gauche) correspond à la valeur entrante de la source "
+"La valeur de sortie (sur la droite) correspond à la valeur de remplacement."
+
+#: ../../define_mappings.rst:72
+msgid ""
+"A good example for value mappings is the transformation of category codes"
+" to match valid koha categorycodes."
+msgstr ""
+"Un bon exemple de correspondances de valeur est la transformation des category codes "
+"pour correspondre à un categorycode Koha valide."
+
+#: ../../define_mappings.rst:79
+msgid ""
+"In the example above, for the field mapping in destination to "
+"categorycode, “Adult” will tranformed to “ADU”, “Young” to “YNG” and "
+"“Librarian” to “LIB”"
+msgstr ""
+"Dans l'exemple ici, le champ correspondant pour 'categorycode', "
+"“Adult” sera transformé en “ADU”, “Young” en “YNG” et "
+"“Librarian” en “LIB”"
+
+#: ../../define_mappings.rst:84
+msgid "If none of this rules match"
+msgstr "Si aucune de ces règles ne fonctionnent"
+
+#: ../../define_mappings.rst:86
+msgid ""
+"Under the value mapping table you can define a “fallback” value. This "
+"value will only be set if none of the existing rules match the field. Not"
+" to be confused with the :ref:`default values <default_values>` which are"
+" applied if the field is empty or non-existent."
+msgstr ""
+"Sous le tableau de correspondances vous pouvez définir une valeur de “secours”. "
+"Cette valeur sera seulement définie si aucune des règles existantes ne correspond au champ. "
+"A ne pas confondre avec :ref:`les valeurs par défaut <default_values>` qui sont "
+"appliquées si le champ est vide ou n'existe pas."
+
+#: ../../define_mappings.rst:90 ../../define_mappings.rst:93
+msgid "No rule match"
+msgstr "Aucune règle ne correspond"
+
+#: ../../define_mappings.rst:97 ../../define_mappings.rst:114
+msgid "Transformation plugins"
+msgstr "Plugins de transformation"
+
+#: ../../define_mappings.rst:99
+msgid ""
+"Tranformation plugins are a set of data filters available to apply "
+"frequent changes to incoming data. They are applied just after the field "
+"mapping process and before the value mapping."
+msgstr ""
+*"Les plugins de transformation sont un ensemble de filtres de données disponibles pour appliquer "
+"des changements fréquents sur les données entrantes. Ils sont appliqués juste après les correspondances de champ et avant les correspondances de valeur."
+
+#: ../../define_mappings.rst:102
+msgid "The mapping order is:"
+msgstr "L'ordre des correspondance est:"
+
+#: ../../define_mappings.rst:104
+msgid "Field mapping (source field => target field)"
+msgstr "Correspondance du champ (champ source => champ cible)"
+
+#: ../../define_mappings.rst:105
+msgid "**Transformation plugins**"
+msgstr "**Plugins de transformation**"
+
+#: ../../define_mappings.rst:106
+msgid "Value mapping"
+msgstr "Correspondance de valeur"
+
+#: ../../define_mappings.rst:107
+msgid "Default value"
+msgstr "Valeur par défaut"
+
+#: ../../define_mappings.rst:109
+msgid ""
+"You can choose none, one or more transformation plugins. To apply them, "
+"click on the `\"Transformation plugins\"` button in the corresponding "
+"mapping on the field mapping page."
+msgstr ""
+"Vous pouvez choisir aucun, un ou plusieurs plugin de transformation. Pour les appliquer, "
+"cliquez sur le bouton `\"Transformation plugins\"` dans la page de correspondances des champs."
+
+#: ../../define_mappings.rst:112
+msgid "In the transformation plugins page, select the ones you wish to use."
+msgstr "Dans la page des plugins de transformation, sélectionnez ceux que vous souhaitez utiliser."
+
+#: ../../define_mappings.rst:117
+msgid "Transformation plugin"
+msgstr "Plugin de transformation"
+
+#: ../../define_mappings.rst:120
+msgid "Matching point"
+msgstr "Dédoublonnage"
+
+#: ../../define_mappings.rst:122
+msgid ""
+"When importing a patron, the import process needs to know whether it is a"
+" new Koha patron (create) or an existing one (update) in Koha that needs "
+"to be modified."
+msgstr ""
+"Lorsqu'un adhérent est importé, le processus d'import doit reconnaître s'il s'agit "
+" d'un nouvel adhérent (création) ou d'un adhérent existant (mise à jour) dans Koha qui nécessite d'être modifié."
+
+#: ../../define_mappings.rst:124
+msgid ""
+"To determine that, we have to create a matching point. A matching point "
+"is one or more field(s) that will be searched in Koha patron database. If"
+" it corresponds to a Koha patron, it will be updated with the incoming "
+"data, otherwise a new patron will be created."
+msgstr ""
+"Pour déterminer ceci, Nous devons créer un dédoublonnage. Le point de dédoublonnage "
+"correspond à un ou plusieurs champs qui seront chercher dans la base de données adhérent de Koha. "
+"Si l'adhérent est trouvé il sera mis à jour avec les données entrantes, sinon il sera crée. "
+
+#: ../../define_mappings.rst:129
+msgid ""
+"Note that all fields in the match point are requested using an “AND” "
+"operator. Not “OR”. This means that all fields must match, not just one."
+msgstr ""
+"A noter que tous les champs du point de dédoublonnage requièrent un opérateur “ET”. "
+"Non “OU”. Ce qui signifie que tous les champs doivent correspond, pas seulement un."
+
+#: ../../define_mappings.rst:132
+msgid ""
+"Add a field to the matching point by selecting it from the list below the"
+" field mapping table and clicking on `\"add\"`."
+msgstr ""
+"Ajouter un champ de dédoublonnage en le sélectionnant depuis la liste sous le tableau de corespondances "
+" et en cliquant sur le bouton `\"add\"`."
+

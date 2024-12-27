@@ -1,0 +1,245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../add-ons.rst:4
+msgid "Add-ons"
+msgstr ""
+
+#: ../../add-ons.rst:6
+msgid "A patron-import add-on is simply a Koha plugin that implements one or more hooks called by the main plugin (patron-import)."
+msgstr ""
+
+#: ../../add-ons.rst:8
+msgid "A add-on is used to handle specific cases that are not feasible by configuring the plugin like complex mappings or unusual data transformation."
+msgstr ""
+
+#: ../../add-ons.rst:13
+msgid "Create an add-on"
+msgstr ""
+
+#: ../../add-ons.rst:15
+msgid "First, create the plugin’s directory. It should respect this structure: my-plugin-name/Koha/Plugin/Com/Biblibre/MyPluginName.pm."
+msgstr ""
+
+#: ../../add-ons.rst:18
+msgid "A good practice is to name the plugin base directory like `\"koha-plugin-myplugin-patron-import\"`."
+msgstr ""
+
+#: ../../add-ons.rst:20
+msgid "``koha-plugin-myplugin-patron-import/Koha/Plugin/Com/Biblibre/MyPlugin.pm``"
+msgstr ""
+
+#: ../../add-ons.rst:22
+msgid "Create this directory on a place where Koha can access / read."
+msgstr ""
+
+#: ../../add-ons.rst:24
+msgid "Your plugin must contain at least this code to be installed by the Koha plugin system: Here is a starter for a plugin named “Example”:"
+msgstr ""
+
+#: ../../add-ons.rst:61
+msgid "Hooks"
+msgstr ""
+
+#: ../../add-ons.rst:63
+msgid "A hook is called multiple times during the import process. Each hook corresponds to a specific point in the import. See `“Available hooks”` section below to learn when they are called and how to implement them."
+msgstr ""
+
+#: ../../add-ons.rst:66
+msgid "To implement a hook add it where you want in the add-on package:"
+msgstr ""
+
+#: ../../add-ons.rst:76
+msgid "**Available hooks:**"
+msgstr ""
+
+#: ../../add-ons.rst:79
+msgid "For authorized users, you can check the `Example add-on <https://git.biblibre.com/Add-on-patron-import/koha-plugin-example-patron-import/src/branch/master/Koha/Plugin/Com/Biblibre/Example.pm>`__."
+msgstr ""
+
+#: ../../add-ons.rst:82
+msgid "Here is a list of available hooks and how they should be written."
+msgstr ""
+
+#: ../../add-ons.rst:84
+msgid "**patron_import_mapping_postprocess**"
+msgstr ""
+
+#: ../../add-ons.rst:87
+msgid "This hook is called just after the field and value mappings are processed."
+msgstr ""
+
+#: ../../add-ons.rst:88
+msgid "``$borrower`` is the futur Koha patron."
+msgstr ""
+
+#: ../../add-ons.rst:96
+msgid "**patron_import_patron_update**"
+msgstr ""
+
+#: ../../add-ons.rst:98
+msgid "Called before the patron is updated in Koha."
+msgstr ""
+
+#: ../../add-ons.rst:99
+#: ../../add-ons.rst:124
+msgid "``$patron`` is the incoming patron"
+msgstr ""
+
+#: ../../add-ons.rst:100
+#: ../../add-ons.rst:125
+msgid "``$extended_attributes`` contains the incoming patron extended attributes"
+msgstr ""
+
+#: ../../add-ons.rst:101
+msgid "``$stored_patron`` is the current Koha patron"
+msgstr ""
+
+#: ../../add-ons.rst:102
+msgid "``$stored_extended_attributes`` contains the current patron extended attributes"
+msgstr ""
+
+#: ../../add-ons.rst:110
+msgid "**patron_import_patron_updated**"
+msgstr ""
+
+#: ../../add-ons.rst:112
+msgid "Called after the patron is updated in Koha."
+msgstr ""
+
+#: ../../add-ons.rst:113
+#: ../../add-ons.rst:136
+msgid "``$borrowernumber`` is the updated borrowernumber."
+msgstr ""
+
+#: ../../add-ons.rst:121
+msgid "**patron_import_patron_create**"
+msgstr ""
+
+#: ../../add-ons.rst:123
+msgid "Called before the patron is created in Koha."
+msgstr ""
+
+#: ../../add-ons.rst:133
+msgid "**patron_import_patron_created**"
+msgstr ""
+
+#: ../../add-ons.rst:135
+msgid "Called after the patron is created in Koha."
+msgstr ""
+
+#: ../../add-ons.rst:144
+msgid "**patron_import_to_skip**"
+msgstr ""
+
+#: ../../add-ons.rst:146
+msgid "Called to define if the patron should be ignored by the import process."
+msgstr ""
+
+#: ../../add-ons.rst:147
+msgid "``$patron`` id the mapped incoming patron."
+msgstr ""
+
+#: ../../add-ons.rst:155
+msgid "**patron_import_patron_exists**"
+msgstr ""
+
+#: ../../add-ons.rst:157
+msgid "Called to define an additionnal condition after matchingpoint result."
+msgstr ""
+
+#: ../../add-ons.rst:159
+msgid "``$patron`` is the mapped incoming patron. ``$borrowernumber`` is the borrowernumber found (or not) by matchingpoint"
+msgstr ""
+
+#: ../../add-ons.rst:167
+msgid "Now you created your add-on, you will have to install it."
+msgstr ""
+
+#: ../../add-ons.rst:170
+msgid "Installation"
+msgstr ""
+
+#: ../../add-ons.rst:172
+msgid "Installing steps:"
+msgstr ""
+
+#: ../../add-ons.rst:174
+#: ../../add-ons.rst:181
+msgid "Clone or upload your add-on on the server"
+msgstr ""
+
+#: ../../add-ons.rst:175
+#: ../../add-ons.rst:191
+msgid "Add it in the Koha configuration file"
+msgstr ""
+
+#: ../../add-ons.rst:176
+#: ../../add-ons.rst:206
+msgid "Launch the plugin installer"
+msgstr ""
+
+#: ../../add-ons.rst:177
+#: ../../add-ons.rst:223
+msgid "Enable the add-on"
+msgstr ""
+
+#: ../../add-ons.rst:178
+#: ../../add-ons.rst:229
+msgid "Link the add-on to a configured import"
+msgstr ""
+
+#: ../../add-ons.rst:183
+msgid "Place your add-ons directory somewhere Koha can access it"
+msgstr ""
+
+#: ../../add-ons.rst:193
+msgid "Edit your koha-conf.xml and add a ``<pluginsdir>`` tag inside the ``<config>`` one."
+msgstr ""
+
+#: ../../add-ons.rst:203
+msgid "At this point you might need to restart some Koha services and clear cache."
+msgstr ""
+
+#: ../../add-ons.rst:208
+msgid "Go the Koha source code and run this command:"
+msgstr ""
+
+#: ../../add-ons.rst:215
+msgid "You should see this when your plugin is successfully installed:"
+msgstr ""
+
+#: ../../add-ons.rst:225
+msgid "Before being used by Koha or other plugins the add-on must be enabled."
+msgstr ""
+
+#: ../../add-ons.rst:226
+msgid "Go to the Koha plugins home page (`cgi-bin/koha/plugins/plugins-home.pl`), find your add-on, click on ``Actions`` and the ``Enable`` button."
+msgstr ""
+
+#: ../../add-ons.rst:231
+msgid "Once your add-on is installed and enabled, you should see it when editing an import configuration."
+msgstr ""
+
+#: ../../add-ons.rst:232
+msgid "Here appear all the enabled plugins that implement at least one parton-import hook."
+msgstr ""
+
+#: ../../add-ons.rst:233
+msgid "Just select the add-on(s) you want be used with the import."
+msgstr ""

@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../index.rst:80
+msgid "Contents"
+msgstr ""
+
+#: ../../index.rst:2
+msgid "Introduction"
+msgstr ""
+
+#: ../../index.rst:4
+msgid "This plugin allows you to import patrons from a CSV file or by a LDAP server. Several mappings are available to define how to import the data."
+msgstr ""
+
+#: ../../index.rst:7
+msgid "The creation of add-ons is possible in order to extend the capabilities of the plugin during the import process."
+msgstr ""
+
+#: ../../index.rst:10
+msgid "Before starting"
+msgstr ""
+
+#: ../../index.rst:12
+msgid "Before configuring the plugin, here are the basic (and **important**) elements that you need to prepare."
+msgstr ""
+
+#: ../../index.rst:15
+msgid "From which source ?"
+msgstr ""
+
+#: ../../index.rst:17
+msgid "CSV or LDAP"
+msgstr ""
+
+#: ../../index.rst:19
+msgid "Ideally the csv should be encoded in utf8. The first line of the CSV must be the **column headers**."
+msgstr ""
+
+#: ../../index.rst:21
+msgid "For a LDAP import, this additional informations are needed:"
+msgstr ""
+
+#: ../../index.rst:23
+msgid "**host and port** of the LDAP to be requested (IP address or URL)"
+msgstr ""
+
+#: ../../index.rst:24
+msgid "an authorized **account** (distinguished name) and **password** to read the directory if the anonymous bind is not allowed"
+msgstr ""
+
+#: ../../index.rst:25
+msgid "a **search base** that is kind a sub-directory where the accounts to import are"
+msgstr ""
+
+#: ../../index.rst:26
+msgid "a **search filter** which allow the LDAP search to select only the wanted entries (optional)"
+msgstr ""
+
+#: ../../index.rst:29
+msgid "Field mappings"
+msgstr ""
+
+#: ../../index.rst:31
+msgid "Create a mapping table between source fields and Koha fields."
+msgstr ""
+
+#: ../../index.rst:34
+msgid "Source field"
+msgstr ""
+
+#: ../../index.rst:34
+msgid "Koha field"
+msgstr ""
+
+#: ../../index.rst:36
+msgid "name"
+msgstr ""
+
+#: ../../index.rst:36
+msgid "surname"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "type"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "categorycode"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "mail"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "email"
+msgstr ""
+
+#: ../../index.rst:43
+msgid "If a source field is named the same way than the corresponding Koha field, the mapping is implicit and does not need to be defined in the configuration page. Unless the field value must correspond to a certain value or be transformed."
+msgstr ""
+
+#: ../../index.rst:47
+msgid "Value mappings"
+msgstr ""
+
+#: ../../index.rst:49
+msgid "Define the values that need to be transformed before being imported into Koha, and provide a transformation table for each field that requires it. Particularly for values that must correspond to an authorized value in Koha (e.g. categorycode, branchcode)."
+msgstr ""
+
+#: ../../index.rst:52
+msgid "The transformation process allows regular expressions such as “strict equals”, “starts with”, “contains”. For very specific treatments, an add-on must be drawn up."
+msgstr ""
+
+#: ../../index.rst:56
+msgid "Matching point"
+msgstr ""
+
+#: ../../index.rst:58
+msgid "One or more fields to be used for deduplicate patrons. It is preferable to use unique fields (userid, cardnumber). Extended attributes can be used."
+msgstr ""
+
+#: ../../index.rst:62
+msgid "Default values (optional but recommended)"
+msgstr ""
+
+#: ../../index.rst:64
+msgid "Set default for certain fields if they are empty (or invalid for categorycode and branchcode). The definition of default values for **categorycode and branchcode** should be systematic."
+msgstr ""
+
+#: ../../index.rst:68
+msgid "Automating"
+msgstr ""
+
+#: ../../index.rst:70
+msgid "Automation involves adding the import to a :ref:`cronjob <tools>`. This requires some important information:"
+msgstr ""
+
+#: ../../index.rst:72
+msgid "**frequency** (each hour/day/week/month ?)"
+msgstr ""
+
+#: ../../index.rst:73
+msgid "**time** important to avoid processing during hours of use/opening"
+msgstr ""
+
+#: ../../index.rst:74
+msgid "**where** the CSV file will be uploaded on the server (not for LDAP)"
+msgstr ""
+
+#: ../../index.rst:75
+msgid "**naming** of CSV file may contain a date part which will be replaced by the current date during import"
+msgstr ""
+
+#: ../../index.rst:78
+msgid "Pay attention to the import time. A file could be uploaded at 11:50 pm and imported at 00:30 am the day after."
+msgstr ""

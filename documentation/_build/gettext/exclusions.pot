@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../exclusions.rst:4
+msgid "Exclusions"
+msgstr ""
+
+#: ../../exclusions.rst:6
+msgid "Exclusion rules can be used to define certain incoming patrons to be ignored."
+msgstr ""
+
+#: ../../exclusions.rst:8
+msgid "A rule is a set of ``koha field => value``. All rule fields must match for the patron to be ignored."
+msgstr ""
+
+#: ../../exclusions.rst:10
+msgid "There is two rule types:"
+msgstr ""
+
+#: ../../exclusions.rst:12
+msgid "**External**: match incoming data"
+msgstr ""
+
+#: ../../exclusions.rst:13
+msgid "**Koha**: match Koha data (if a matching patron has been found)."
+msgstr ""
+
+#: ../../exclusions.rst:16
+msgid "Create a rule"
+msgstr ""
+
+#: ../../exclusions.rst:18
+msgid "Enter a rule name, check whether you want a Koha rule or not and click on the `“Add”` button."
+msgstr ""
+
+#: ../../exclusions.rst:20
+#: ../../exclusions.rst:23
+msgid "Add rule"
+msgstr ""
+
+#: ../../exclusions.rst:26
+msgid "Add fields"
+msgstr ""
+
+#: ../../exclusions.rst:28
+msgid "Select a field, entrer a value and click on `“Add”` button."
+msgstr ""
+
+#: ../../exclusions.rst:30
+#: ../../exclusions.rst:33
+msgid "Add field"
+msgstr ""

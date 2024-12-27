@@ -1,0 +1,76 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../deletions.rst:4
+msgid "Deletions"
+msgstr "Suppressions"
+
+#: ../../deletions.rst:6
+msgid ""
+"Deletion rules are a set of fields/values defining which patrons are to "
+"be deleted in Koha."
+msgstr "Les règles de suppressions sont un ensemble de champs/valeurs qui définit les patrons à supprimer de Koha."
+
+#: ../../deletions.rst:8
+msgid "Several conditions must be met to delete a patron:"
+msgstr "Plusieurs conditions doivent être réunies pour supprimer un adhérent:"
+
+#: ../../deletions.rst:10
+msgid "Entire rule fields must have been matched the incoming data"
+msgstr "La règle doit correspondre en entier aux données entrantes"
+
+#: ../../deletions.rst:11
+msgid ""
+"Incoming data must have been associated with a corresponding patron in "
+"Koha with regard to the `matching point`"
+msgstr ""
+"Les données entrantes doivent être associées à un adhérent Koha (trouvé par dédoublonnage)"
+
+#: ../../deletions.rst:12
+msgid "Koha's target patron must not have any due charges"
+msgstr "L'adhérent cible ne doit pas avoir de dettes"
+
+#: ../../deletions.rst:13
+msgid "Koha's target patron must not have any due checkouts"
+msgstr "L'adhérent cible ne doit pas avoir de prêts dus"
+
+#: ../../deletions.rst:16
+msgid "Create a rule"
+msgstr "Créer une règle"
+
+#: ../../deletions.rst:18
+msgid "Type a rule name and click `\"Add\"` button."
+msgstr "Saisir un nom de règle et cliquer sur le bouton `\"Add\"`."
+
+#: ../../deletions.rst:20 ../../deletions.rst:23
+msgid "Add rule"
+msgstr "Ajouter une règle"
+
+#: ../../deletions.rst:26
+msgid "Add fields"
+msgstr "Ajouter les champs"
+
+#: ../../deletions.rst:28
+msgid "Select a field, entrer a value and click on the `\"Add\"` button."
+msgstr "Sélectionner un champ, saisir une valeur et cliquer sur le bouton `\"Add\"`."
+
+#: ../../deletions.rst:30
+msgid "Add field"
+msgstr "Ajouter un champ"
+
