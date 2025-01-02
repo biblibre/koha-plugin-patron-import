@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../define_mappings.rst:4
+msgid "Define mappings"
+msgstr ""
+
+#: ../../define_mappings.rst:6
+msgid "Mapping definitions is a very important feature of this plugin, as it determines how the data will be interpreted."
+msgstr ""
+
+#: ../../define_mappings.rst:8
+msgid "When you :ref:`created an import <create_import>`, you choose a *flow type* which is the source type of your data. Whichever type of source you import from, Patron-import will transform the source data into tabular data. This tabular data is referred to here as **incoming data**. Mappings are applied to the incoming data to create a Koha patron."
+msgstr ""
+
+#: ../../define_mappings.rst:12
+msgid "This data transformation involves several optional steps:"
+msgstr ""
+
+#: ../../define_mappings.rst:15
+msgid "Fields mappings"
+msgstr ""
+
+#: ../../define_mappings.rst:17
+msgid "Field mapping consists in moving the incoming data field into the koha patron field. Basically, this means that we will tell Pattern-import: \"move the incoming data to the Koha field related to the patron\"."
+msgstr ""
+
+#: ../../define_mappings.rst:21
+msgid "Accessing mappings page"
+msgstr ""
+
+#: ../../define_mappings.rst:23
+msgid "Once you've :ref:`created an import <create_import>`, you can view it on the plugin configuration home page. On this page, click on the “mappings” link."
+msgstr ""
+
+#: ../../define_mappings.rst:26
+msgid "Add new field mapping"
+msgstr ""
+
+#: ../../define_mappings.rst:28
+msgid "To add a field match, enter the name of a field in the left-hand part of the table (Source field column). Which must match an existing field in your source data, and select the koha field to match. Click on `add` button."
+msgstr ""
+
+#: ../../define_mappings.rst:31
+#: ../../define_mappings.rst:34
+msgid "Field mapping"
+msgstr ""
+
+#: ../../define_mappings.rst:37
+msgid "Implicit mappings"
+msgstr ""
+
+#: ../../define_mappings.rst:39
+msgid "If the name of your source field matches the name of a koha field, you don't need to explicitly create the match. The plugin will do this implicitly. For example, ``surname => surname`` is not required except if you have to apply value mapping or transformation plugin."
+msgstr ""
+
+#: ../../define_mappings.rst:43
+msgid "Tokens"
+msgstr ""
+
+#: ../../define_mappings.rst:45
+msgid "You can use tokens in the source field column. Tokens are source field names surrounded by square brackets. They are used for conditional matches or concatenation."
+msgstr ""
+
+#: ../../define_mappings.rst:47
+msgid "Concatenation with comma"
+msgstr ""
+
+#: ../../define_mappings.rst:50
+msgid "'num' and 'street' will be concatenated with ‘,’ as separator and mapped in the address koha field."
+msgstr ""
+
+#: ../../define_mappings.rst:52
+msgid "Concatenation with pipe"
+msgstr ""
+
+#: ../../define_mappings.rst:55
+msgid "Email will be mapped if it is not empty. If it is, id will be."
+msgstr ""
+
+#: ../../define_mappings.rst:58
+#: ../../define_mappings.rst:74
+#: ../../define_mappings.rst:77
+msgid "Value mappings"
+msgstr ""
+
+#: ../../define_mappings.rst:60
+msgid "Value mappings allow you to transform source field values into other values during the mapping process. Value matches are configured for each field mapping."
+msgstr ""
+
+#: ../../define_mappings.rst:64
+msgid "Add new value mapping"
+msgstr ""
+
+#: ../../define_mappings.rst:66
+msgid "In the field mapping page, click on `value mappings` button of the corresponding field mapping. In the table, add as any value mappings as you like and save."
+msgstr ""
+
+#: ../../define_mappings.rst:69
+msgid "The value on the left (input value) is the incoming value of your source field. The value on the right (output value) is the replacement value."
+msgstr ""
+
+#: ../../define_mappings.rst:72
+msgid "A good example for value mappings is the transformation of category codes to match valid koha categorycodes."
+msgstr ""
+
+#: ../../define_mappings.rst:79
+msgid "In the example above, for the field mapping in destination to categorycode, “Adult” will tranformed to “ADU”, “Young” to “YNG” and “Librarian” to “LIB”"
+msgstr ""
+
+#: ../../define_mappings.rst:84
+msgid "If none of this rules match"
+msgstr ""
+
+#: ../../define_mappings.rst:86
+msgid "Under the value mapping table you can define a “fallback” value. This value will only be set if none of the existing rules match the field. Not to be confused with the :ref:`default values <default_values>` which are applied if the field is empty or non-existent."
+msgstr ""
+
+#: ../../define_mappings.rst:90
+#: ../../define_mappings.rst:93
+msgid "No rule match"
+msgstr ""
+
+#: ../../define_mappings.rst:97
+#: ../../define_mappings.rst:114
+msgid "Transformation plugins"
+msgstr ""
+
+#: ../../define_mappings.rst:99
+msgid "Tranformation plugins are a set of data filters available to apply frequent changes to incoming data. They are applied just after the field mapping process and before the value mapping."
+msgstr ""
+
+#: ../../define_mappings.rst:102
+msgid "The mapping order is:"
+msgstr ""
+
+#: ../../define_mappings.rst:104
+msgid "Field mapping (source field => target field)"
+msgstr ""
+
+#: ../../define_mappings.rst:105
+msgid "**Transformation plugins**"
+msgstr ""
+
+#: ../../define_mappings.rst:106
+msgid "Value mapping"
+msgstr ""
+
+#: ../../define_mappings.rst:107
+msgid "Default value"
+msgstr ""
+
+#: ../../define_mappings.rst:109
+msgid "You can choose none, one or more transformation plugins. To apply them, click on the `\"Transformation plugins\"` button in the corresponding mapping on the field mapping page."
+msgstr ""
+
+#: ../../define_mappings.rst:112
+msgid "In the transformation plugins page, select the ones you wish to use."
+msgstr ""
+
+#: ../../define_mappings.rst:117
+msgid "Transformation plugin"
+msgstr ""
+
+#: ../../define_mappings.rst:120
+msgid "Matching point"
+msgstr ""
+
+#: ../../define_mappings.rst:122
+msgid "When importing a patron, the import process needs to know whether it is a new Koha patron (create) or an existing one (update) in Koha that needs to be modified."
+msgstr ""
+
+#: ../../define_mappings.rst:124
+msgid "To determine that, we have to create a matching point. A matching point is one or more field(s) that will be searched in Koha patron database. If it corresponds to a Koha patron, it will be updated with the incoming data, otherwise a new patron will be created."
+msgstr ""
+
+#: ../../define_mappings.rst:129
+msgid "Note that all fields in the match point are requested using an “AND” operator. Not “OR”. This means that all fields must match, not just one."
+msgstr ""
+
+#: ../../define_mappings.rst:132
+msgid "Add a field to the matching point by selecting it from the list below the field mapping table and clicking on `\"add\"`."
+msgstr ""

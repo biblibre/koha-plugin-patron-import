@@ -1,0 +1,317 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../add-ons.rst:4
+msgid "Add-ons"
+msgstr ""
+
+#: ../../add-ons.rst:6
+msgid ""
+"A patron-import add-on is simply a Koha plugin that implements one or "
+"more hooks called by the main plugin (patron-import)."
+msgstr ""
+"Un add-on est simplement un plugin Koha qui implémente un ou plusieurs "
+"hook(s) appelés par le plugin principal."
+
+#: ../../add-ons.rst:8
+msgid ""
+"A add-on is used to handle specific cases that are not feasible by "
+"configuring the plugin like complex mappings or unusual data "
+"transformation."
+msgstr ""
+"Un add-on est utilisé pour prendre en compte des cas spécifiques qui ne "
+"peuvent pas être configurés par la configuration du plugin comme les "
+"correspondances complexes ou les transformations de données non "
+"habituelles."
+
+#: ../../add-ons.rst:13
+msgid "Create an add-on"
+msgstr "Créer un add-on"
+
+#: ../../add-ons.rst:15
+msgid ""
+"First, create the plugin’s directory. It should respect this structure: "
+"my-plugin-name/Koha/Plugin/Com/Biblibre/MyPluginName.pm."
+msgstr ""
+"Premièrement, créer le dossier du plugin. Cela doit respecter la "
+"structure: my-plugin-name/Koha/Plugin/Com/Biblibre/MyPluginName.pm."
+
+#: ../../add-ons.rst:18
+msgid ""
+"A good practice is to name the plugin base directory like `\"koha-plugin-"
+"myplugin-patron-import\"`."
+msgstr ""
+"Une bonne pratique est de nommer dossier du plugin comme `\"koha-plugin-"
+"myplugin-patron-import\"`."
+
+#: ../../add-ons.rst:20
+msgid ""
+"``koha-plugin-myplugin-patron-"
+"import/Koha/Plugin/Com/Biblibre/MyPlugin.pm``"
+msgstr ""
+
+#: ../../add-ons.rst:22
+msgid "Create this directory on a place where Koha can access / read."
+msgstr "Créer ce dossier à un endroit que Koha peut lire/accéder."
+
+#: ../../add-ons.rst:24
+msgid ""
+"Your plugin must contain at least this code to be installed by the Koha "
+"plugin system: Here is a starter for a plugin named “Example”:"
+msgstr ""
+"Votre plugin doit contenir au minimum ce code afin qu'il soit installé "
+"par l'installation de plugin Koha: Ici le début d'un plugin nommé "
+"“Exemple”:"
+
+#: ../../add-ons.rst:61
+msgid "Hooks"
+msgstr ""
+
+#: ../../add-ons.rst:63
+msgid ""
+"A hook is called multiple times during the import process. Each hook "
+"corresponds to a specific point in the import. See `“Available hooks”` "
+"section below to learn when they are called and how to implement them."
+msgstr ""
+"Un hook est appelé plusieurs fois durant un import. Chaque hook "
+"correspond à un moment spécifique de l'import. Voir la section `“Hooks "
+"disponibles”` ci-dessous afin d'apprendre quand ils sont appelés et "
+"comment les implémenter."
+
+#: ../../add-ons.rst:66
+msgid "To implement a hook add it where you want in the add-on package:"
+msgstr "Pour implémenter un hook, ajouter le dans l'add-on:"
+
+#: ../../add-ons.rst:76
+msgid "**Available hooks:**"
+msgstr "**Hooks disponibles:**"
+
+#: ../../add-ons.rst:79
+msgid ""
+"For authorized users, you can check the `Example add-on "
+"<https://git.biblibre.com/Add-on-patron-import/koha-plugin-example-"
+"patron-import/src/branch/master/Koha/Plugin/Com/Biblibre/Example.pm>`__."
+msgstr ""
+"Pour les utilisateurs autorisés, vous pouvez regarder l'add-on d'exemple "
+"<https://git.biblibre.com/Add-on-patron-import/koha-plugin-example-"
+"patron-import/src/branch/master/Koha/Plugin/Com/Biblibre/Example.pm>`__."
+
+#: ../../add-ons.rst:82
+msgid "Here is a list of available hooks and how they should be written."
+msgstr ""
+"Ici sont listés les hooks disponibles et la manière dont ils doivent être"
+" manipulés."
+
+#: ../../add-ons.rst:84
+msgid "**patron_import_mapping_postprocess**"
+msgstr ""
+
+#: ../../add-ons.rst:87
+msgid "This hook is called just after the field and value mappings are processed."
+msgstr ""
+"Ce hook est appelé juste après les correspondances faites au travers du "
+"mapping paramétré."
+
+#: ../../add-ons.rst:88
+msgid "``$borrower`` is the futur Koha patron."
+msgstr "``$borrower`` est le futur adhérent Koha."
+
+#: ../../add-ons.rst:96
+msgid "**patron_import_patron_update**"
+msgstr ""
+
+#: ../../add-ons.rst:98
+msgid "Called before the patron is updated in Koha."
+msgstr "Appelé avant qu'un adhérent soit mis à jour dans Koha."
+
+#: ../../add-ons.rst:99 ../../add-ons.rst:124
+msgid "``$patron`` is the incoming patron"
+msgstr "``$patron`` est l'adhérent entrant"
+
+#: ../../add-ons.rst:100 ../../add-ons.rst:125
+msgid "``$extended_attributes`` contains the incoming patron extended attributes"
+msgstr ""
+"``$extended_attributes`` contient les attributes étendus de l'adhérent "
+"entrant"
+
+#: ../../add-ons.rst:101
+msgid "``$stored_patron`` is the current Koha patron"
+msgstr "``$stored_patron`` est l'adhérent courant"
+
+#: ../../add-ons.rst:102
+msgid ""
+"``$stored_extended_attributes`` contains the current patron extended "
+"attributes"
+msgstr ""
+"``$stored_extended_attributes`` contient les attributs étendus de "
+"l'adhérent courant"
+
+#: ../../add-ons.rst:110
+msgid "**patron_import_patron_updated**"
+msgstr ""
+
+#: ../../add-ons.rst:112
+msgid "Called after the patron is updated in Koha."
+msgstr "Appelé après qu'un adhérent soit mis à jour dans Koha."
+
+#: ../../add-ons.rst:113 ../../add-ons.rst:136
+msgid "``$borrowernumber`` is the updated borrowernumber."
+msgstr "``$borrowernumber`` est le borrowernumber de l'adhérent mis à jour."
+
+#: ../../add-ons.rst:121
+msgid "**patron_import_patron_create**"
+msgstr ""
+
+#: ../../add-ons.rst:123
+msgid "Called before the patron is created in Koha."
+msgstr "Appelé avant que l'adhérent ne soit crée dans Koha."
+
+#: ../../add-ons.rst:133
+msgid "**patron_import_patron_created**"
+msgstr ""
+
+#: ../../add-ons.rst:135
+msgid "Called after the patron is created in Koha."
+msgstr "Appelé après que l'adhérent eut été crée dans Koha."
+
+#: ../../add-ons.rst:144
+msgid "**patron_import_to_skip**"
+msgstr ""
+
+#: ../../add-ons.rst:146
+msgid "Called to define if the patron should be ignored by the import process."
+msgstr "Appelé pour définir si l'adhérent doit être ignorés durant l'import."
+
+#: ../../add-ons.rst:147
+msgid "``$patron`` id the mapped incoming patron."
+msgstr "``$patron`` id de l'adhérent entrant correspondant."
+
+#: ../../add-ons.rst:155
+msgid "**patron_import_patron_exists**"
+msgstr ""
+
+#: ../../add-ons.rst:157
+msgid "Called to define an additionnal condition after matchingpoint result."
+msgstr ""
+"Appelé pour définir une condition additionnelle après le résultat du "
+"dédoublonnage."
+
+#: ../../add-ons.rst:159
+msgid ""
+"``$patron`` is the mapped incoming patron. ``$borrowernumber`` is the "
+"borrowernumber found (or not) by matchingpoint"
+msgstr ""
+"``$patron`` est l'adhérent correspondant entrant. ``$borrowernumber`` est"
+" le borrowernumber trouvé (ou non) suite au dédoublonnage"
+
+#: ../../add-ons.rst:167
+msgid "Now you created your add-on, you will have to install it."
+msgstr "Maintenant que vous avez crée votre add-on, vous devez l'installer."
+
+#: ../../add-ons.rst:170
+msgid "Installation"
+msgstr ""
+
+#: ../../add-ons.rst:172
+msgid "Installing steps:"
+msgstr "Etapes d'installation:"
+
+#: ../../add-ons.rst:174 ../../add-ons.rst:181
+msgid "Clone or upload your add-on on the server"
+msgstr "Cloner ou mettre à jour l'add-on sur le serveur"
+
+#: ../../add-ons.rst:175 ../../add-ons.rst:191
+msgid "Add it in the Koha configuration file"
+msgstr "Ajouter le dans le fichier de configuration Koha"
+
+#: ../../add-ons.rst:176 ../../add-ons.rst:206
+msgid "Launch the plugin installer"
+msgstr "Lancer l'installeur de plugin"
+
+#: ../../add-ons.rst:177 ../../add-ons.rst:223
+msgid "Enable the add-on"
+msgstr "Activer l'add-on"
+
+#: ../../add-ons.rst:178 ../../add-ons.rst:229
+msgid "Link the add-on to a configured import"
+msgstr "Lier l'add-on à un import configuré"
+
+#: ../../add-ons.rst:183
+msgid "Place your add-ons directory somewhere Koha can access it"
+msgstr ""
+"Placer vos dossiers d'add-ons de façon à ce que Koha puisse accéder à "
+"ceux-çi"
+
+#: ../../add-ons.rst:193
+msgid ""
+"Edit your koha-conf.xml and add a ``<pluginsdir>`` tag inside the "
+"``<config>`` one."
+msgstr "Editer le fichier koha-conf.xml et ajouter un élement ``<pluginsdir>``"
+
+#: ../../add-ons.rst:203
+msgid ""
+"At this point you might need to restart some Koha services and clear "
+"cache."
+msgstr "A présent, redémarrer les services Koha et nettoyer le cache."
+
+#: ../../add-ons.rst:208
+msgid "Go the Koha source code and run this command:"
+msgstr "Aller dans le code de Koha et lancer la commande:"
+
+#: ../../add-ons.rst:215
+msgid "You should see this when your plugin is successfully installed:"
+msgstr "Vous devriez voir ceci lorsque votre plugin s'est correctement installé:"
+
+#: ../../add-ons.rst:225
+msgid "Before being used by Koha or other plugins the add-on must be enabled."
+msgstr ""
+"Avant d'être utilisé par Koha ou par d'autres plugins l'add-on doit être "
+"activé."
+
+#: ../../add-ons.rst:226
+msgid ""
+"Go to the Koha plugins home page (`cgi-bin/koha/plugins/plugins-"
+"home.pl`), find your add-on, click on ``Actions`` and the ``Enable`` "
+"button."
+msgstr ""
+"Aller à la page d'accueil des plugins (`cgi-bin/koha/plugins/plugins-"
+"home.pl`), trouver l'add-on, cliquer sur ``Actions`` et sur le bouton "
+"``Enable``."
+
+#: ../../add-ons.rst:231
+msgid ""
+"Once your add-on is installed and enabled, you should see it when editing"
+" an import configuration."
+msgstr ""
+"Une fois l'add-on installé et activé, il sera visible dans la "
+"configuration d'un import."
+
+#: ../../add-ons.rst:232
+#, fuzzy
+msgid ""
+"Here appear all the enabled plugins that implement at least one parton-"
+"import hook."
+msgstr ""
+"Ici apparaissent tous les plugins activés qui implémentent au moins un "
+"hook de patron-import."
+
+#: ../../add-ons.rst:233
+msgid "Just select the add-on(s) you want be used with the import."
+msgstr "Sélectionner juste le(s) add-on(s) a utiliser avec l'import."
+

@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../logs.rst:4
+msgid "Logs"
+msgstr ""
+
+#: ../../logs.rst:7
+msgid "Runs"
+msgstr ""
+
+#: ../../logs.rst:9
+msgid "Runs record various information (depending on the options passed to the script), and to separate runs started with the ``--dry-run`` option, there is a specific class to distinguish them."
+msgstr ""
+
+#: ../../logs.rst:13
+msgid "|Run| On each run detail, you can see which borrowers have passed through the plugin, with information about the actions performed (creation, update or deletion for example) and the date of that action."
+msgstr ""
+
+#: ../../logs.rst:23
+msgid "Run"
+msgstr ""
+
+#: ../../logs.rst:18
+#: ../../logs.rst:21
+msgid "Patrons history"
+msgstr ""
+
+#: ../../logs.rst:26
+msgid "Debug options"
+msgstr ""
+
+#: ../../logs.rst:28
+msgid "You can pass some options to the script to get more information about the import:"
+msgstr ""
+
+#: ../../logs.rst:31
+msgid "``--info-logs``"
+msgstr ""
+
+#: ../../logs.rst:32
+msgid "Log infos about mapping or other configuration setting on each patron (``--dry-run`` compatible)"
+msgstr ""
+
+#: ../../logs.rst:35
+msgid "``--success-log``"
+msgstr ""
+
+#: ../../logs.rst:36
+msgid "Log every successful action on database for each patron (no effect with ``--dry-run``)"
+msgstr ""
+
+#: ../../logs.rst:39
+msgid "``--debug``"
+msgstr ""
+
+#: ../../logs.rst:40
+msgid "Printed on server side, `Raw data` from the source and `Patron for Koha`: patron transformed by plugin configuration and sent to koha database"
+msgstr ""

@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Définitions des correspondances &mdash; Documentation PatronImport </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d1a510d7"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=041d0952"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Champs protégés et effacables" href="protected_erasables_fields.html" />
+    <link rel="prev" title="Créer un nouvel import" href="create_import.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PatronImport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Créer un nouvel import</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Définitions des correspondances</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fields-mappings">Correspondances des champs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-mappings-page">Accès à la page des correspondances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-field-mapping">Ajouter une nouvelle correspondance de champ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-mappings">Correspondances implicites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tokens">Tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#value-mappings">Correspondances de valeur</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-value-mapping">Ajouter une nouvelle correspondance de valeur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if-none-of-this-rules-match">Si aucune de ces règles ne fonctionnent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transformation-plugins">Plugins de transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matching-point">Dédoublonnage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Champs protégés et effacables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Valeurs par défaut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Suppressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Debarments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Attributs étendus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Outils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PatronImport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Définitions des correspondances</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/define_mappings.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="define-mappings">
+<span id="id1"></span><h1>Définitions des correspondances<a class="headerlink" href="#define-mappings" title="Lien vers cette rubrique"></a></h1>
+<p>Les correspondances sont une fonctionnalité essentielles de ce plugin puisque ce sont elles qui vont déterminer les données à traiter.</p>
+<p>Quand vous <a class="reference internal" href="create_import.html#create-import"><span class="std std-ref">créez un import</span></a>, vous choisissez une <em>source de données. Peu importe la source utilisée, le plugin transformera les données sources en tableau de données. Ce tableau sera référencé comme étant les **données entrantes*</em>. Les correspondances seront appliquées sur ces données pour créer un adhérent Koha.</p>
+<p>Cette transformation des données implique plusieurs étapes facultatives:</p>
+<section id="fields-mappings">
+<h2>Correspondances des champs<a class="headerlink" href="#fields-mappings" title="Lien vers cette rubrique"></a></h2>
+<p>La correspondance des champs consiste à ajouter les données entrantes dans les champs Koha de l’adhérent. Cela signifie simplement que nous disons au plugin: « ajoute cette donnée dans ce champ Koha de l’adhérent ».</p>
+<section id="accessing-mappings-page">
+<h3>Accès à la page des correspondances<a class="headerlink" href="#accessing-mappings-page" title="Lien vers cette rubrique"></a></h3>
+<p>Une fois que vous avez <a class="reference internal" href="create_import.html#create-import"><span class="std std-ref">crée un import</span></a>, vous pouvez le voir sur la page d’accueil du plugin. Sur cette page, cliquez sur le lien “mappings”.</p>
+</section>
+<section id="add-new-field-mapping">
+<h3>Ajouter une nouvelle correspondance de champ<a class="headerlink" href="#add-new-field-mapping" title="Lien vers cette rubrique"></a></h3>
+<p>Pour ajouter une correspondance, saisir le nom du champ de la source à gauche et sélectionnez le champ Koha à faire correspondre. Cliquer sur le bouton <cite>add</cite>.</p>
+<figure class="align-default" id="id2">
+<img alt="Correspondance de champ" src="_images/field-mapping.jpg" />
+<figcaption>
+<p><span class="caption-text">Correspondance de champ</span><a class="headerlink" href="#id2" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="implicit-mappings">
+<h3>Correspondances implicites<a class="headerlink" href="#implicit-mappings" title="Lien vers cette rubrique"></a></h3>
+<p>Si le nom du champ de la source correspond exactement au champ Koha, vous n’avez pas besoin de créer explicitement la correspondance. Le plugin le fera implicitement. Par exemple, <code class="docutils literal notranslate"><span class="pre">surname</span> <span class="pre">=&gt;</span> <span class="pre">surname</span></code> n’est pas requis, sauf si vous ajoutez une correspondance de valeur ou une transformation.</p>
+</section>
+<section id="tokens">
+<h3>Tokens<a class="headerlink" href="#tokens" title="Lien vers cette rubrique"></a></h3>
+<p>Vous pouvez utiliser des tokens pour le nom de vos champs source. Les tokens sont les noms entourés de chevrons. Ils sont utilisés pour des correspondances conditionnelles ou des concaténations.</p>
+<figure class="align-default" id="id3">
+<img alt="Concaténation avec une virgule" src="_images/concat_token.jpg" />
+<figcaption>
+<p><span class="caption-text">“num” et “street” seront concaténés avec ‘,’ comme séparateur et correspondront au champ Koha de l’adresse.</span><a class="headerlink" href="#id3" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
+<img alt="Concaténation avec pipe" src="_images/conditional_token.jpg" />
+<figcaption>
+<p><span class="caption-text">L’email sera pris en compte s’il n’est pas vide. S’il l’est ce sera l’id qui le sera à sa place.</span><a class="headerlink" href="#id4" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="value-mappings">
+<h2>Correspondances de valeur<a class="headerlink" href="#value-mappings" title="Lien vers cette rubrique"></a></h2>
+<p>Les correspondances de valeur vous permettent de transformer les valeurs des champs entrants vers une autre valeur durant la prise en compte des correspondances. Les correspondances de valeur sont configurables pour chaque correspondance de champ.</p>
+<section id="add-new-value-mapping">
+<h3>Ajouter une nouvelle correspondance de valeur<a class="headerlink" href="#add-new-value-mapping" title="Lien vers cette rubrique"></a></h3>
+<p>Dans la page de correspondance des champs, cliquer sur le bouton <cite>value mappings</cite> du champ correspondant. Dans le tableau ajouter autant de correspondances de valeur que souhaité et sauvegarder.</p>
+<p>La valeur d’entrée (sur la gauche) correspond à la valeur entrante de la source La valeur de sortie (sur la droite) correspond à la valeur de remplacement.</p>
+<p>Un bon exemple de correspondances de valeur est la transformation des category codes pour correspondre à un categorycode Koha valide.</p>
+<figure class="align-default" id="id5">
+<img alt="Correspondances de valeur" src="_images/value-mappings.jpg" />
+<figcaption>
+<p><span class="caption-text">Correspondances de valeur</span><a class="headerlink" href="#id5" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<p>Dans l’exemple ici, le champ correspondant pour “categorycode”, “Adult” sera transformé en “ADU”, “Young” en “YNG” et “Librarian” en “LIB”</p>
+</section>
+<section id="if-none-of-this-rules-match">
+<h3>Si aucune de ces règles ne fonctionnent<a class="headerlink" href="#if-none-of-this-rules-match" title="Lien vers cette rubrique"></a></h3>
+<p>Sous le tableau de correspondances vous pouvez définir une valeur de “secours”. Cette valeur sera seulement définie si aucune des règles existantes ne correspond au champ. A ne pas confondre avec <a class="reference internal" href="default_values.html#default-values"><span class="std std-ref">les valeurs par défaut</span></a> qui sont appliquées si le champ est vide ou n’existe pas.</p>
+<figure class="align-default" id="id6">
+<img alt="Aucune règle ne correspond" src="_images/if-none-rules-match.jpg" />
+<figcaption>
+<p><span class="caption-text">Aucune règle ne correspond</span><a class="headerlink" href="#id6" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="transformation-plugins">
+<h2>Plugins de transformation<a class="headerlink" href="#transformation-plugins" title="Lien vers cette rubrique"></a></h2>
+<p>des changements fréquents sur les données entrantes. Ils sont appliqués juste après les correspondances de champ et avant les correspondances de valeur.</p>
+<p>L’ordre des correspondance est:</p>
+<ol class="arabic simple">
+<li><p>Correspondance du champ (champ source =&gt; champ cible)</p></li>
+<li><p><strong>Plugins de transformation</strong></p></li>
+<li><p>Correspondance de valeur</p></li>
+<li><p>Valeur par défaut</p></li>
+</ol>
+<p>Vous pouvez choisir aucun, un ou plusieurs plugin de transformation. Pour les appliquer, cliquez sur le bouton <cite>« Transformation plugins »</cite> dans la page de correspondances des champs.</p>
+<p>Dans la page des plugins de transformation, sélectionnez ceux que vous souhaitez utiliser.</p>
+<figure class="align-default" id="id7">
+<img alt="Plugins de transformation" src="_images/transformation-plugins.jpg" />
+<figcaption>
+<p><span class="caption-text">Plugin de transformation</span><a class="headerlink" href="#id7" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="matching-point">
+<h2>Dédoublonnage<a class="headerlink" href="#matching-point" title="Lien vers cette rubrique"></a></h2>
+<p>Lorsqu’un adhérent est importé, le processus d’import doit reconnaître s’il s’agit  d’un nouvel adhérent (création) ou d’un adhérent existant (mise à jour) dans Koha qui nécessite d’être modifié.</p>
+<p>Pour déterminer ceci, Nous devons créer un dédoublonnage. Le point de dédoublonnage correspond à un ou plusieurs champs qui seront chercher dans la base de données adhérent de Koha. Si l’adhérent est trouvé il sera mis à jour avec les données entrantes, sinon il sera crée.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A noter que tous les champs du point de dédoublonnage requièrent un opérateur “ET”. Non “OU”. Ce qui signifie que tous les champs doivent correspond, pas seulement un.</p>
+</div>
+<p>Ajouter un champ de dédoublonnage en le sélectionnant depuis la liste sous le tableau de corespondances  et en cliquant sur le bouton <cite>« add »</cite>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="create_import.html" class="btn btn-neutral float-left" title="Créer un nouvel import" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="protected_erasables_fields.html" class="btn btn-neutral float-right" title="Champs protégés et effacables" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, BibLibre.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

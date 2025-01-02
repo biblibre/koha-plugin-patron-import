@@ -1,0 +1,76 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../exclusions.rst:4
+msgid "Exclusions"
+msgstr ""
+
+#: ../../exclusions.rst:6
+msgid ""
+"Exclusion rules can be used to define certain incoming patrons to be "
+"ignored."
+msgstr "Les règles d'exclusion peuvent être utilisées pour définir les adhérents à ignorer."
+
+#: ../../exclusions.rst:8
+msgid ""
+"A rule is a set of ``koha field => value``. All rule fields must match "
+"for the patron to be ignored."
+msgstr ""
+"Une règle est un ensemble ``champ koha => valeur``. "
+"Toutes les règles doivent correspondre pour que le patron soit ignorés. "
+
+#: ../../exclusions.rst:10
+msgid "There is two rule types:"
+msgstr "Il y a deux types de règles:"
+
+#: ../../exclusions.rst:12
+msgid "**External**: match incoming data"
+msgstr "**Externe**: correspond à la donnée entrante"
+
+#: ../../exclusions.rst:13
+msgid "**Koha**: match Koha data (if a matching patron has been found)."
+msgstr "**Koha**: correspond à la donnée Koha (si le patron correspondant à été trouvé)."
+
+#: ../../exclusions.rst:16
+msgid "Create a rule"
+msgstr "Créer une règle"
+
+#: ../../exclusions.rst:18
+msgid ""
+"Enter a rule name, check whether you want a Koha rule or not and click on"
+" the `“Add”` button."
+msgstr ""
+"Entrer le nom d'une règle, cocher ou non s'il s'agit d'une règle Koha et cliquer sur le bouton `“Add”`."
+
+#: ../../exclusions.rst:20 ../../exclusions.rst:23
+msgid "Add rule"
+msgstr "Ajouter une règle"
+
+#: ../../exclusions.rst:26
+msgid "Add fields"
+msgstr "Ajouter les champs"
+
+#: ../../exclusions.rst:28
+msgid "Select a field, entrer a value and click on `“Add”` button."
+msgstr "Sélectionner un champ, entrer une valeur et cliquer sur le bouton `“Add”`."
+
+#: ../../exclusions.rst:30 ../../exclusions.rst:33
+msgid "Add field"
+msgstr "Ajouter un champ"
+

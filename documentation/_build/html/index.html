@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Documentation PatronImport </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d1a510d7"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=041d0952"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Créer un nouvel import" href="create_import.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            PatronImport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Créer un nouvel import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Définitions des correspondances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Champs protégés et effacables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Valeurs par défaut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Suppressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Suspensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Attributs étendus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Outils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">PatronImport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Lien vers cette rubrique"></a></h1>
+<p>Ce plugin vous permet d’importer des adhérents depuis un fichier CSV ou un serveur LDAP. Vous pouvez définir de multiples correspondances sur la manière de traiter les informations entrantes pour importer les données.</p>
+<p>La création d’add-ons est possible afin d’étendre les capacités du plugin durant le processus d’import.</p>
+<section id="before-starting">
+<h2>Avant de commencer<a class="headerlink" href="#before-starting" title="Lien vers cette rubrique"></a></h2>
+<p>Avant de configurer le plugin, vous trouverez ici les éléments de bases (et <strong>importants</strong>) que vous aurez besoin de préparer.</p>
+<section id="from-which-source">
+<h3>Depuis quelle source ?<a class="headerlink" href="#from-which-source" title="Lien vers cette rubrique"></a></h3>
+<p>CSV ou LDAP</p>
+<p>Idéalement les colonnes du csv doivent être encodées en utf8. La première ligne devraient contenir les <strong>en-têtes</strong>.</p>
+<p>Pour un import LDAP, vous aurez besoin de ces informations additionnelles:</p>
+<ul class="simple">
+<li><p><strong>l’hôte et le port</strong> du serveur LDAP à requêter (adresse IP ou URL)</p></li>
+<li><p>un <strong>compte</strong> autorisé et un <strong>mot de passe</strong> afin de lire le répertoire LDAP si les demandes anonymes ne sont pas autorisées.</p></li>
+<li><p>une <strong>base de recherche</strong> qui est une sorte de sous-répertoire où se trouve les comptes à importer</p></li>
+<li><p>un <strong>filtre de recherche</strong> vous autorisant à effectuer une recherche LDAP pour sélectionner seulement les entrées souhaitées. (optionnel)</p></li>
+</ul>
+</section>
+<section id="field-mappings">
+<h3>Correspondances des champs<a class="headerlink" href="#field-mappings" title="Lien vers cette rubrique"></a></h3>
+<p>Créer une table de correspondances entre les champs sources et les champs Koha.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Champ source</p></th>
+<th class="head"><p>Champ Koha</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>surname</p></td>
+</tr>
+<tr class="row-odd"><td><p>type</p></td>
+<td><p>categorycode</p></td>
+</tr>
+<tr class="row-even"><td><p>mail</p></td>
+<td><p>email</p></td>
+</tr>
+</tbody>
+</table>
+<p>Si un champ source est nommé exactement de la même manière que le champ Koha correspondant, la correspondance est implicite et vous n’avez pas besoin de le définir dans la configuration. Sauf si vous y appliquer des correspondances de valeur ou des transformations.</p>
+</section>
+<section id="value-mappings">
+<h3>Correspondances de valeur<a class="headerlink" href="#value-mappings" title="Lien vers cette rubrique"></a></h3>
+<p>Définissez les valeurs ayant besoin d’être transformées avant d’être importées dans Koha, et ajouter une transformation si le champ le nécessite. Particulièrement si les valeurs doivent correspondrent à des valeurs autorisées dans Koha (exemple: categorycode, branchcode).</p>
+<p>Le processus de transformation vous autorise à utiliser des expressions régulières comme “strictement égal”, “commence par”, “contient”. Pour chaque autre traitement spécifique, un add-on doit être écrit.</p>
+</section>
+<section id="matching-point">
+<h3>Point de dédoublonnage<a class="headerlink" href="#matching-point" title="Lien vers cette rubrique"></a></h3>
+<p>Un ou plusieurs champs sont utilisés pour dédoublonner les adhérents. Il est préférable d’utiliser un champ unique (userid, cardnumber). Les attributs étendus ne peuvent être utilisés »</p>
+</section>
+<section id="default-values-optional-but-recommended">
+<h3>Valeurs par défaut (optionnelles mais recommandées)<a class="headerlink" href="#default-values-optional-but-recommended" title="Lien vers cette rubrique"></a></h3>
+<p>Définissez des valeurs par défaut pour certains champs s’ils sont vides (ou invalides pour categorycode et branchcode). La définition de valeurs par défaut pour les champs <strong>categorycode et branchcode</strong> devrait être systématique.</p>
+</section>
+<section id="automating">
+<h3>Automatisation<a class="headerlink" href="#automating" title="Lien vers cette rubrique"></a></h3>
+<p>L’automatisation implique d’ajouter un <a class="reference internal" href="tools.html#tools"><span class="std std-ref">cronjob</span></a>. Ceci est important pour son fonctionnement:</p>
+<ul class="simple">
+<li><p><strong>fréquence</strong> (chaque heure/jour/semaine/mois ?)</p></li>
+<li><p><strong>moment</strong> important afin d’éviter les imports durant les heures d’utilisation</p></li>
+<li><p><strong>où</strong> le fichier CSV sera envoyé sur le serveur (pas nécessaire pour le LDAP)</p></li>
+<li><p><strong>nommage</strong> du fichier CSV qui pourrait contenir une partie dynamique pour la date</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prêtez attention à l’heure d’import. Un fichier peut être envoyé à 23h50 et importé à 00h30 le jour d’après.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Créer un nouvel import</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create_import.html#csv-settings">Réglages CSV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_import.html#configuration-handler">Gestionnaire de configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Définitions des correspondances</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_mappings.html#fields-mappings">Correspondances des champs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_mappings.html#value-mappings">Correspondances de valeur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_mappings.html#transformation-plugins">Plugins de transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define_mappings.html#matching-point">Dédoublonnage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Champs protégés et effacables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="protected_erasables_fields.html#protected-fields">Champs protégés</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protected_erasables_fields.html#erasable-fields">Champs effacables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Valeurs par défaut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exclusions.html#create-a-rule">Créer une règle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exclusions.html#add-fields">Ajouter les champs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Suppressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deletions.html#create-a-rule">Créer une règle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deletions.html#add-fields">Ajouter les champs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Suspensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Attributs étendus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logs.html#runs">Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logs.html#debug-options">Options de débug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Outils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#cronjob">Cronjob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#launcher">Lanceur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add-ons.html#create-an-add-on">Créer un add-on</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add-ons.html#installation">Installation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="create_import.html" class="btn btn-neutral float-right" title="Créer un nouvel import" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, BibLibre.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

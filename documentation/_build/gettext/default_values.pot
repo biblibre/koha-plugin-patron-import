@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../default_values.rst:4
+#: ../../default_values.rst:19
+#: ../../default_values.rst:22
+msgid "Default values"
+msgstr ""
+
+#: ../../default_values.rst:6
+msgid "Default values prevent a field from being left empty and therefore force it to have a value (the default value) in Koha."
+msgstr ""
+
+#: ../../default_values.rst:8
+msgid "Not to be confused with the “If none of these rules match” fallback in the value match table, which may apply even if the field contains a value. Which may apply even if the field contains a value. Default values are only defined if the field is empty or non-existent."
+msgstr ""
+
+#: ../../default_values.rst:12
+msgid "To add a default value to a field, in the corresponding page, select a (Koha) field,  enter the desired default value and click on the `\"Add\"` button."
+msgstr ""
+
+#: ../../default_values.rst:17
+msgid "Default values are not allowed for extended attributes."
+msgstr ""
+
+#: ../../default_values.rst:25
+msgid "Note that the **categorycode** and **branchcode** fields have specific behavior with regard to default values. During the import process, these fields are deleted if the value does not correspond to a valid category or branch in Koha. So if your set default values for these fields, we can assume that they can be applied even if they are not empty."
+msgstr ""

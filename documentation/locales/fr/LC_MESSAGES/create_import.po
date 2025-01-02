@@ -1,0 +1,167 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../create_import.rst:4
+msgid "Create new import"
+msgstr "Créer un nouvel import"
+
+#: ../../create_import.rst:6
+msgid ""
+"Once the plugin has been installed, you can access its configuration from"
+" the Koha plugins home page."
+msgstr ""
+"Une fois le plugin installé, accédez à sa configuration depuis la page d'accueil des plugins Koha."
+
+#: ../../create_import.rst:8
+msgid ""
+"Find the Patron import plugin in the table and click on "
+"``Action->configure``. Here you can add one or more imports and view "
+"existing imports. Click on `\"New import\"` and fill in the form as "
+"required."
+msgstr ""
+"Trouver le plugin Patron import dans la table et cliquer sur ``Action->configure``.  "
+"Ici vous pourrez ajouter un ou plusieurs imports et voir les existants. "
+"Cliquer sur `\"New import\"` remplir le formulaire."
+
+#: ../../create_import.rst:11
+msgid ""
+"The Import name can be anything you like. There are 2 options for the "
+"type of feed: CSV or LDAP server. All other form elements are described."
+msgstr ""
+"Le nom de l'import peut être ce que vous voulez. Il y a 2 options pour le type de source: CSV ou LDAP server. "
+"Tous les autres éléments sont indiqués."
+
+#: ../../create_import.rst:14
+msgid ""
+"To create new import, click on the `\"New import\"` plugin configuration "
+"page and complete the form:"
+msgstr "Pour créer un nouvel import, cliquer sur `\"New import\"` sur la page de configuration et compléter le formulaire."
+
+#: ../../create_import.rst:16
+msgid "**Import name**: Name of your import. Can be anything you like."
+msgstr "**Import name**: Nom de l'import. Peut être ce que vous voulez."
+
+#: ../../create_import.rst:17
+msgid "**Flow type**: Type of data source. This can be a CSV or LDAP server."
+msgstr "**Flow type**: Type de données source. Cela peut provenir d'un CSV ou d'un serveur LDAP."
+
+#: ../../create_import.rst:18
+msgid ""
+"**Create only**: If this box is checked, only a new user is added. No "
+"update."
+msgstr ""
+"**Create only**: Si cette case est cochée, seulement les nouveaux utilisateurs sont crées, il n'y a pas de mise à jour."
+
+#: ../../create_import.rst:19
+msgid "**Auto Cardnumber**: Let the plugin create cardnumber for your patrons."
+msgstr "**Auto Cardnumber**: Laisser le plugin créer les numéros de carte pour les adhérents."
+
+#: ../../create_import.rst:20
+msgid ""
+"**Send email to new patrons**: In the same way as Koha's embedded "
+"functionality for CSV imports, send an email based on the “WELCOME” "
+"template"
+msgstr ""
+"**Send email to new patrons**: A la manière de la fonctionnalité incluse dans Koha sur les imports CSV, "
+"envoyer un mail d'après le modèle “WELCOME”"
+
+#: ../../create_import.rst:21
+msgid ""
+"**Clear reports and logs older than**: Number of days for which import "
+"reports are stored in the database. They are then deleted."
+msgstr ""
+"**Clear reports and logs older than**: Nombre de jours de stockage des rapports dans la base de données."
+"Ensuite ils seront supprimés."
+
+#: ../../create_import.rst:24
+msgid "CSV Settings"
+msgstr "Réglages CSV"
+
+#: ../../create_import.rst:26
+msgid ""
+"**CSV path**: Path of CSV file to be imported. If it is empty, you must "
+"specify it as a parameter of the import script."
+msgstr ""
+"**CSV path**: Chemin du fichier CSV a importé. S'il est vide, vous devez le spécifier comme paramètre du script d'import."
+
+#: ../../create_import.rst:27
+msgid "**Binary**: CSV option, see https://metacpan.org/pod/Text::CSV#binary"
+msgstr "**Binary**: option CSV, voir https://metacpan.org/pod/Text::CSV#binary"
+
+#: ../../create_import.rst:28
+msgid "**End of line**: CSV option, see https://metacpan.org/pod/Text::CSV#eol"
+msgstr "**End of line**: Option CSV, voir https://metacpan.org/pod/Text::CSV#eol"
+
+#: ../../create_import.rst:29
+msgid ""
+"**Char separator**: CSV option, see "
+"https://metacpan.org/pod/Text::CSV#sep_char"
+msgstr ""
+"**Char separator**: Option CSV, voir "
+"https://metacpan.org/pod/Text::CSV#sep_char"
+
+#: ../../create_import.rst:30
+msgid ""
+"**Quote char**: CSV option, see "
+"https://metacpan.org/pod/Text::CSV#quote_char"
+msgstr ""
+"**Quote char**: Option CSV, voir "
+"https://metacpan.org/pod/Text::CSV#quote_char"
+
+#: ../../create_import.rst:31
+msgid ""
+"**Empty is undef**: CSV option, see "
+"https://metacpan.org/pod/Text::CSV#empty_is_undef"
+msgstr ""
+"**Empty is undef**: Option CSV, voir "
+"https://metacpan.org/pod/Text::CSV#empty_is_undef"
+
+#: ../../create_import.rst:32
+msgid ""
+"**Allow loose quotes**: CSV option, see "
+"https://metacpan.org/pod/Text::CSV#allow_loose_quotes"
+msgstr ""
+"**Allow loose quotes**: Option CSV, voir "
+"https://metacpan.org/pod/Text::CSV#allow_loose_quotes"
+
+#: ../../create_import.rst:35 ../../create_import.rst:46
+msgid "Configuration handler"
+msgstr "Gestionnaire de configuration"
+
+#: ../../create_import.rst:37
+msgid ""
+"You can export your configuration by clicking on the `\"Export this "
+"configuration\"` link. When you click on it, an entry appears, allowing "
+"you to choose the name of your `YAML` file."
+msgstr ""
+"Vous pouvez exporter votre configuration en cliquant sur le lien `\"Export this configuration\"`. "
+"Quand vous cliquez dessus, une entrée vous invitant à choisir le nom de votre fichier `YAML` file apparaît."
+
+#: ../../create_import.rst:40
+msgid ""
+"You can also apply a configuration from a `YAML` (well-structured) file. "
+"On an existing import profile or directly with a new one."
+msgstr ""
+"Vous pouvez aussi appliquer une configuration depuis un fichier `YAML` (bien structuré). "
+"sur un import existant ou sur un nouvel import directement."
+
+#: ../../create_import.rst:43
+msgid "Configuration Handler"
+msgstr "Gestionnaire de configuration"
+

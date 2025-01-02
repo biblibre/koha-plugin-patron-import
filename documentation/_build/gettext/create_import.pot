@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../create_import.rst:4
+msgid "Create new import"
+msgstr ""
+
+#: ../../create_import.rst:6
+msgid "Once the plugin has been installed, you can access its configuration from the Koha plugins home page."
+msgstr ""
+
+#: ../../create_import.rst:8
+msgid "Find the Patron import plugin in the table and click on ``Action->configure``. Here you can add one or more imports and view existing imports. Click on `\"New import\"` and fill in the form as required."
+msgstr ""
+
+#: ../../create_import.rst:11
+msgid "The Import name can be anything you like. There are 2 options for the type of feed: CSV or LDAP server. All other form elements are described."
+msgstr ""
+
+#: ../../create_import.rst:14
+msgid "To create new import, click on the `\"New import\"` plugin configuration page and complete the form:"
+msgstr ""
+
+#: ../../create_import.rst:16
+msgid "**Import name**: Name of your import. Can be anything you like."
+msgstr ""
+
+#: ../../create_import.rst:17
+msgid "**Flow type**: Type of data source. This can be a CSV or LDAP server."
+msgstr ""
+
+#: ../../create_import.rst:18
+msgid "**Create only**: If this box is checked, only a new user is added. No update."
+msgstr ""
+
+#: ../../create_import.rst:19
+msgid "**Auto Cardnumber**: Let the plugin create cardnumber for your patrons."
+msgstr ""
+
+#: ../../create_import.rst:20
+msgid "**Send email to new patrons**: In the same way as Koha's embedded functionality for CSV imports, send an email based on the “WELCOME” template"
+msgstr ""
+
+#: ../../create_import.rst:21
+msgid "**Clear reports and logs older than**: Number of days for which import reports are stored in the database. They are then deleted."
+msgstr ""
+
+#: ../../create_import.rst:24
+msgid "CSV Settings"
+msgstr ""
+
+#: ../../create_import.rst:26
+msgid "**CSV path**: Path of CSV file to be imported. If it is empty, you must specify it as a parameter of the import script."
+msgstr ""
+
+#: ../../create_import.rst:27
+msgid "**Binary**: CSV option, see https://metacpan.org/pod/Text::CSV#binary"
+msgstr ""
+
+#: ../../create_import.rst:28
+msgid "**End of line**: CSV option, see https://metacpan.org/pod/Text::CSV#eol"
+msgstr ""
+
+#: ../../create_import.rst:29
+msgid "**Char separator**: CSV option, see https://metacpan.org/pod/Text::CSV#sep_char"
+msgstr ""
+
+#: ../../create_import.rst:30
+msgid "**Quote char**: CSV option, see https://metacpan.org/pod/Text::CSV#quote_char"
+msgstr ""
+
+#: ../../create_import.rst:31
+msgid "**Empty is undef**: CSV option, see https://metacpan.org/pod/Text::CSV#empty_is_undef"
+msgstr ""
+
+#: ../../create_import.rst:32
+msgid "**Allow loose quotes**: CSV option, see https://metacpan.org/pod/Text::CSV#allow_loose_quotes"
+msgstr ""
+
+#: ../../create_import.rst:35
+#: ../../create_import.rst:46
+msgid "Configuration handler"
+msgstr ""
+
+#: ../../create_import.rst:37
+msgid "You can export your configuration by clicking on the `\"Export this configuration\"` link. When you click on it, an entry appears, allowing you to choose the name of your `YAML` file."
+msgstr ""
+
+#: ../../create_import.rst:40
+msgid "You can also apply a configuration from a `YAML` (well-structured) file. On an existing import profile or directly with a new one."
+msgstr ""
+
+#: ../../create_import.rst:43
+msgid "Configuration Handler"
+msgstr ""

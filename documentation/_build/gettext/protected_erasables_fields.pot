@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, BibLibre
+# This file is distributed under the same license as the PatronImport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PatronImport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-30 13:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../protected_erasables_fields.rst:4
+msgid "Protected and erasables fields"
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:6
+msgid "This page is accessible by clicking on `“Protected/erasables”` of your import in the configuration page."
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:10
+msgid "Protected fields"
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:12
+msgid "Field protection prevents fields from being changed with a new value when updating a patron. The protection feature only affects the update."
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:15
+msgid "Note that only a non blank value can erase a field when updating."
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:17
+#: ../../protected_erasables_fields.rst:20
+msgid "Protected"
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:23
+msgid "Erasable fields"
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:25
+msgid "Erasure is the opposite of protecting. If want you want to force a blank incoming field to update the Koha field, so set the field as erasable."
+msgstr ""
+
+#: ../../protected_erasables_fields.rst:27
+#: ../../protected_erasables_fields.rst:30
+msgid "Erasable"
+msgstr ""
