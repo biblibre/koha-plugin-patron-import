@@ -14,4 +14,4 @@ Patron-import is a plugin for [Koha](https://koha-community.org/) allowing confi
 
 This documentation is for **master** version
 
-The complete documentation can be found [here](#lien).
+The complete documentation can be found [here](https://biblibre.github.io/koha-plugin-patron-import).
