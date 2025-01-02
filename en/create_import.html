@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create new import &mdash; PatronImport  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Define mappings" href="define_mappings.html" />
+    <link rel="prev" title="Introduction" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PatronImport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create new import</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#csv-settings">CSV Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-handler">Configuration handler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Define mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Protected and erasables fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Default values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Deletions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Debarments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Extended attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PatronImport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Create new import</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/create_import.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="create-new-import">
+<span id="create-import"></span><h1>Create new import<a class="headerlink" href="#create-new-import" title="Link to this heading"></a></h1>
+<p>Once the plugin has been installed, you can access its configuration from the Koha plugins home page.</p>
+<p>Find the Patron import plugin in the table and click on <code class="docutils literal notranslate"><span class="pre">Action-&gt;configure</span></code>.
+Here you can add one or more imports and view existing imports. Click on <cite>“New import”</cite> and fill in the form as required.</p>
+<p>The Import name can be anything you like. There are 2 options for the type of feed: CSV or LDAP server.
+All other form elements are described.</p>
+<p>To create new import, click on the <cite>“New import”</cite> plugin configuration page and complete the form:</p>
+<ul class="simple">
+<li><p><strong>Import name</strong>: Name of your import. Can be anything you like.</p></li>
+<li><p><strong>Flow type</strong>: Type of data source. This can be a CSV or LDAP server.</p></li>
+<li><p><strong>Create only</strong>: If this box is checked, only a new user is added. No update.</p></li>
+<li><p><strong>Auto Cardnumber</strong>: Let the plugin create cardnumber for your patrons.</p></li>
+<li><p><strong>Send email to new patrons</strong>: In the same way as Koha’s embedded functionality for CSV imports, send an email based on the “WELCOME” template</p></li>
+<li><p><strong>Clear reports and logs older than</strong>: Number of days for which import reports are stored in the database. They are then deleted.</p></li>
+</ul>
+<section id="csv-settings">
+<h2>CSV Settings<a class="headerlink" href="#csv-settings" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>CSV path</strong>: Path of CSV file to be imported. If it is empty, you must specify it as a parameter of the import script.</p></li>
+<li><p><strong>Binary</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#binary">https://metacpan.org/pod/Text::CSV#binary</a></p></li>
+<li><p><strong>End of line</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#eol">https://metacpan.org/pod/Text::CSV#eol</a></p></li>
+<li><p><strong>Char separator</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#sep_char">https://metacpan.org/pod/Text::CSV#sep_char</a></p></li>
+<li><p><strong>Quote char</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#quote_char">https://metacpan.org/pod/Text::CSV#quote_char</a></p></li>
+<li><p><strong>Empty is undef</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#empty_is_undef">https://metacpan.org/pod/Text::CSV#empty_is_undef</a></p></li>
+<li><p><strong>Allow loose quotes</strong>: CSV option, see <a class="reference external" href="https://metacpan.org/pod/Text::CSV#allow_loose_quotes">https://metacpan.org/pod/Text::CSV#allow_loose_quotes</a></p></li>
+</ul>
+</section>
+<section id="configuration-handler">
+<h2>Configuration handler<a class="headerlink" href="#configuration-handler" title="Link to this heading"></a></h2>
+<p>You can export your configuration by clicking on the <cite>“Export this configuration”</cite> link.
+When you click on it, an entry appears, allowing you to choose the name of your <cite>YAML</cite> file.</p>
+<p>You can also apply a configuration from a <cite>YAML</cite> (well-structured) file.
+On an existing import profile or directly with a new one.</p>
+<figure class="align-default" id="id1">
+<img alt="Configuration Handler" src="_images/config-handler.png" />
+<figcaption>
+<p><span class="caption-text">Configuration handler</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="define_mappings.html" class="btn btn-neutral float-right" title="Define mappings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BibLibre.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

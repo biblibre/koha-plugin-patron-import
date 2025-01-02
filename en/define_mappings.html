@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Define mappings &mdash; PatronImport  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Protected and erasables fields" href="protected_erasables_fields.html" />
+    <link rel="prev" title="Create new import" href="create_import.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PatronImport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Create new import</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Define mappings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fields-mappings">Fields mappings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-mappings-page">Accessing mappings page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-field-mapping">Add new field mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-mappings">Implicit mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tokens">Tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#value-mappings">Value mappings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#add-new-value-mapping">Add new value mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if-none-of-this-rules-match">If none of this rules match</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transformation-plugins">Transformation plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matching-point">Matching point</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Protected and erasables fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Default values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Deletions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Debarments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Extended attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PatronImport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Define mappings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/define_mappings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="define-mappings">
+<span id="id1"></span><h1>Define mappings<a class="headerlink" href="#define-mappings" title="Link to this heading"></a></h1>
+<p>Mapping definitions is a very important feature of this plugin, as it determines how the data will be interpreted.</p>
+<p>When you <a class="reference internal" href="create_import.html#create-import"><span class="std std-ref">created an import</span></a>, you choose a <em>flow type</em> which is the source type of your data.
+Whichever type of source you import from, Patron-import will transform the source data into tabular data.
+This tabular data is referred to here as <strong>incoming data</strong>. Mappings are applied to the incoming data to create a Koha patron.</p>
+<p>This data transformation involves several optional steps:</p>
+<section id="fields-mappings">
+<h2>Fields mappings<a class="headerlink" href="#fields-mappings" title="Link to this heading"></a></h2>
+<p>Field mapping consists in moving the incoming data field into the koha patron field.
+Basically, this means that we will tell Pattern-import: “move the incoming data to the Koha field related to the patron”.</p>
+<section id="accessing-mappings-page">
+<h3>Accessing mappings page<a class="headerlink" href="#accessing-mappings-page" title="Link to this heading"></a></h3>
+<p>Once you’ve <a class="reference internal" href="create_import.html#create-import"><span class="std std-ref">created an import</span></a>, you can view it on the plugin configuration home page. On this page, click on the “mappings” link.</p>
+</section>
+<section id="add-new-field-mapping">
+<h3>Add new field mapping<a class="headerlink" href="#add-new-field-mapping" title="Link to this heading"></a></h3>
+<p>To add a field match, enter the name of a field in the left-hand part of the table (Source field column).
+Which must match an existing field in your source data, and select the koha field to match. Click on <cite>add</cite> button.</p>
+<figure class="align-default" id="id2">
+<img alt="Field mapping" src="_images/field-mapping.jpg" />
+<figcaption>
+<p><span class="caption-text">Field mapping</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="implicit-mappings">
+<h3>Implicit mappings<a class="headerlink" href="#implicit-mappings" title="Link to this heading"></a></h3>
+<p>If the name of your source field matches the name of a koha field, you don’t need to explicitly create the match.
+The plugin will do this implicitly. For example, <code class="docutils literal notranslate"><span class="pre">surname</span> <span class="pre">=&gt;</span> <span class="pre">surname</span></code> is not required except if you have to apply value mapping or transformation plugin.</p>
+</section>
+<section id="tokens">
+<h3>Tokens<a class="headerlink" href="#tokens" title="Link to this heading"></a></h3>
+<p>You can use tokens in the source field column. Tokens are source field names surrounded by square brackets. They are used for conditional matches or concatenation.</p>
+<figure class="align-default" id="id3">
+<img alt="Concatenation with comma" src="_images/concat_token.jpg" />
+<figcaption>
+<p><span class="caption-text">‘num’ and ‘street’ will be concatenated with ‘,’ as separator and mapped in the address koha field.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
+<img alt="Concatenation with pipe" src="_images/conditional_token.jpg" />
+<figcaption>
+<p><span class="caption-text">Email will be mapped if it is not empty. If it is, id will be.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="value-mappings">
+<h2>Value mappings<a class="headerlink" href="#value-mappings" title="Link to this heading"></a></h2>
+<p>Value mappings allow you to transform source field values into other values during the mapping process.
+Value matches are configured for each field mapping.</p>
+<section id="add-new-value-mapping">
+<h3>Add new value mapping<a class="headerlink" href="#add-new-value-mapping" title="Link to this heading"></a></h3>
+<p>In the field mapping page, click on <cite>value mappings</cite> button of the corresponding field mapping.
+In the table, add as any value mappings as you like and save.</p>
+<p>The value on the left (input value) is the incoming value of your source field.
+The value on the right (output value) is the replacement value.</p>
+<p>A good example for value mappings is the transformation of category codes to match valid koha categorycodes.</p>
+<figure class="align-default" id="id5">
+<img alt="Value mappings" src="_images/value-mappings.jpg" />
+<figcaption>
+<p><span class="caption-text">Value mappings</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>In the example above, for the field mapping in destination to
+categorycode, “Adult” will tranformed to “ADU”, “Young” to “YNG” and
+“Librarian” to “LIB”</p>
+</section>
+<section id="if-none-of-this-rules-match">
+<h3>If none of this rules match<a class="headerlink" href="#if-none-of-this-rules-match" title="Link to this heading"></a></h3>
+<p>Under the value mapping table you can define a “fallback” value.
+This value will only be set if none of the existing rules match the field.
+Not to be confused with the <a class="reference internal" href="default_values.html#default-values"><span class="std std-ref">default values</span></a> which are applied if the field is empty or non-existent.</p>
+<figure class="align-default" id="id6">
+<img alt="No rule match" src="_images/if-none-rules-match.jpg" />
+<figcaption>
+<p><span class="caption-text">No rule match</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="transformation-plugins">
+<h2>Transformation plugins<a class="headerlink" href="#transformation-plugins" title="Link to this heading"></a></h2>
+<p>Tranformation plugins are a set of data filters available to apply frequent changes to incoming data.
+They are applied just after the field mapping process and before the value mapping.</p>
+<p>The mapping order is:</p>
+<ol class="arabic simple">
+<li><p>Field mapping (source field =&gt; target field)</p></li>
+<li><p><strong>Transformation plugins</strong></p></li>
+<li><p>Value mapping</p></li>
+<li><p>Default value</p></li>
+</ol>
+<p>You can choose none, one or more transformation plugins.
+To apply them, click on the <cite>“Transformation plugins”</cite> button in the corresponding mapping on the field mapping page.</p>
+<p>In the transformation plugins page, select the ones you wish to use.</p>
+<figure class="align-default" id="id7">
+<img alt="Transformation plugins" src="_images/transformation-plugins.jpg" />
+<figcaption>
+<p><span class="caption-text">Transformation plugin</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="matching-point">
+<h2>Matching point<a class="headerlink" href="#matching-point" title="Link to this heading"></a></h2>
+<p>When importing a patron, the import process needs to know whether it is a new Koha patron (create) or an existing one (update) in Koha that needs to be modified.</p>
+<p>To determine that, we have to create a matching point.
+A matching point is one or more field(s) that will be searched in Koha patron database.
+If it corresponds to a Koha patron, it will be updated with the incoming data, otherwise a new patron will be created.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that all fields in the match point are requested using an “AND” operator. Not “OR”.
+This means that all fields must match, not just one.</p>
+</div>
+<p>Add a field to the matching point by selecting it from the list below the field mapping table and clicking on <cite>“add”</cite>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="create_import.html" class="btn btn-neutral float-left" title="Create new import" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="protected_erasables_fields.html" class="btn btn-neutral float-right" title="Protected and erasables fields" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BibLibre.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

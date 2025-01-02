@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attributs étendus &mdash; Documentation PatronImport </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d1a510d7"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=041d0952"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Logs" href="logs.html" />
+    <link rel="prev" title="Suspensions" href="debarments.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PatronImport
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Créer un nouvel import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Définitions des correspondances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Champs protégés et effacables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Valeurs par défaut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deletions.html">Suppressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debarments.html">Suspensions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Attributs étendus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Outils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PatronImport</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Attributs étendus</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/extented_attributes.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="extended-attributes">
+<span id="extented-attributes"></span><h1>Attributs étendus<a class="headerlink" href="#extended-attributes" title="Lien vers cette rubrique"></a></h1>
+<p>Cette page est utilisée pour configurer le comportement de chaque attribut étendu d’un adhérent Koha existant lors de sa mise à jour.</p>
+<p>Pour chacun des attributs, le comportement peut être configuré de différentes façons:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si l’attribut est non répétable, le menu de sélection correspondant à <cite>« If many values »</cite> sera désactivé.</p>
+</div>
+<dl class="simple">
+<dt><strong>L’attribut est déjà défini avec une valeur (seulement une)</strong></dt><dd><ul class="simple">
+<li><p><cite>Do nothing</cite>: Rien ne sera ajouté ni mis à jour</p></li>
+<li><p><cite>Update existing</cite>: remplacement de la valeur existante par la valeur entrante</p></li>
+</ul>
+</dd>
+<dt><strong>L’attribut est déjà défini avec plus d’une valeur (plusieurs)</strong></dt><dd><ul class="simple">
+<li><p><cite>Do nothing</cite>: Rien ne sera ajouté ni mis à jour</p></li>
+<li><p><cite>Update existing</cite>: remplacement de la valeur existante par la valeur entrante</p></li>
+<li><p><cite>Add if the values does not exists</cite>: ajoute la nouvelle valeur entrante seulement si elle n’existe pas déjà.</p></li>
+</ul>
+</dd>
+</dl>
+<figure class="align-default" id="id1">
+<img alt="Attributs étendus" src="_images/extended-attributes.jpg" />
+<figcaption>
+<p><span class="caption-text">Attributs étendus</span><a class="headerlink" href="#id1" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Lorsque <cite>« Update existing »</cite> est sélectionné, vérifier que la donnée entrante corresponde avec la donnée que vous souhaitez remplacer, même si la donnée est vide ou contient une chaîne vide.</p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="debarments.html" class="btn btn-neutral float-left" title="Suspensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="logs.html" class="btn btn-neutral float-right" title="Logs" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, BibLibre.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
