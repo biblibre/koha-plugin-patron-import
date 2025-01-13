@@ -19,6 +19,36 @@
                 $('#csv-file').hide();
             }
         });
+
+        $('.ldap-conf-link').click(function () {
+            $.ajax({
+                url: '/api/v1/contrib/patron-import/get-ldap-conf',
+                success: function(response) {
+                    var fields = {
+                        'ldap_host': response.host,
+                        'ldap_user': response.user,
+                        'ldap_pass': response.password,
+                        'search_base': response.search_base
+                    };
+
+                    $.each(fields, function(name, newValue) {
+                        var input = $('input[name="' + name + '"]');
+                        input.val(newValue);
+                    });
+
+                    var anonymousBind = $('input[name="anonymous_bind"]');
+                    anonymousBind.prop('checked', response.anonymous_bind === true || response.anonymous_bind === '1' || response.anonymous_bind === 1);
+
+                    $('#ldap-conf-logs').addClass('alert alert-success');
+                    $('#ldap-conf-logs').text("Configuration loaded don't forget to save it");
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Something is wrong, check the logs';
+                    $('#ldap-conf-logs').addClass('alert alert-danger');
+                    $('#ldap-conf-logs').text(errorMessage);
+                }
+            });
+        });
     });
 </script>
 </head>
@@ -214,8 +244,13 @@
                     </fieldset>
 
                     <fieldset class="rows" id="ldap">
-                        <legend>LDAP settings</legend>
-
+                        <div class="ldap-conf-header">
+                            <legend>LDAP settings</legend>
+                            <a class="ldap-conf-link btn btn-link btn-sm">
+                                <i class="fa fa-gears"></i> Get configuration settings from 'koha-conf' file
+                            </a>
+                        </div>
+                        <div id="ldap-conf-logs"></div>
                         <ol>
                             <li>
                                 <label for="ldap_host">Host or IP address :</label>
