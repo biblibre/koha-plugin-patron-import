@@ -15,9 +15,9 @@ paths:
         - application/json
       responses:
         200:
-          description: Run actions list on patrons
+          description: Historical actions on patrons
           schema:
-            type: array
+            $ref: './openapi/definitions.yaml#/history'
         400:
           description: Bad parameters
           schema:

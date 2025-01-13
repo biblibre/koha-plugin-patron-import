@@ -1,0 +1,16 @@
+type: array
+items:
+  type: object
+  properties:
+    run_id:
+      description: Run ID
+      type: integer
+    borrowernumber:
+      description: Patron's borrowernumber
+      type: integer
+    action:
+      description: Action
+      type: string
+    action_date:
+      description: Action date
+      type: string

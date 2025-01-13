@@ -4,3 +4,5 @@ message:
   $ref: "./definitions/message.yaml"
 ldap_conf:
   $ref: "./definitions/ldap_conf.yaml"
+history:
+  $ref: "./definitions/history.yaml"
