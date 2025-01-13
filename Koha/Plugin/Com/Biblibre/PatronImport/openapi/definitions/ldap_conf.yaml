@@ -1,0 +1,17 @@
+type: object
+properties:
+  host:
+    description: Host or IP adress of the LDAP server
+    type: string
+  anonymous_bind:
+    description: Anonymous bind option
+    type: boolean
+  user:
+    description: LDAP user
+    type: string
+  password:
+    description: LDAP user's password
+    type: string
+  search_base:
+    description: LDAP search base
+    type: string

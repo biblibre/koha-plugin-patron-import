@@ -65,3 +65,24 @@ paths:
         permissions:
           - borrowers: edit_borrowers
       x-mojo-to: Com::Biblibre::PatronImport::Controller::FileLauncher#run_import
+  /get-ldap-conf:
+    get:
+      operationId: PatronImportGetLdapConf
+      produces:
+        - application/json
+      responses:
+        200:
+          description: LDAP configuration
+          schema:
+            $ref: './openapi/definitions.yaml#/ldap_conf'
+        404:
+          description: No LDAP configuration
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+      tags:
+        - patrons
+        - ldap
+      x-koha-authorization:
+        permissions:
+          - borrowers: edit_borrowers
+      x-mojo-to: Com::Biblibre::PatronImport::Controller::ConfigHandler#get_ldap_conf
