@@ -58,32 +58,52 @@ Run logs</div>
 [% INCLUDE 'datatables.inc' %]
 <script>
     $(document).ready(function() {
-        // paging, ordering, searching disabled and hide for now cause not working
         var runId = $('#stats').data('run-id');
-        var history = $('#history').kohaTable({
+        var history = $('#history').dataTable({
             "ajax": {
-                "url": "/api/v1/contrib/patron-import/history/by_run/" + runId
+                url: "/api/v1/contrib/patron-import/history/by_run/" + runId,
+                cache: true,
+                dataSrc: ''
             },
             "columns": [
                 {
-                    "data": "run_id"
+                    "data": "run_id",
+                    "title": "Run ID",
+                    "visible": false,
+                    "searchable": false,
+                    "orderable": false
                 },
                 {
-                    "data": "borrowernumber"
+                    "data": "borrowernumber",
+                    "title": "Borrowernumber",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
                 },
                 {
-                    "data": "action"
+                    "data": "action",
+                    "title": "Action",
+                    "searchable": true,
+                    "orderable": true
                 },
                 {
-                    "data": "action_date"
+                    "data": "action_date",
+                    "title": "Action date",
+                    "searchable": false,
+                    "orderable": false,
+                    "render": function(data) {
+                        return $date(data);
+                    }
                 }
             ],
-            "paging": false,
-            "ordering": false,
-            "searching": false
+            "order": [[1, 'asc']],
+            "paging": true,
+            "language": {
+                "emptyTable": '<div class="dialog message">There are no details for this run.</div>'
+            }
         });
-        $('#history_wrapper .pager').hide();
-        $('#history_info').hide();
     });
 </script>
 [% END %]
