@@ -9,7 +9,7 @@ use Mojo::JSON qw(decode_json);;
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '2.1';
+our $VERSION = '2.2';
 
 our $metadata = {
     name => 'Patron import',
@@ -520,7 +520,6 @@ sub upgrade {
     }
 
     if ($DBversion < '1.4') {
-        my $dbh = C4::Context->dbh;
         my $exclusions_table = $self->get_qualified_table_name('exclusions_rules');
         $dbh->do("ALTER TABLE $exclusions_table ADD COLUMN origin ENUM('ext', 'koha') NOT NULL AFTER name;");
     }
@@ -590,7 +589,7 @@ sub upgrade {
         ");
     }
     
-    if ( Koha::Plugins::Base::_version_compare($DBversion, '1.91') == -1 ) {      
+    if ( Koha::Plugins::Base::_version_compare($DBversion, '1.91') == -1 ) {
         my $runs_table = $self->get_qualified_table_name('runs');
         $dbh->do("ALTER TABLE $runs_table ADD COLUMN dry_run int(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0 AFTER error;");
     }
@@ -610,6 +609,13 @@ sub upgrade {
     if ($DBversion < '2.1') {
         my $import_table = $self->get_qualified_table_name('import');
         $dbh->do("ALTER TABLE $import_table ADD COLUMN welcome_message tinyint COLLATE utf8_unicode_ci NULL;");
+    }
+
+    if ($DBversion < '2.2') {
+        my $runs_table = $self->get_qualified_table_name('runs');
+        unless (_column_exists($dbh, $runs_table, 'dry_run')) {
+            $dbh->do("ALTER TABLE $runs_table ADD COLUMN dry_run int(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0 AFTER error;");
+        }
     }
 
     $self->store_data({'__INSTALLED_VERSION__' => $VERSION});
@@ -732,6 +738,13 @@ sub _convert_array_refs_to_absolute {
         push @res, $item;
     }
     return \@res;
+}
+
+sub _column_exists {
+    my ( $dbh, $table, $column ) = @_;
+    my $sth = $dbh->prepare("SHOW COLUMNS FROM $table LIKE ?");
+    $sth->execute($column);
+    return $sth->fetchrow_arrayref ? 1 : 0;
 }
 
 1;
