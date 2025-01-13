@@ -6,11 +6,11 @@ paths:
         - application/json
       operationId: PatronImportHistoryRun
       parameters:
-        - $ref: './openapi/definitions.yaml#/run'
-        - $ref: './openapi/definitions.yaml#/match'
-        - $ref: './openapi/definitions.yaml#/order_by'
-        - $ref: './openapi/definitions.yaml#/page'
-        - $ref: './openapi/definitions.yaml#/per_page'
+        - $ref: './openapi/parameters.yaml#/run'
+        - $ref: './openapi/parameters.yaml#/match'
+        - $ref: './openapi/parameters.yaml#/order_by'
+        - $ref: './openapi/parameters.yaml#/page'
+        - $ref: './openapi/parameters.yaml#/per_page'
       produces:
         - application/json
       responses:
