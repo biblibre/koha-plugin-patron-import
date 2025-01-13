@@ -9,3 +9,7 @@ page:
   $ref: "./parameters/page.yaml"
 per_page:
   $ref: "./parameters/per_page.yaml"
+import:
+  $ref: "./parameters/import.yaml"
+options:
+  $ref: "./parameters/options.yaml"

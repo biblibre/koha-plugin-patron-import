@@ -1,2 +1,4 @@
 error:
   $ref: "./definitions/error.yaml"
+message:
+  $ref: "./definitions/message.yaml"

@@ -1,3 +1,4 @@
+[% USE Asset %]
 [% INCLUDE 'doc-head-open.inc' %]
 <title>Configure Koha patron imports</title>
 [% INCLUDE 'doc-head-close.inc' %]
@@ -13,6 +14,13 @@
         align-self: flex-end;
         margin-left: 5px;
     }
+    .import-header{
+        display: flex;
+        justify-content: space-between;    
+    }
+    #file-launcher-modal .form-group label {
+        font-weight: normal;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -26,6 +34,69 @@
         });
         $('.config-import-new-link').click(function() {
             $('#config-import-new-form').toggleClass('hide');
+        });
+        $('.file-launcher-link').click(function() {
+            var importId = $(this).data('import-id');
+            $('#file-launcher-form_' + importId).toggleClass('hide');
+        });
+
+        $('#file-launcher-modal').on('show.bs.modal', function (event) {
+            var link = $(event.relatedTarget);
+            var importId = link.data('import-id');
+            var modal = $(this);
+            modal.find('#modal-import-id').val(importId);
+        });
+
+        $('#submit-file-launcher').click(function(e) {
+            e.preventDefault();
+            var isValid = true;
+
+            var importId = $('#modal-import-id').val();
+            var runAsTest = $('input[name="test"]:checked').val();
+            var logsOptions = $('input[name="logs[]"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            var localFile = $('input[name="file_path"]').val();
+
+            if (!$('input[name="test"]:checked').length) {
+                isValid = false;
+                alert('Please select if this run is a test.');
+            }
+            
+            if (!$('input[name="file_path"]').val()) {
+                isValid = false;
+                alert('Please provide a file path.');
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            $.ajax({
+                url: '/api/v1/contrib/patron-import/file_launcher/run_import/' + importId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                'data': JSON.stringify({
+                    "run_as_test": runAsTest,
+                    "logs_options": logsOptions,
+                    "file": localFile,
+                }),
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+            $('#file-launcher-modal').modal('hide');
+            location.reload();
+        });
+        $('#file-launcher-modal').on('hidden.bs.modal', function (e) {
+            $('#modal-info').replaceWith('');
+            $('#file-launcher-modal input[type="text"]').val('');
+            $('#file-launcher-modal input[type="radio"]').prop('checked', false);
+            $('#file-launcher-modal input[type="checkbox"]').prop('checked', false);
         });
     });
 </script>
@@ -62,7 +133,14 @@
 
                 [% FOREACH i IN imports %]
                     <fieldset class="rows">
-                        <legend>[% i.name %]</legend>
+                        <div class="import-header">
+                            <legend>[% i.name %]</legend>
+                            <div class="file-launcher-actions">
+                                <a href="#file-launcher-modal" class="file-launcher-link btn btn-link btn-sm" data-import-id="[% i.id %]" data-toggle="modal">
+                                    <i class="fa fa-file"></i> Submit a file
+                                </a>
+                            </div>
+                        </div>
                         <div class="config-handler-actions">
                             <div id="config-export-action">
                                 <a class="config-export-link btn btn-link btn-sm" data-import-id="[% i.id %]">
@@ -141,3 +219,50 @@
     </div> <!-- row -->
 </div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]
+
+<!-- Local launcher modal -->
+<div id="file-launcher-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="file-launcher-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" id="modal-import-id" value="">
+            <div class="modal-header">
+                <button type="button" class="closebtn" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="file-launcher-label">File launcher</h4>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <p><strong>Run as a test</strong> (required)</p>
+                    <label>
+                        <input type="radio" name="test" value="1"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="test" value="0"> No
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <p><strong>Logs</strong></p>
+                    <label>
+                        <input type="checkbox" name="logs[]" value="info"> Info
+                    </label>
+                    <label>
+                        <input type="checkbox" name="logs[]" value="success"> Success
+                    </label>
+                    <label>
+                        <input type="checkbox" name="logs[]" value="debug"> Debug
+                    </label>
+                </div>
+
+                <div class="form-group">
+                     <p><strong>File path</strong> (required)</p>
+                    <input class="form-control" type="text" name="file_path" placeholder="Enter absolute file path" required/>
+                </div>            
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="submit-file-launcher">Run</button>
+            </div>
+        </div>
+    </div>
+</div>

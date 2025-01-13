@@ -1,0 +1,6 @@
+---
+name: import_id
+in: path
+type: integer
+description: Import identifier
+required: true

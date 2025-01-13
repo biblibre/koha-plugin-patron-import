@@ -44,3 +44,24 @@ paths:
         permissions:
           - reports
       x-mojo-to: Com::Biblibre::PatronImport::Controller::History#by_run
+  /file_launcher/run_import/{import_id}:
+    post:
+      consumes:
+        - application/json
+      operationId: FileLauncherRunImport
+      parameters:
+        - $ref: './openapi/parameters.yaml#/import'
+        - $ref: './openapi/parameters.yaml#/options'
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Confirmation message
+          schema:
+            $ref: './openapi/definitions.yaml#/message'
+      tags:
+        - patrons
+      x-koha-authorization:
+        permissions:
+          - borrowers: edit_borrowers
+      x-mojo-to: Com::Biblibre::PatronImport::Controller::FileLauncher#run_import

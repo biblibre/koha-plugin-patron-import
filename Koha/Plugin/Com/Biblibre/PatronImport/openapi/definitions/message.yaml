@@ -1,0 +1,7 @@
+---
+type: object
+properties:
+  message:
+    description: Confirmation message
+    type: string
+    required: true

@@ -1,0 +1,21 @@
+---
+name: options
+in: body
+type: object
+properties:
+  run_as_test:
+    type: integer
+    description: Define if the import should be run as a test
+    required: true
+  file:
+    type: string
+    description: File path to import
+    required: true
+  logs_options:
+    type: array
+    enum:
+      - info
+      - success
+      - debug
+    description: Logs options
+description: Import options
