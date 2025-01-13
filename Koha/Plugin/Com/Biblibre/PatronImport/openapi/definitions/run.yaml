@@ -1,6 +1,0 @@
----
-name: run_id
-in: path
-type: integer
-description: Internal run identifier
-required: true

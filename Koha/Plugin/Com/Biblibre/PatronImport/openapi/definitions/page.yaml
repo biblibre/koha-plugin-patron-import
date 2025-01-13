@@ -1,6 +1,0 @@
----
-name: _page
-in: query
-type: integer
-description: "Page number, for paginated object listing"
-required: false
