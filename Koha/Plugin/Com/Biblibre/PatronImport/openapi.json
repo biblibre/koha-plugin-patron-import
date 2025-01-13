@@ -1,10 +1,11 @@
-
 {
   "/history/by_run/{run_id}": {
     "get": {
       "x-mojo-to": "Com::Biblibre::PatronImport::Controller::History#by_run",
       "operationId": "PatronImportHistoryRun",
-      "tags": ["patron-import"],
+      "tags": [
+        "patron-import"
+      ],
       "parameters": [
         {
           "name": "run_id",
@@ -23,7 +24,8 @@
             "contains",
             "exact",
             "starts_with",
-            "ends_with"          ]
+            "ends_with"
+          ]
         },
         {
           "name": "_order_by",
@@ -58,27 +60,27 @@
         "200": {
           "description": "A run patron history",
           "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                    "run_id": {
-                      "description": "The run identifier",
-                      "type": "integer"
-                    },
-                    "borrowernumber": {
-                        "description": "The patron identifier",
-                        "type": "integer"
-                    },
-                    "action": {
-                        "description": "The action name",
-                        "type": "string"
-                    },
-                    "action_date": {
-                      "description": "The action date",
-                      "type": "string"
-                    }
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "run_id": {
+                  "description": "The run identifier",
+                  "type": "integer"
+                },
+                "borrowernumber": {
+                  "description": "The patron identifier",
+                  "type": "integer"
+                },
+                "action": {
+                  "description": "The action name",
+                  "type": "string"
+                },
+                "action_date": {
+                  "description": "The action date",
+                  "type": "string"
                 }
+              }
             }
           }
         },
@@ -97,38 +99,38 @@
         "403": {
           "description": "No permission",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         },
         "404": {
           "description": "No history for the given run",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         },
         "500": {
           "description": "Internal Server Error",
           "schema": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "description": "Error message",
-              "type": "string"
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "Error message",
+                "type": "string"
+              }
             }
           }
-        }
         }
       },
       "x-koha-authorization": {
@@ -137,6 +139,86 @@
         }
       }
     }
+  },
+  "/file_launcher/run_import/{import_id}": {
+    "post": {
+      "x-mojo-to": "Com::Biblibre::PatronImport::Controller::FileLauncher#run_import",
+      "operationId": "FileLauncherRunImport",
+      "tags": [
+        "patron-import"
+      ],
+      "parameters": [
+        {
+          "name": "import_id",
+          "in": "path",
+          "required": true,
+          "description": "Import to execute",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "required": true,
+          "description": "A JSON object representing the import options",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "description": "File to upload"
+              },
+              "run_as_test": {
+                "type": "string",
+                "description": "Run as a test option"
+              },
+              "logs_options": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "info",
+                    "success",
+                    "debug"
+                  ]
+                },
+                "description": "Logs options"
+              }
+            },
+            "required": [
+              "file",
+              "run_as_test"
+            ]
+          }
+        }
+      ],
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "201": {
+          "description": "Import launched",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Run correctly launched"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        }
+      },
+      "x-koha-authorization": {
+        "permissions": {
+          "borrowers": "edit_borrowers"
+        }
+      }
+    }
   }
 }
-  
