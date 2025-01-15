@@ -6,46 +6,48 @@ use DateTime;
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 
 sub new {
-    my ( $class, $import_id, $config ) = @_;
+    my ( $class, $import_id, $filename, $config ) = @_;
 
     my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new({
         enable_plugins  => 1,
     });
 
     my $self = {
-        import_id => $import_id,
-        plugin => $plugin,
-        info_logs => $config->{info_logs} || 0,
+        import_id    => $import_id,
+        filename     => $filename,
+        plugin       => $plugin,
+        info_logs    => $config->{info_logs}   || 0,
         success_logs => $config->{success_log} || 0,
-        dry_run => $config->{dry_run} || 0,
-        config => $config,
-        stats => {
-            new => 0,
+        dry_run      => $config->{dry_run}     || 0,
+        config       => $config,
+        stats        => {
+            new     => 0,
             updated => 0,
             deleted => 0,
             skipped => 0,
-            error => 0,
-            fields => {}
-        }
-    };
+            error   => 0,
+            fields  => {}
+        },
+};
+
 
     return( bless $self, $class );
 }
 
 sub InitRun {
     my ( $self ) = @_;
-    
     my $now = DateTime->now( time_zone => 'local' );
     my $run_id = InsertInTable(
         $self->{plugin}{runs_table},
        {   import_id => $self->{import_id},
-            start     => $now->ymd . ' ' . $now->hms,
-            new       => 0,
-            updated   => 0,
-            deleted   => 0,
-            skipped   => 0,
-            error     => 0,
-            dry_run   => $self->{dry_run}
+          start      => $now->ymd . ' ' . $now->hms,
+            new      => 0,
+            updated  => 0,
+            deleted  => 0,
+            skipped  => 0,
+            error    => 0,
+            dry_run  => $self->{dry_run},
+            filename => $self->{filename}
 }
 
     );
