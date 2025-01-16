@@ -7,10 +7,13 @@
 <body>
 [% INCLUDE 'header.inc' %]
 [% INCLUDE 'cat-search.inc' %]
-<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
-Exclusions</div>
+<div id="breadcrumbs">
+  <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+  <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+  <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+  <i>[% import_name | html%]</i> &rsaquo;
+  Exclusions
+</div>
 
 <div class="main container-fluid">
   <div class="row">

@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Commons qw( PatronFields );
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw( GetImportName );
 
 sub edit {
     my ( $plugin, $params ) = @_;
@@ -63,9 +64,10 @@ sub edit {
     my $columns = PatronFields();
 
     $template->param(
-        import_id => $import_id,
-        rules => $rules,
-        columns => $columns,
+        import_id   => $import_id,
+        import_name => GetImportName($import_id),
+        rules       => $rules,
+        columns     => $columns,
     );
 
     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');

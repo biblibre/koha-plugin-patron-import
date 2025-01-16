@@ -45,11 +45,14 @@
 <body>
 [% INCLUDE 'header.inc' %]
 [% INCLUDE 'cat-search.inc' %]
-<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=configure">Koha Patron Import</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=editfieldmappings&import_id=[% import_id %]">Field mappings</a> &rsaquo;
-Mappings</div>
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=configure">Koha Patron Import</a> &rsaquo;
+    <i>[% import_name | html%]</i> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/run.pl?class=[% CLASS %]&method=editfieldmappings&import_id=[% import_id %]">Field mappings</a> &rsaquo;
+    Mappings
+</div>
 
 <div class="main container-fluid">
     <div class="row">
@@ -86,7 +89,7 @@ Mappings</div>
                                         <option value="contains">Contains</option>
                                     </select>
                                 </td>
-                                <td><a class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
+                                <td><a href="#" class="btn btn-default btn-xs add"><i class="fa fa-plus"></i> Add</a></td>
                             </tr>
 
                             [% FOREACH mapping IN mappings %]

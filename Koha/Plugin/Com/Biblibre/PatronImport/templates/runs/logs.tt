@@ -19,11 +19,13 @@ span {
 [% INCLUDE 'header.inc' %]
 [% INCLUDE 'cat-search.inc' %]
 <div id="breadcrumbs">
-<a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=[% import_id %]">View runs</a> &rsaquo;
-Run logs</div>
+    <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=showruns&import_id=[% import_id %]">View runs</a> &rsaquo;
+    <i>[% import_name | html%]</i> &rsaquo;
+    Run logs
+</div>
 
 <div class="main container-fluid">
     <div class="row">
@@ -111,7 +113,7 @@ Run logs</div>
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="userid"/>
                                             <input type="hidden" name="searchmember" value="[% log.userid %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -122,7 +124,7 @@ Run logs</div>
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="cardnumber"/>
                                             <input type="hidden" name="searchmember" value="[% log.cardnumber %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -133,7 +135,7 @@ Run logs</div>
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
                                             <input type="hidden" name="searchfieldstype" value="standard"/>
                                             <input type="hidden" name="searchmember" value="[% log.firstname %] [% log.surname %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search"/>
+                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                         Unknown

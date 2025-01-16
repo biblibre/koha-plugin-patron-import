@@ -25,6 +25,7 @@
                 }).appendTo(li);
 
                 a = $('<a>').addClass('btn btn-default btn-xs delete');
+                a.attr('href', '#');
                 i = $('<i>').addClass('fa fa-trash');
                 i.appendTo(a);
                 a.find('i').after(' Delete');
@@ -56,6 +57,7 @@
                 }).appendTo(li);
 
                 a = $('<a>').addClass('btn btn-default btn-xs delete');
+                a.attr('href', '#');
                 i = $('<i>').addClass('fa fa-trash');
                 i.appendTo(a);
                 a.find('i').after(' Delete');
@@ -75,10 +77,13 @@
 <body>
 [% INCLUDE 'header.inc' %]
 [% INCLUDE 'cat-search.inc' %]
-<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
-<a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
-Protected/erasables</div>
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ABiblibre%3A%3APatronImport&method=configure">Koha Patron Import</a> &rsaquo;
+    <i>[% import_name | html%]</i> &rsaquo;
+    Protected/erasables
+</div>
 
 <div class="main container-fluid">
     <div class="row">
@@ -106,13 +111,13 @@ Protected/erasables</div>
                                     [% END %]
                                     <option value="[message_preferences]">[message_preferences]</option>
                                 </select>
-                                <a class="btn btn-default btn-xs add_protected"><i class="fa fa-plus"></i> Add</a>
+                                <a href="#" class="btn btn-default btn-xs add_protected"><i class="fa fa-plus"></i> Add</a>
                             </li>
                             [% FOREACH p IN protected %]
                                 <li class="list-group-item">
                                     [% p.field %]
                                     <input type="hidden" name="protected" value="[% p.field %]"/>
-                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href='#' class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
                                 </li>
                             [% END %]
                         </ul>
@@ -127,13 +132,13 @@ Protected/erasables</div>
                                         <option value="[% e.code %]">[% e.description %]</option>
                                     [% END %]
                                 </select>
-                                <a class="btn btn-default btn-xs add_erasable"><i class="fa fa-plus"></i> Add</a>
+                                <a href="#" class="btn btn-default btn-xs add_erasable"><i class="fa fa-plus"></i> Add</a>
                             </li>
                             [% FOREACH e IN erased %]
                                 <li class="list-group-item">
                                     [% e.field %]
                                     <input type="hidden" name="erasable" value="[% e.field %]"/>
-                                    <a class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href="#" class="btn btn-default btn-xs delete"><i class="fa fa-trash"></i> Delete</a>
                                 </li>
                             [% END %]
                         </ul>

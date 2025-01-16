@@ -3,6 +3,7 @@ package Koha::Plugin::Com::Biblibre::PatronImport::Controller::Debarments;
 use Modern::Perl;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
+use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw(GetImportName);
 
 sub edit {
     my ( $plugin, $params ) = @_;
@@ -13,7 +14,10 @@ sub edit {
     my $op = $cgi->param('op') || '';
 
     my $import_id = $cgi->param('import_id');
-    $template->param( import_id => $import_id );
+    $template->param(
+        import_id   => $import_id,
+        import_name => GetImportName($import_id)
+    );
 
     if ( $op eq 'save' ) {
         my $values;
