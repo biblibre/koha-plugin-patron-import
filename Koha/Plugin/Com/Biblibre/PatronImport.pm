@@ -13,11 +13,11 @@ our $VERSION = '3.0';
 
 our $metadata = {
     name => 'Patron import',
-    author => 'Alex Arnaud <alex.arnaud@biblibre.com>',
+    author => 'BibLibre',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2024-12-24',
-    minimum_version => '22.11',
+    date_updated => '2025-01-16',
+    minimum_version => '23.11',
     maximum_version => '',
     version => $VERSION,
 };
