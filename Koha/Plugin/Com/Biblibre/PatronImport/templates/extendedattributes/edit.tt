@@ -14,15 +14,19 @@
 </div>
 <div class="main container-fluid">
     <div class="row">
+        <div class="col-sm-2 col-sm-pull-10">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div>
         <div class="col-sm-10 col-sm-push-2">
             <h2> Configure extended attributes behavior</h2>
             [% UNLESS table_not_empty %]
                 <div class="dialog message">None rules is configured in database. Patron extended attributes from source will be ignored.</div>
             [% END %]
             <form method="POST">
+                [% INCLUDE 'csrf-token.inc' %]
                 <input type="hidden" name="class" value="[% CLASS %]"/>
                 <input type="hidden" name="method" value="[% METHOD %]"/>
-                <input type="hidden" name="op" value="save"/>
+                <input type="hidden" name="op" value="cud-save"/>
                 <input type="hidden" name="import_id" value="[% import_id %]"/>
                 <div>
                     <table>
@@ -83,9 +87,6 @@
                 <br />
                 <input type="submit" value="Save"/>
             </form>
-        </div>
-        <div class="col-sm-2 col-sm-pull-10">
-            [% INCLUDE 'tools-menu.inc' %]
         </div>
     </div> <!-- /.row -->
 </div> <!-- /.main.container-fluid -->

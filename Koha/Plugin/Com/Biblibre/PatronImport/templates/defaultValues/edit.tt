@@ -24,6 +24,9 @@
 
 <div class="main container-fluid">
     <div class="row">
+        <div class="col-sm-2 col-sm-pull-10">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div>
         <div class="col-sm-10 col-sm-push-2">
                 <h2> Default values</h2>
                 [% IF error %]
@@ -34,11 +37,12 @@
 
                 <div id="add-form">
                     <form class="form-inline" method="POST">
+                        [% INCLUDE 'csrf-token.inc' %]
                         <input type="hidden" name="class" value="[% CLASS %]"/>
                         <input type="hidden" name="method" value="[% METHOD %]"/>
                         <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
                         <input type="hidden" name="action" value="add_form"/>
-                        <input type="hidden" name="op" value="save"/>
+                        <input type="hidden" name="op" value="cud-save"/>
                         <input type="hidden" name="import_id" value="[% import_id %]"/>
 
                         <div class="form-group">
@@ -54,18 +58,19 @@
                             <label for="value">Default value</label>
                             <input type="text" id="value" name="value">
                         </div>
-                        <button type="submit" class="btn btn-xs">add</button>
+                        <button type="submit" class="btn btn-xs btn-default">add</button>
                     </form>
                 </div>
 
                     [% FOREACH d IN defaults %]
                         <div id="del-form">
                             <form class="form-inline" method="POST">
+                                [% INCLUDE 'csrf-token.inc' %]
                                 <input type="hidden" name="class" value="[% CLASS %]"/>
                                 <input type="hidden" name="method" value="[% METHOD %]"/>
                                 <input type="hidden" name="controller" value="[% CONTROLLER %]"/>
                                 <input type="hidden" name="action" value="add_form"/>
-                                <input type="hidden" name="op" value="delete"/>
+                                <input type="hidden" name="op" value="cud-delete"/>
                                 <input type="hidden" name="import_id" value="[% import_id %]"/>
                                 <input type="hidden" name="koha_field" value="[% d.koha_field %]"/>
 
@@ -78,14 +83,11 @@
                                     <label for="value">Default value</label>
                                     <input type="text" name="value" value="[% d.value %]" disabled/>
                                 </div>
-                                <button type="submit" class="btn btn-xs">delete</button>
+                                <button type="submit" class="btn btn-xs btn-default">delete</button>
                             </form>
                         </div>
                     [% END %]
             </div>
-        <div class="col-sm-2 col-sm-pull-10">
-            [% INCLUDE 'tools-menu.inc' %]
-        </div>
     </div> <!-- row -->
 </div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]

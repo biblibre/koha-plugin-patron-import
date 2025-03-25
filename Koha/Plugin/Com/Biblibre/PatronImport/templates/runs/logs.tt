@@ -29,14 +29,18 @@ span {
 
 <div class="main container-fluid">
     <div class="row">
+        <div class="col-sm-2 col-sm-pull-10">
+            [% INCLUDE 'tools-menu.inc' %]
+        </div>
         <div class="col-sm-10 col-sm-push-2">
                 <h2> Logs for run #[% id %]</h2>
 
                 <div id="toolbar" class="btn-toolbar">
-                    <form class="form-inline" method="POST">
+                    <form class="form-inline d-inline-flex" method="POST">
+                        [% INCLUDE 'csrf-token.inc' %]
                         <input type="hidden" name="class" value="[% CLASS %]"/>
                         <input type="hidden" name="method" value="[% METHOD %]"/>
-                        <input type="hidden" name="op" value="filter"/>
+                        <input type="hidden" name="op" value="cud-filter"/>
                         <input type="hidden" name="id" value="[% id %]"/>
                         <div class="checkbox">
                             <label>
@@ -69,12 +73,12 @@ span {
                         </div>
 
                         <div id="submit" class="form-group">
-                            <button type="submit" class="btn btn-default btn-sm">Filter</button>
+                            <button type="submit" class="btn btn-outline-secondary btn-xl">Filter</button>
                         </div>
                     </form>
                 </div>
 
-                <table class="table">
+                <table class="dataTable">
                     <thead>
                         <tr>
                             <td></td>
@@ -90,15 +94,17 @@ span {
                         [% FOREACH log IN logs %]
                             <tr>
                                 <td>
-                                    [% IF log.reason == 'error' %]
-                                        <span class="label label-danger">
-                                    [% ELSIF log.reason == 'info' %]
-                                        <span class="label label-info">
-                                    [% ELSE %]
-                                        <span class="label label-success">
-                                    [% END %]
-                                    [% log.reason %]
+                                    <h6>
+                                        [% IF log.reason == 'error' %]
+                                            <span class="badge bg-danger">
+                                        [% ELSIF log.reason == 'info' %]
+                                            <span class="badge bg-info">
+                                        [% ELSE %]
+                                            <span class="badge bg-success">
+                                        [% END %]
+                                        [% log.reason %]
                                     </span>
+                                    </h6>
                                 </td>
                                 <td><strong>[[% log.time %]]</strong></td>
                                 <td>[% log.message %]</td>
@@ -111,9 +117,10 @@ span {
                                     [% IF log.userid %]
                                         [% log.userid %]
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
+                                            [% INCLUDE 'csrf-token.inc' %]
                                             <input type="hidden" name="searchfieldstype" value="userid"/>
                                             <input type="hidden" name="searchmember" value="[% log.userid %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
+                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -122,9 +129,10 @@ span {
                                     [% IF log.cardnumber %]
                                         [% log.cardnumber %]
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
+                                            [% INCLUDE 'csrf-token.inc' %]
                                             <input type="hidden" name="searchfieldstype" value="cardnumber"/>
                                             <input type="hidden" name="searchmember" value="[% log.cardnumber %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
+                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                     [% END %]
@@ -133,9 +141,10 @@ span {
                                     [% IF log.surname OR log.firstname %]
                                         [% log.firstname %] [% log.surname %]
                                         <form action="/cgi-bin/koha/members/member.pl" method="POST">
+                                            [% INCLUDE 'csrf-token.inc' %]
                                             <input type="hidden" name="searchfieldstype" value="standard"/>
                                             <input type="hidden" name="searchmember" value="[% log.firstname %] [% log.surname %]"/>
-                                            <input class="btn btn-xs" type="submit" value="Search" formtarget="_blank"/>
+                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
                                         </form>
                                     [% ELSE %]
                                         Unknown
@@ -146,9 +155,6 @@ span {
                     </tbody>
                 </table>
             </div>
-        <div class="col-sm-2 col-sm-pull-10">
-            [% INCLUDE 'tools-menu.inc' %]
-        </div>
     </div> <!-- row -->
 </div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]

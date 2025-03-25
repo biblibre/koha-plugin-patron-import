@@ -15,7 +15,7 @@ sub edit {
     my $import_id = $cgi->param('import_id');
     my $op = $cgi->param('op');
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         my $value = $cgi->param('value');
         my $is_error = 0;
         if ( $value ) {
@@ -38,7 +38,7 @@ sub edit {
         }
     }
 
-    if ( $op eq 'delete' ) {
+    if ( $op eq 'cud-delete' ) {
         my $koha_field = $cgi->param('koha_field');
         eval {
             Delete($plugin->{default_values_table},

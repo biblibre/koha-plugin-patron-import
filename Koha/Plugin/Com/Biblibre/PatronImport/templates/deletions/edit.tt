@@ -17,6 +17,9 @@
 
 <div class="main container-fluid">
   <div class="row">
+    <div class="col-sm-2 col-sm-pull-10">
+      [% INCLUDE 'tools-menu.inc' %]
+    </div>
     <div class="col-sm-10 col-sm-push-2">
         [% IF error %]
           <div class="alert alert-danger" role="alert">
@@ -53,9 +56,10 @@
                         [% IF first %]
                           <td rowspan="[% r.fields.size + 1 %]" style="vertical-align: middle">
                             <form class="form-delete-rule" method="post">
+                              [% INCLUDE 'csrf-token.inc' %]
                               <input type="hidden" name="class" value="[% CLASS %]"/>
                               <input type="hidden" name="method" value="[% METHOD %]"/>
-                              <input type="hidden" name="op" value="delete_rule"/>
+                              <input type="hidden" name="op" value="cud-delete_rule"/>
                               <input type="hidden" name="import_id" value="[% import_id %]"/>
                               <input type="hidden" name="rule_id" value="[% r.id %]"/>
                               <input style="height: 18px; padding: 0px 8px" type="submit" value="delete"/>
@@ -68,9 +72,10 @@
                         <td>[% f.value %]</td>
                         <td>
                           <form class="form-delete" id="form-delete-[% f.id %]" id="delete" method="post">
+                            [% INCLUDE 'csrf-token.inc' %]
                             <input type="hidden" name="class" value="[% CLASS %]"/>
                             <input type="hidden" name="method" value="[% METHOD %]"/>
-                            <input type="hidden" name="op" value="delete_field"/>
+                            <input type="hidden" name="op" value="cud-delete_field"/>
                             <input type="hidden" name="import_id" value="[% import_id %]"/>
                             <input type="hidden" name="field_id" value="[% f.id %]"/>
                             <input style="height: 18px; padding: 0px 8px" type="submit" value="delete"/>
@@ -82,9 +87,10 @@
                   <tr>
                     <td rowspan="2" style="vertical-align: middle">
                       <form class="form-delete-rule" method="post">
+                        [% INCLUDE 'csrf-token.inc' %]
                         <input type="hidden" name="class" value="[% CLASS %]"/>
                         <input type="hidden" name="method" value="[% METHOD %]"/>
-                        <input type="hidden" name="op" value="delete_rule"/>
+                        <input type="hidden" name="op" value="cud-delete_rule"/>
                         <input type="hidden" name="import_id" value="[% import_id %]"/>
                         <input type="hidden" name="rule_id" value="[% r.id %]"/>
                         <input style="height: 18px; padding: 0px 8px" type="submit" value="delete"/>
@@ -108,11 +114,12 @@
                     </td>
                     <td>
                       <form id="form-[% r.id %]" method="post">
+                        [% INCLUDE 'csrf-token.inc' %]
                         <input type="hidden" name="class" value="[% CLASS %]">
                         <input type="hidden" name="method" value="[% METHOD %]">
                         <input type="hidden" name="import_id" value="[% import_id %]">
                         <input type="hidden" name="rule_id" value="[% r.id %]">
-                        <input type="hidden" name="op" value="add_field">
+                        <input type="hidden" name="op" value="cud-add_field">
                         <input style="height: 18px; padding: 0px 8px" type="submit" value="add">
                       </form>
                     </td>
@@ -130,9 +137,10 @@
         <div id="add-new-rule" style="margin-top: 20px;">
           <h3>Add a rule</h3>
           <form method="POST">
+            [% INCLUDE 'csrf-token.inc' %]
             <input type="hidden" name="class" value="[% CLASS %]"/>
             <input type="hidden" name="method" value="[% METHOD %]"/>
-            <input type="hidden" name="op" value="add_rule"/>
+            <input type="hidden" name="op" value="cud-add_rule"/>
             <input type="hidden" name="import_id" value="[% import_id %]"/>
 
             <label for="name">Rule's name: </label>
@@ -143,10 +151,6 @@
         </form>
         </div>
       </div>
-
-    <div class="col-sm-2 col-sm-pull-10">
-      [% INCLUDE 'tools-menu.inc' %]
-    </div>
   </div> <!-- row -->
 </div> <!-- main container-fluid -->
 [% INCLUDE 'intranet-bottom.inc' %]

@@ -19,7 +19,7 @@ sub edit {
         import_name => GetImportName($import_id)
     );
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         my $values;
         $values->{suspend} = $cgi->param('suspend') ? 1 : 0;
         $values->{comment} = $cgi->param('comment');
