@@ -4,6 +4,7 @@ use Modern::Perl;
 
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::SQL qw( :DEFAULT );
 use Koha::Plugin::Com::Biblibre::PatronImport::Helper::Info qw(GetImportName);
+use Mojo::Base 'Mojolicious::Controller';
 
 sub index {
     my ( $plugin, $params ) = @_;
@@ -76,66 +77,78 @@ sub details {
 }
 
 sub logs {
-    my ( $plugin, $params ) = @_;
-    my $cgi = $plugin->{'cgi'};
+    my $c = shift->openapi->valid_input or return;
 
-    my $template = $plugin->get_template({ file => 'templates/runs/logs.tt' });
+    my $run_id = $c->validation->param('run_id');
+    my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new();
 
-    my $error_checked = 1;
-    my $info_checked = 1;
-    my $success_checked = 1;
-
-    my $id = $cgi->param('id');
-    my $op = $cgi->param('op') || '';
-
-    my $additional = '';
-    if ( $op eq 'cud-filter' ) {
-        my $e = $cgi->param('error');
-        my $i = $cgi->param('info');
-        my $s = $cgi->param('success');
-
-        $error_checked = 0;
-        $info_checked = 0;
-        $success_checked = 0;
-
-        my @in;
-        if ( $e eq 'on' ) {
-             $error_checked = 1;
-             push @in, "'error'";
-        }
-
-        if ( $i eq 'on' ) {
-             $info_checked = 1;
-             push @in, "'info'";
-        }
-
-        if ( $s eq 'on' ) {
-             $success_checked = 1;
-             push @in, "'success'";
-        }
-
-        if ( @in ) {
-            $additional = " AND reason IN (" . join(', ', @in) . ")";
-        }
+    my $logs_details = GetFromTable( $plugin->{run_logs_table}, { run_id => $run_id } );
+    unless ($logs_details) {
+        return $c->render( status => 404, openapi => { error => "Logs details not found." } );
     }
-
-    my $runs = GetFromTable( $plugin->{runs_table}, { id => $id, } );
-    my $logs = GetFromTable( $plugin->{run_logs_table}, { run_id => $id, },
-        "$additional ORDER BY time" );
-
-    $template->param(
-        id              => $id,
-        import_id       => $runs->[0]->{import_id},
-        import_name     => GetImportName( $runs->[0]->{import_id} ),
-        logs            => $logs,
-        error_checked   => $error_checked,
-        info_checked    => $info_checked,
-        success_checked => $success_checked
-    );
-
-    print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
-    print $template->output();
+    return $c->render( status => 200, openapi => $logs_details );
 }
+# sub logs {
+#     my ( $plugin, $params ) = @_;
+#     my $cgi = $plugin->{'cgi'};
+
+#     my $template = $plugin->get_template({ file => 'templates/runs/logs.tt' });
+
+#     my $error_checked = 1;
+#     my $info_checked = 1;
+#     my $success_checked = 1;
+
+#     my $id = $cgi->param('id');
+#     my $op = $cgi->param('op') || '';
+
+#     my $additional = '';
+#     if ( $op eq 'cud-filter' ) {
+#         my $e = $cgi->param('error');
+#         my $i = $cgi->param('info');
+#         my $s = $cgi->param('success');
+
+#         $error_checked = 0;
+#         $info_checked = 0;
+#         $success_checked = 0;
+
+#         my @in;
+#         if ( $e eq 'on' ) {
+#              $error_checked = 1;
+#              push @in, "'error'";
+#         }
+
+#         if ( $i eq 'on' ) {
+#              $info_checked = 1;
+#              push @in, "'info'";
+#         }
+
+#         if ( $s eq 'on' ) {
+#              $success_checked = 1;
+#              push @in, "'success'";
+#         }
+
+#         if ( @in ) {
+#             $additional = " AND reason IN (" . join(', ', @in) . ")";
+#         }
+#     }
+
+#     my $runs = GetFromTable( $plugin->{runs_table}, { id => $id, } );
+#     my $logs = GetFromTable( $plugin->{run_logs_table}, { run_id => $id, },
+#         "$additional ORDER BY time" );
+
+#     $template->param(
+#         id              => $id,
+#         import_id       => $runs->[0]->{import_id},
+#         import_name     => GetImportName( $runs->[0]->{import_id} ),
+#         logs            => $logs,
+#         error_checked   => $error_checked,
+#         info_checked    => $info_checked,
+#         success_checked => $success_checked
+#     );
+
+#     print $cgi->header(-type => 'text/html', -charset => 'UTF-8', -encoding => 'UTF-8');
+#     print $template->output();
+# }
 
 sub delete {
     my ( $plugin, $params ) = @_;

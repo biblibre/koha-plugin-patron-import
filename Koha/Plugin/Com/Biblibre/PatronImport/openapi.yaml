@@ -86,3 +86,47 @@ paths:
         permissions:
           - borrowers: edit_borrowers
       x-mojo-to: Com::Biblibre::PatronImport::Controller::ConfigHandler#get_ldap_conf
+  /run/logs_details/{run_id}:
+    get:
+      consumes:
+        - application/json
+      operationId: PatronImportRunLogsDetails
+      parameters:
+        - $ref: './openapi/parameters.yaml#/run'
+        - $ref: './openapi/parameters.yaml#/match'
+        - $ref: './openapi/parameters.yaml#/order_by'
+        - $ref: './openapi/parameters.yaml#/page'
+        - $ref: './openapi/parameters.yaml#/per_page'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Run logs details
+          schema:
+            $ref: './openapi/definitions.yaml#/run'
+        400:
+          description: Bad parameters
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        401:
+          description: Unauthorized
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        403:
+          description: Access forbidden
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        500:
+          description: Internal error
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+        503:
+          description: Under maintenance
+          schema:
+            $ref: './openapi/definitions.yaml#/error'
+      tags:
+        - patrons
+      x-koha-authorization:
+        permissions:
+          - reports
+      x-mojo-to: Com::Biblibre::PatronImport::Controller::Runs#logs

@@ -32,129 +32,113 @@ span {
         <div class="col-sm-2 col-sm-pull-10">
             [% INCLUDE 'tools-menu.inc' %]
         </div>
-        <div class="col-sm-10 col-sm-push-2">
-                <h2> Logs for run #[% id %]</h2>
-
-                <div id="toolbar" class="btn-toolbar">
-                    <form class="form-inline d-inline-flex" method="POST">
-                        [% INCLUDE 'csrf-token.inc' %]
-                        <input type="hidden" name="class" value="[% CLASS %]"/>
-                        <input type="hidden" name="method" value="[% METHOD %]"/>
-                        <input type="hidden" name="op" value="cud-filter"/>
-                        <input type="hidden" name="id" value="[% id %]"/>
-                        <div class="checkbox">
-                            <label>
-                                [% IF error_checked %]
-                                    <input type="checkbox" name="error" checked> Error
-                                [% ELSE %]
-                                    <input type="checkbox" name="error"> Error
-                                [% END %]
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <label>
-                                [% IF info_checked %]
-                                    <input type="checkbox" name="info" checked> Info
-                                [% ELSE %]
-                                    <input type="checkbox" name="info"> Info
-                                [% END %]
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <label>
-                                [% IF success_checked %]
-                                    <input type="checkbox" name="success" checked> Success
-                                [% ELSE %]
-                                    <input type="checkbox" name="success"> Success
-                                [% END %]
-                            </label>
-                        </div>
-
-                        <div id="submit" class="form-group">
-                            <button type="submit" class="btn btn-outline-secondary btn-xl">Filter</button>
-                        </div>
-                    </form>
-                </div>
-
-                <table class="dataTable">
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>Time</td>
-                            <td>Message</td>
-                            <td>Borrowernumber</td>
-                            <td>Userid</td>
-                            <td>Cardnumber</td>
-                            <td>Name</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        [% FOREACH log IN logs %]
-                            <tr>
-                                <td>
-                                    <h6>
-                                        [% IF log.reason == 'error' %]
-                                            <span class="badge bg-danger">
-                                        [% ELSIF log.reason == 'info' %]
-                                            <span class="badge bg-info">
-                                        [% ELSE %]
-                                            <span class="badge bg-success">
-                                        [% END %]
-                                        [% log.reason %]
-                                    </span>
-                                    </h6>
-                                </td>
-                                <td><strong>[[% log.time %]]</strong></td>
-                                <td>[% log.message %]</td>
-                                <td>
-                                    [% IF log.borrowernumber %]
-                                        <a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=[% log.borrowernumber %]">[% log.borrowernumber %]</a>
-                                    [% END %]
-                                </td>
-                                <td>
-                                    [% IF log.userid %]
-                                        [% log.userid %]
-                                        <form action="/cgi-bin/koha/members/member.pl" method="POST">
-                                            [% INCLUDE 'csrf-token.inc' %]
-                                            <input type="hidden" name="searchfieldstype" value="userid"/>
-                                            <input type="hidden" name="searchmember" value="[% log.userid %]"/>
-                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
-                                        </form>
-                                    [% ELSE %]
-                                    [% END %]
-                                </td>
-                                <td>
-                                    [% IF log.cardnumber %]
-                                        [% log.cardnumber %]
-                                        <form action="/cgi-bin/koha/members/member.pl" method="POST">
-                                            [% INCLUDE 'csrf-token.inc' %]
-                                            <input type="hidden" name="searchfieldstype" value="cardnumber"/>
-                                            <input type="hidden" name="searchmember" value="[% log.cardnumber %]"/>
-                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
-                                        </form>
-                                    [% ELSE %]
-                                    [% END %]
-                                </td>
-                                <td>
-                                    [% IF log.surname OR log.firstname %]
-                                        [% log.firstname %] [% log.surname %]
-                                        <form action="/cgi-bin/koha/members/member.pl" method="POST">
-                                            [% INCLUDE 'csrf-token.inc' %]
-                                            <input type="hidden" name="searchfieldstype" value="standard"/>
-                                            <input type="hidden" name="searchmember" value="[% log.firstname %] [% log.surname %]"/>
-                                            <input class="btn btn-primary btn-sm" type="submit" value="Search" formtarget="_blank"/>
-                                        </form>
-                                    [% ELSE %]
-                                        Unknown
-                                    [% END %]
-                                </td>
-                            </tr>
-                        [% END %]
-                    </tbody>
-                </table>
-            </div>
+        <div id="logs_details" class="col-sm-10 col-sm-push-2" data-run-id=[% id %]>
+            <h2> Logs for run #[% id %]</h2>
+            <table id="logs_details_table">
+                <thead>
+                    <tr>
+                        <td>Status</td>
+                        <td>Time</td>
+                        <td>Message</td>
+                        <td>Borrowernumber</td>
+                        <td>Userid</td>
+                        <td>Cardnumber</td>
+                        <td>Surname</td>
+                        <td>Firstname</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div> <!-- row -->
 </div> <!-- main container-fluid -->
+[% MACRO jsinclude BLOCK %]
+[% INCLUDE 'datatables.inc' %]
+<script>
+    $(document).ready(function() {
+        console.log()
+        var runId = $('#logs_details').data('run-id');
+        var logsDetails = $('#logs_details_table').dataTable({
+            "ajax": {
+                url: "/api/v1/contrib/patron-import/run/logs_details/" + runId,
+                cache: true,
+                dataSrc: ''
+            },
+            "columns": [
+                {
+                    "data": "reason",
+                    "title": "Log reason",
+                    "visible": true,
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "data": "time",
+                    "title": "Time",
+                    "searchable": false,
+                    "orderable": false,
+                    "render": function(data) {
+                        return $date(data);
+                    }
+                },
+                {
+                    "data": "message",
+                    "title": "Message",
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "data": "borrowernumber",
+                    "title": "Borrowernumber",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
+                },
+                {
+                    "data": "userid",
+                    "title": "User id",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
+                },
+                {
+                    "data": "cardnumber",
+                    "title": "Cardnumber",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
+                },
+                {
+                    "data": "surname",
+                    "title": "Surname",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
+                },
+                {
+                    "data": "firstname",
+                    "title": "Firstname",
+                    "searchable": true,
+                    "orderable": true,
+                    "render": function(data) {
+                        return `<a href="/cgi-bin/koha/members/moremember.pl?borrowernumber=${data}" target="_blank">${data}</a>`;
+                    }
+                }
+            ],
+            "order": [[1, 'asc']],
+            "paging": true,
+            "language": {
+                "emptyTable": '<div class="dialog message">There are no details for this run.</div>'
+            }
+        });
+    });
+</script>
+[% END %]
 [% INCLUDE 'intranet-bottom.inc' %]

@@ -1,0 +1,28 @@
+type: array
+items:
+  type: object
+  properties:
+    reason:
+      description: Log reason
+      type: string
+    time:
+      description: Time
+      type: string
+    message:
+      description: Message
+      type: string
+    borrowernumber:
+      description: Patron's borrowernumber
+      type: integer
+    userid:
+      description: Patron's user id
+      type: string
+    cardnumber:
+      description: Patron's cardnumber
+      type: integer
+    surname:
+      description: Patron's surname
+      type: string
+    firstname:
+      description: Patron's firstname
+      type: string
