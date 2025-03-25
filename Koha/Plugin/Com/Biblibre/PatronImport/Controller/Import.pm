@@ -30,7 +30,7 @@ sub edit {
         supported_sep_char => SupportedSepChar(),
     );
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         my $id = $cgi->param('id');
         my $name = $cgi->param('name');
         my $type = $cgi->param('type');
@@ -113,7 +113,7 @@ sub delete {
     my $id = $cgi->param('id');
     my $op = $cgi->param('op') || '';
 
-    if ( $op eq 'confirm' ) {
+    if ( $op eq 'cud-confirm' ) {
         if (my $existing = GetFirstFromTable( $plugin->{import_table}, { id => $id } )) {
             Delete( $plugin->{import_table}, { id => $existing->{id} });
         }

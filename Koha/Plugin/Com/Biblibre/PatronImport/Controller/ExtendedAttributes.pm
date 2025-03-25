@@ -23,7 +23,7 @@ sub edit {
         push @{ $attr_types_unblessed }, $attr_type->unblessed;
     }
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         Delete($plugin->{extended_attributes_table}, { import_id => $import_id });
         foreach my $attr_type ( @$attr_types_unblessed ) {
             my $code = $attr_type->{code};

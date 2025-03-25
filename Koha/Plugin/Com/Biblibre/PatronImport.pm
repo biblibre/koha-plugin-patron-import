@@ -16,8 +16,8 @@ our $metadata = {
     author => 'BibLibre',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2025-01-16',
-    minimum_version => '23.11',
+    date_updated => '2025-05-27',
+    minimum_version => '24.05',
     maximum_version => '',
     version => $VERSION,
 };

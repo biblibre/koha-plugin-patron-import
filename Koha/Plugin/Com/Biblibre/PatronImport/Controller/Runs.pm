@@ -89,7 +89,7 @@ sub logs {
     my $op = $cgi->param('op') || '';
 
     my $additional = '';
-    if ( $op eq 'filter' ) {
+    if ( $op eq 'cud-filter' ) {
         my $e = $cgi->param('error');
         my $i = $cgi->param('info');
         my $s = $cgi->param('success');
@@ -148,7 +148,7 @@ sub delete {
 
     my $runs = GetFromTable( $plugin->{runs_table}, { id => $id, } );
 
-    if ( $op eq 'delete_confirm' ) {
+    if ( $op eq 'cud-delete_confirm' ) {
         Delete( $plugin->{runs_table}, { id => $id } );
         Delete( $plugin->{patrons_history_table}, { run_id => $id } );
 

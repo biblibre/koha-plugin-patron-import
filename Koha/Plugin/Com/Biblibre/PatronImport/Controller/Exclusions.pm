@@ -15,12 +15,12 @@ sub edit {
 
     my $template = $plugin->get_template({ file => 'templates/exclusions/edit.tt' });
 
-    if ( $op eq 'delete_field' ) {
+    if ( $op eq 'cud-delete_field' ) {
         my $field_id = $cgi->param('field_id');
         Delete($plugin->{exclusions_fields_table}, { id => $field_id });
     }
 
-    if ( $op eq 'add_field' ) {
+    if ( $op eq 'cud-add_field' ) {
         my $rule_id = $cgi->param('rule_id');
         my $koha_field = $cgi->param('koha_field');
         my $field_value = $cgi->param('field_value');
@@ -35,12 +35,12 @@ sub edit {
         );
     }
 
-    if ( $op eq 'delete_rule' ) {
+    if ( $op eq 'cud-delete_rule' ) {
         my $rule_id = $cgi->param('rule_id');
         Delete($plugin->{exclusions_rules_table}, { id => $rule_id });
     }
 
-    if ( $op eq 'add_rule' ) {
+    if ( $op eq 'cud-add_rule' ) {
         my $name = $cgi->param('name');
         my $origin = $cgi->param('origin');
 

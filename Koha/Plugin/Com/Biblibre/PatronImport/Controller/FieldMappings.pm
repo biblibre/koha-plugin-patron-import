@@ -16,7 +16,7 @@ sub edit {
     my $import_id = $cgi->param('import_id');
     my $op = $cgi->param('op') || '';
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         # Save mappings
         my @source_fields = $cgi->param('source_field');
         my @koha_fields = $cgi->param('koha_field');
@@ -106,7 +106,7 @@ sub editvalues {
     my $destination = $cgi->param('destination');
     my $op = $cgi->param('op') || '';
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         my @input_values = $cgi->param('input');
         my @output_values = $cgi->param('output');
         my @operators = $cgi->param('operator');
@@ -184,7 +184,7 @@ sub edittransformationplugins {
     my $op = $cgi->param('op') || '';
     my $tr_plugins = Koha::Plugin::Com::Biblibre::PatronImport::TransformationPlugins::all;
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         Delete($plugin->{transformation_plugins_table},
             { import_id => $import_id, destination => $destination });
 
@@ -239,7 +239,7 @@ sub editprotected {
     my $import_id = $cgi->param('import_id');
     my $op = $cgi->param('op') || '';
 
-    if ( $op eq 'save' ) {
+    if ( $op eq 'cud-save' ) {
         # Save protected fields.
         my @protected = $cgi->multi_param('protected');
         my $is_error = 0;
