@@ -56,6 +56,7 @@ View runs</div>
                                     <th colspan="2">Dates</th>
                                     <th colspan="6">Borrowers processed</th>
                                     <th colspan="2">Actions</th>
+                                    <th colspan="1">Infos</th>
                                 </tr>
                                 <tr>
                                     <th>#id</th>
@@ -69,6 +70,7 @@ View runs</div>
                                     <th>Total</th>
                                     <th>Show</th>
                                     <th><a href="#" id="selectall">Select all</a> | <a href="#" id="selectnone">none</a></th>
+                                    <th>Filename</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,6 +94,7 @@ View runs</div>
                                             <input type="checkbox" name="delete" value="[% run.id %]" class="delete">
                                             [% IF run.dry_run == 1 %](test mode)[% END %]
                                         </td>
+                                        <td>[% IF run.filename %][% run.filename %][% ELSE %]N/A[% END %]</td>
                                     </tr>
                                 [% END %]
                             </tbody>
