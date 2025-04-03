@@ -10,6 +10,7 @@ Patron-import is a plugin for [Koha](https://koha-community.org/) allowing confi
 - 21.05-1.x => Koha >= 21.05.xx
 - 21.11-1.x => Koha >= 21.11.xx
 - 22.11-2.x => Koha >= 22.11.xx
+- 23.11-2.x => Koha >= 23.11.xx
 - **master => Koha latest version**
 
 This documentation is for **master** version
