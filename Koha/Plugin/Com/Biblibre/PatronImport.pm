@@ -217,10 +217,11 @@ sub extendedattributes {
 sub api_routes {
     my ( $self, $args ) = @_;
 
-    my $spec_str = $self->mbf_read('openapi.json');
-    my $spec     = decode_json($spec_str);
+    my $spec_dir = $self->mbf_dir();
 
-    return $spec;
+    my $schema = JSON::Validator::Schema::OpenAPIv2->new;
+    my $spec = $schema->resolve($spec_dir . '/openapi.yaml');
+    return $self->_convert_refs_to_absolute($spec->data->{'paths'}, 'file://' . $spec_dir . '/');
 }
 
 sub api_namespace {
@@ -699,6 +700,38 @@ sub _enable_borrowers_logs {
     my ( $self ) = @_;
 
     C4::Context->set_preference( 'BorrowersLog', $self->{BorrowersLog} );
+}
+
+sub _convert_refs_to_absolute {
+    my ( $self, $hashref, $path_prefix ) = @_;
+
+    foreach my $key (keys %{ $hashref }) {
+        if ($key eq '$ref') {
+            if ($hashref->{$key} =~ /^(\.\/)?openapi/) {
+                $hashref->{$key} = $path_prefix . $hashref->{$key};
+            }
+        } elsif (ref $hashref->{$key} eq 'HASH' ) {
+            $hashref->{$key} = $self->_convert_refs_to_absolute($hashref->{$key}, $path_prefix);
+        } elsif (ref($hashref->{$key}) eq 'ARRAY') {
+            $hashref->{$key} = $self->_convert_array_refs_to_absolute($hashref->{$key}, $path_prefix);
+        }
+    }
+    return $hashref;
+}
+
+sub _convert_array_refs_to_absolute {
+    my ( $self, $arrayref, $path_prefix ) = @_;
+
+    my @res;
+    foreach my $item (@{ $arrayref }) {
+        if (ref($item) eq 'HASH') {
+            $item = $self->_convert_refs_to_absolute($item, $path_prefix);
+        } elsif (ref($item) eq 'ARRAY') {
+            $item = $self->_convert_array_refs_to_absolute($item, $path_prefix);
+        }
+        push @res, $item;
+    }
+    return \@res;
 }
 
 1;

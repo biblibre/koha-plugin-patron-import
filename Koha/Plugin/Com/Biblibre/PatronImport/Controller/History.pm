@@ -11,11 +11,9 @@ sub by_run {
     my $plugin = Koha::Plugin::Com::Biblibre::PatronImport->new();
 
     my $history = GetFromTable( $plugin->{patrons_history_table}, { run_id => $run_id } );
-
     unless ($history) {
         return $c->render( status => 404, openapi => { error => "History not found." } );
     }
-
     return $c->render( status => 200, openapi => $history );
 }
 

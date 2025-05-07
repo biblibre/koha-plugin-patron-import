@@ -1,0 +1,11 @@
+---
+name: _match
+in: query
+type: string
+enum:
+  - contains
+  - exact
+  - starts_with
+  - ends_with
+description: Matching criteria
+required: false
