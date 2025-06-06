@@ -11,9 +11,9 @@ Patron-import is a plugin for [Koha](https://koha-community.org/) allowing confi
 - 21.11-1.x => Koha >= 21.11.xx
 - 22.11-2.x => Koha >= 22.11.xx
 - 23.11-3.x => Koha >= 23.11.xx
-- **24.05-3.x => Koha >= 24.05.xx**
-- master => Koha latest version
+- 24.05-3.x => Koha >= 24.05.xx
+- **master => Koha latest version**
 
-This documentation is for **24.05.xx** version
+This documentation is for **master** version
 
 The complete documentation can be found [here](https://biblibre.github.io/koha-plugin-patron-import).
