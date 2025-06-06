@@ -92,7 +92,10 @@
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
-                }
+                },
+		complete: function(data) {
+		    location.reload();
+		}
             });
         });
 
@@ -145,7 +148,7 @@
                             <legend>[% i.name %]</legend>
                             <div class="file-launcher-actions">
                                 <a href="#" class="file-launcher-link btn btn-link btn-sm" data-import-id="[% i.id %]" data-bs-toggle="modal" data-bs-target="#file-launcher-modal">
-                                    <i class="fa fa-file"></i> Submit a file
+                                    <i class="fa fa-file"></i> Import a file
                                 </a>
                             </div>
                         </div>
