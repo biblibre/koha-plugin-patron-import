@@ -1,25 +1,24 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="fr" data-content_root="./">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suppressions &mdash; Documentation PatronImport </title>
+  <title>Deletions &mdash; PatronImport  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d1a510d7"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="_static/translations.js?v=041d0952"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Debarments" href="debarments.html" />
     <link rel="prev" title="Exclusions" href="exclusions.html" /> 
 </head>
@@ -37,7 +36,7 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,18 +44,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="create_import.html">Créer un nouvel import</a></li>
-<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Définitions des correspondances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_import.html">Create new import</a></li>
+<li class="toctree-l1"><a class="reference internal" href="define_mappings.html">Define mappings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="protected_erasables_fields.html">Protected and erasables fields</a></li>
-<li class="toctree-l1"><a class="reference internal" href="default_values.html">Valeurs par défaut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="default_values.html">Default values</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exclusions.html">Exclusions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Suppressions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#create-a-rule">Créer une règle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#add-fields">Ajouter les champs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Deletions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-rule">Create a rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-fields">Add fields</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="debarments.html">Debarments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Attributs étendus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extented_attributes.html">Extended attributes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logs.html">Logs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="add-ons.html">Add-ons</a></li>
@@ -76,9 +75,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Suppressions</li>
+      <li class="breadcrumb-item active">Deletions</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/deletions.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+            <a href="_sources/deletions.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -87,30 +86,30 @@
            <div itemprop="articleBody">
              
   <section id="deletions">
-<span id="id1"></span><h1>Suppressions<a class="headerlink" href="#deletions" title="Lien vers cette rubrique"></a></h1>
-<p>Les règles de suppressions sont un ensemble de champs/valeurs qui définit les patrons à supprimer de Koha.</p>
-<p>Plusieurs conditions doivent être réunies pour supprimer un adhérent:</p>
+<span id="id1"></span><h1>Deletions<a class="headerlink" href="#deletions" title="Link to this heading"></a></h1>
+<p>Deletion rules are a set of fields/values defining which patrons are to be deleted in Koha.</p>
+<p>Several conditions must be met to delete a patron:</p>
 <ol class="arabic simple">
-<li><p>La règle doit correspondre en entier aux données entrantes</p></li>
-<li><p>Les données entrantes doivent être associées à un adhérent Koha (trouvé par dédoublonnage)</p></li>
-<li><p>L’adhérent cible ne doit pas avoir de dettes</p></li>
-<li><p>L’adhérent cible ne doit pas avoir de prêts dus</p></li>
+<li><p>Entire rule fields must have been matched the incoming data</p></li>
+<li><p>Incoming data must have been associated with a corresponding patron in Koha with regard to the <cite>matching point</cite></p></li>
+<li><p>Koha’s target patron must not have any due charges</p></li>
+<li><p>Koha’s target patron must not have any due checkouts</p></li>
 </ol>
 <section id="create-a-rule">
-<h2>Créer une règle<a class="headerlink" href="#create-a-rule" title="Lien vers cette rubrique"></a></h2>
-<p>Saisir un nom de règle et cliquer sur le bouton <cite>« Add »</cite>.</p>
+<h2>Create a rule<a class="headerlink" href="#create-a-rule" title="Link to this heading"></a></h2>
+<p>Type a rule name and click <cite>“Add”</cite> button.</p>
 <figure class="align-default" id="id2">
-<img alt="Ajouter une règle" src="_images/add-deletion-rule.jpg" />
+<img alt="Add rule" src="_images/add-deletion-rule.jpg" />
 <figcaption>
-<p><span class="caption-text">Ajouter une règle</span><a class="headerlink" href="#id2" title="Lien vers cette image"></a></p>
+<p><span class="caption-text">Add rule</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="add-fields">
-<h2>Ajouter les champs<a class="headerlink" href="#add-fields" title="Lien vers cette rubrique"></a></h2>
-<p>Sélectionner un champ, saisir une valeur et cliquer sur le bouton <cite>« Add »</cite>.</p>
+<h2>Add fields<a class="headerlink" href="#add-fields" title="Link to this heading"></a></h2>
+<p>Select a field, entrer a value and click on the <cite>“Add”</cite> button.</p>
 <figure class="align-default">
-<img alt="Ajouter un champ" src="_images/add-deletion-field.jpg" />
+<img alt="Add field" src="_images/add-deletion-field.jpg" />
 </figure>
 </section>
 </section>
@@ -118,20 +117,20 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="exclusions.html" class="btn btn-neutral float-left" title="Exclusions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="debarments.html" class="btn btn-neutral float-right" title="Debarments" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="exclusions.html" class="btn btn-neutral float-left" title="Exclusions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="debarments.html" class="btn btn-neutral float-right" title="Debarments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Droits d'auteur 2024, BibLibre.</p>
+    <p>&#169; Copyright 2024, BibLibre.</p>
   </div>
 
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
    
 
 </footer>

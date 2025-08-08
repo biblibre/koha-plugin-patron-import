@@ -28,7 +28,6 @@ CSV Settings
 - **End of line**: CSV option, see https://metacpan.org/pod/Text::CSV#eol
 - **Char separator**: CSV option, see https://metacpan.org/pod/Text::CSV#sep_char
 - **Quote char**: CSV option, see https://metacpan.org/pod/Text::CSV#quote_char
-- **Empty is undef**: CSV option, see https://metacpan.org/pod/Text::CSV#empty_is_undef
 - **Allow loose quotes**: CSV option, see https://metacpan.org/pod/Text::CSV#allow_loose_quotes
 
 Configuration handler
