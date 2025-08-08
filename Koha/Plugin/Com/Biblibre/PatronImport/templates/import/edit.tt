@@ -223,17 +223,6 @@
                                 <div class="hint">chararacter to quote fields<div>
                             </li>
                             <li>
-                                <label for="empty_is_undef">Empty is undef :</label>
-                                [% IF empty_is_undef %]
-                                    <input type="checkbox"name="empty_is_undef" checked="checked"/>
-                                [% ELSE %]
-                                    <input type="checkbox" name="empty_is_undef"/>
-                                [% END %]
-                                <div class="hint">
-                                    this attribute converts all blank fields to undef
-                                </div>
-                            </li>
-                            <li>
                                 <label for="allow_loose_quotes">Allow loose quotes :</label>
                                     [% IF allow_loose_quotes %]
                                         <input type="checkbox" name="allow_loose_quotes" checked="checked"/>

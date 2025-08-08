@@ -154,7 +154,6 @@ sub _handle_csv {
         eol                 => $cgi->param('eol') || "",
         sep_char            => $cgi->param('sep_char') || "",
         quote_char          => $cgi->param('quote_char') || "",
-        empty_is_undef      => $cgi->param('empty_is_undef') ? 1 : 0,
         allow_loose_quotes  => $cgi->param('allow_loose_quotes') ? 1 : 0,
     };
 
