@@ -387,6 +387,9 @@ sub to_koha {
             );
         }
 
+        # Set cardnumber to NULL if empty and autocardnumber config on "no"
+        delete $patron{cardnumber} if $conf->{autocardnumber} eq 'no' && $patron{cardnumber} eq '';
+
         eval { $borrowernumber = Koha::Patron->new(\%patron)->store->borrowernumber; };
         if ( $@ ) {
             $import->{logger}->Add(
