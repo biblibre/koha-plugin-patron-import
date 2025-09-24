@@ -238,7 +238,7 @@ sub _load_debarments {
     my $values = $sth->fetchrow_hashref;
 
     if ( $values->{unlimited} ) {
-        $values->{expiration} = '9999-12-01';
+        $values->{expiration} = '';
         return $values;
     }
 
