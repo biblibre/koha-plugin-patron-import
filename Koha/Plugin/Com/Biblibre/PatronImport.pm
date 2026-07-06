@@ -9,14 +9,14 @@ use Mojo::JSON qw(decode_json);;
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '3.0';
+our $VERSION = '3.1';
 
 our $metadata = {
     name => 'Patron import',
     author => 'BibLibre',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2025-05-27',
+    date_updated => '2026-07-06',
     minimum_version => '24.05',
     maximum_version => '',
     version => $VERSION,
@@ -104,7 +104,7 @@ sub deleteimport {
 }
 
 sub configexport {
-    my ($self, $args) = @_;  
+    my ($self, $args) = @_;
 
     use Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler;
     Koha::Plugin::Com::Biblibre::PatronImport::Controller::ConfigHandler::configexport($self, $args);
@@ -226,7 +226,7 @@ sub api_routes {
 
 sub api_namespace {
     my ( $self ) = @_;
-    
+
     return 'patron-import';
 }
 
@@ -473,7 +473,7 @@ sub install {
 sub upgrade {
     my ( $self, $args ) = @_;
 
-    my $DBversion = $self->retrieve_data('__INSTALLED_VERSION__');    
+    my $DBversion = $self->retrieve_data('__INSTALLED_VERSION__');
 
     my $dbh = C4::Context->dbh;
     my $import_table = $self->get_qualified_table_name('import');
@@ -589,7 +589,7 @@ sub upgrade {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         ");
     }
-    
+
     if ( Koha::Plugins::Base::_version_compare($DBversion, '1.91') == -1 ) {
         my $runs_table = $self->get_qualified_table_name('runs');
         $dbh->do("ALTER TABLE $runs_table ADD COLUMN dry_run int(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0 AFTER error;");
@@ -618,7 +618,7 @@ sub upgrade {
             $dbh->do("ALTER TABLE $runs_table ADD COLUMN dry_run int(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0 AFTER error;");
         }
     }
-    
+
     if ($DBversion < '3.0') {
         my $runs_table = $self->get_qualified_table_name('runs');
         $dbh->do("ALTER TABLE $runs_table ADD COLUMN filename varchar(255) COLLATE utf8_unicode_ci NULL;");
