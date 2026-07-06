@@ -313,6 +313,12 @@ sub to_koha {
             }
         }
 
+        # Set cardnumber to NULL (instead of empty string) if it is erasable,
+        # empty and autocardnumber config on "no".
+        if ( exists $patron{cardnumber} && $patron{cardnumber} eq '' && $conf->{autocardnumber} eq 'no' ) {
+            $patron{cardnumber} = undef;
+        }
+
         my $stored_patron = Koha::Patrons->find( $borrowernumber );
         my $stored_extended_attributes = $stored_patron->extended_attributes()->unblessed;
 
