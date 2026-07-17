@@ -85,7 +85,7 @@ sub GetMappedField {
     }
 
     my $value = $source;
-    while ($source =~ /<<([a-zA-Z0-9\|]+)>>/g) {
+    while ($source =~ /<<([a-zA-Z0-9_\|]+)>>/g) {
         my $token = $1;
 
         if ($token =~ /\|\|/) {
