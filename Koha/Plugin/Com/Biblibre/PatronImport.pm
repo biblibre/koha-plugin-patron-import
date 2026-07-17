@@ -9,14 +9,14 @@ use Mojo::JSON qw(decode_json);;
 use base qw(Koha::Plugins::Base);
 
 
-our $VERSION = '3.1';
+our $VERSION = '3.2';
 
 our $metadata = {
     name => 'Patron import',
     author => 'BibLibre',
     description => 'A tool for importing patrons into Koha',
     date_authored => '2019-07-02',
-    date_updated => '2026-07-06',
+    date_updated => '2026-07-17',
     minimum_version => '24.05',
     maximum_version => '',
     version => $VERSION,
